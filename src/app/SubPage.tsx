@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import type { ContentType, Page } from "./content";
 import { IMGS } from "./images";
-import { serif, Mark, Reveal, PortfolioCard, ContactSection } from "./ui";
+import { serif, Mark, Reveal, PortfolioCard, ContactSection, ImageGallery } from "./ui";
 
 interface SubPageProps {
   c: ContentType;
@@ -10,11 +11,26 @@ interface SubPageProps {
 }
 
 export function SubPage({ c, pageKey, goPage }: SubPageProps) {
+  const [galleryProjectId, setGalleryProjectId] = useState<string | null>(null);
   const pg = c[pageKey];
   const imgIdx = pageKey === "expoPage" ? 0 : 1;
 
   return (
     <div style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>
+      {/* Project Gallery Modal */}
+      {galleryProjectId !== null && (() => {
+        const project = IMGS.getProject(galleryProjectId);
+        const projectItem = c.portfolio.items.find(item => item.id === galleryProjectId);
+        return project && projectItem ? (
+          <ImageGallery
+            images={project.gallery}
+            title={projectItem.title}
+            subtitle={projectItem.sub}
+            tag={projectItem.tag}
+            onClose={() => setGalleryProjectId(null)}
+          />
+        ) : null;
+      })()}
 
       {/* Compact hero */}
       <div className="relative overflow-hidden bg-zinc-900" style={{ minHeight: "480px" }}>
@@ -94,7 +110,7 @@ export function SubPage({ c, pageKey, goPage }: SubPageProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {c.portfolio.items.map((item, i) => (
               <Reveal key={i} delay={i * 55}>
-                <PortfolioCard {...item} src={IMGS.portfolio[i]} />
+                <PortfolioCard {...item} src={IMGS.portfolio[i]} projectId={item.id} onClick={() => setGalleryProjectId(item.id)} />
               </Reveal>
             ))}
           </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowRight } from "lucide-react";
 import { C, type Lang, type Page } from "./content";
 import { IMGS } from "./images";
-import { serif, Mark, Reveal, UnderlineBtn, PortfolioCard, PortfolioModal, ContactSection } from "./ui";
+import { serif, Mark, Reveal, UnderlineBtn, PortfolioCard, PortfolioModal, ContactSection, ImageGallery } from "./ui";
 import { NavBar } from "./NavBar";
 import { SubPage } from "./SubPage";
 
@@ -88,6 +88,7 @@ export default function App() {
   const [page, setPage] = useState<Page>(getInitialPage);
   const [menuOpen, setMenuOpen] = useState(false);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
+  const [galleryProjectId, setGalleryProjectId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "booth" | "event">("all");
   const scrolled = useScrolled();
   const c = C[lang];
@@ -135,7 +136,22 @@ export default function App() {
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:text-xs"
         style={{ backgroundColor: "var(--accent)", color: "white" }}>Skip to content</a>
 
-      {/* Modal overlay */}
+      {/* Project Gallery Modal */}
+      {galleryProjectId !== null && (() => {
+        const project = IMGS.getProject(galleryProjectId);
+        const projectItem = c.portfolio.items.find(item => item.id === galleryProjectId);
+        return project && projectItem ? (
+          <ImageGallery
+            images={project.gallery}
+            title={projectItem.title}
+            subtitle={projectItem.sub}
+            tag={projectItem.tag}
+            onClose={() => setGalleryProjectId(null)}
+          />
+        ) : null;
+      })()}
+
+      {/* Legacy Portfolio Modal */}
       {modalIndex !== null && (
         <PortfolioModal
           items={c.portfolio.items}
@@ -182,7 +198,7 @@ export default function App() {
               {filteredItems.map((item, fi) => (
                 <Reveal key={filteredIndices[fi]} delay={fi * 50}>
                   <PortfolioCard {...item} src={IMGS.portfolio[filteredIndices[fi]]}
-                    onClick={() => setModalIndex(filteredIndices[fi])} />
+                    onClick={() => setGalleryProjectId(item.id)} projectId={item.id} />
                 </Reveal>
               ))}
             </div>
@@ -332,7 +348,7 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {c.portfolio.items.map((item, i) => (
                   <Reveal key={i} delay={i * 55}>
-                    <PortfolioCard {...item} src={IMGS.portfolio[i]} onClick={() => setModalIndex(i)} />
+                    <PortfolioCard {...item} src={IMGS.portfolio[i]} onClick={() => setGalleryProjectId(item.id)} projectId={item.id} />
                   </Reveal>
                 ))}
               </div>

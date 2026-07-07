@@ -71,11 +71,11 @@ export function UnderlineBtn({ onClick, children, light = false, className = "" 
 }
 
 // ── Portfolio card ───────────────────────────────────────
-export function PortfolioCard({ title, sub, tag, src, onClick }: {
-  title: string; sub: string; tag: string; src: string; onClick?: () => void;
+export function PortfolioCard({ title, sub, tag, src, onClick, projectId }: {
+  title: string; sub: string; tag: string; src: string; onClick?: () => void; projectId?: string;
 }) {
   return (
-    <div className="group relative overflow-hidden bg-zinc-300 cursor-pointer" style={{ aspectRatio: "4/3" }} onClick={onClick}>
+    <div className="group relative overflow-hidden bg-zinc-300 cursor-pointer" style={{ aspectRatio: "4/3" }} onClick={onClick} data-project-id={projectId}>
       <img src={src} alt={title}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]"
         loading="lazy" />
@@ -99,7 +99,93 @@ export function PortfolioCard({ title, sub, tag, src, onClick }: {
   );
 }
 
+// ── Reusable Image Gallery Modal ─────────────────────────
+// Generic gallery component for displaying image carousels
+export function ImageGallery({ images, title, subtitle, tag, onClose, initialIndex = 0 }: {
+  images: string[];
+  title: string;
+  subtitle?: string;
+  tag?: string;
+  onClose: () => void;
+  initialIndex?: number;
+}) {
+  const [idx, setIdx] = useState(initialIndex);
+  const total = images.length;
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  useEffect(() => {
+    const fn = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") setIdx((i) => (i + 1) % total);
+      if (e.key === "ArrowLeft") setIdx((i) => (i - 1 + total) % total);
+    };
+    window.addEventListener("keydown", fn);
+    return () => window.removeEventListener("keydown", fn);
+  }, [total, onClose]);
+
+  return (
+    <div className="fixed inset-0 z-[300] flex flex-col items-center justify-center p-4 lg:p-8"
+      style={{ backgroundColor: "rgba(0,0,0,0.96)" }}
+      onClick={onClose}>
+      <div className="relative w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+
+        {/* Close */}
+        <button onClick={onClose}
+          className="absolute -top-10 right-0 flex items-center gap-2 text-white/50 hover:text-white transition-colors text-[11px] tracking-widest uppercase font-bold">
+          Close <X size={16} />
+        </button>
+
+        {/* Counter */}
+        <div className="absolute -top-10 left-0 text-[11px] tracking-widest uppercase font-bold"
+          style={{ color: "var(--accent)" }}>
+          {String(idx + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+        </div>
+
+        {/* Image */}
+        <div className="relative overflow-hidden bg-zinc-900" style={{ aspectRatio: "16/9" }}>
+          <img src={images[idx]} alt={title} className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-8">
+            {tag && <span className="inline-block text-[9px] tracking-[0.28em] uppercase font-bold px-2.5 py-1 mb-3"
+              style={{ backgroundColor: "var(--accent)", color: "white" }}>{tag}</span>}
+            <h3 className="text-white font-bold text-xl lg:text-3xl leading-tight"
+              style={{ fontFamily: serif, letterSpacing: "-0.02em" }}>{title}</h3>
+            {subtitle && <p className="text-white/55 text-sm mt-1">{subtitle}</p>}
+          </div>
+
+          {/* Side arrows */}
+          <button onClick={() => setIdx((i) => (i - 1 + total) % total)}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/40 hover:bg-black/70 transition-colors text-white">
+            <ChevronLeft size={20} />
+          </button>
+          <button onClick={() => setIdx((i) => (i + 1) % total)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-black/40 hover:bg-black/70 transition-colors text-white">
+            <ChevronRight size={20} />
+          </button>
+        </div>
+
+        {/* Dot indicators */}
+        <div className="flex justify-center gap-2 mt-5">
+          {images.map((_, i) => (
+            <button key={i} onClick={() => setIdx(i)}
+              className="transition-all duration-200"
+              style={{
+                width: i === idx ? "24px" : "8px", height: "4px",
+                backgroundColor: i === idx ? "var(--accent)" : "rgba(255,255,255,0.25)",
+              }} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Portfolio lightbox modal ─────────────────────────────
+// Legacy component - kept for backward compatibility
 export function PortfolioModal({ items, images, initialIndex, onClose }: {
   items: { title: string; sub: string; tag: string }[];
   images: string[];
