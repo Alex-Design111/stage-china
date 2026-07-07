@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
 import { C, type Lang, type Page } from "./content";
 import { IMGS } from "./images";
-import { serif, Mark, Reveal, UnderlineBtn, PortfolioCard, PortfolioModal, ContactSection, ImageGallery } from "./ui";
+import { serif, Mark, Reveal, UnderlineBtn, PillBtn, PortfolioCard, PortfolioModal, ContactSection, ImageGallery } from "./ui";
 import { NavBar } from "./NavBar";
 import { SubPage } from "./SubPage";
 
@@ -26,16 +25,16 @@ function getInitialPage(): Page {
 
 const SEO: Record<Lang, Record<Page, { title: string; description: string; path: string }>> = {
   en: {
-    home:      { title: "MAKE by New Imagination | Exhibition Booth Design & Event Production in China", description: "Full-service exhibition booth design, construction and corporate event production in China.", path: "/" },
-    expo:      { title: "Expo Design & Construction | MAKE by New Imagination China", description: "Custom exhibition stand design and turnkey booth construction in China.", path: "/expo-design-construction" },
-    events:    { title: "Event Design & Production | MAKE by New Imagination China", description: "Corporate conferences, product launches and brand activations in China.", path: "/event-design-production" },
-    portfolio: { title: "Portfolio | MAKE by New Imagination China", description: "Exhibition booths and corporate events delivered across China.", path: "/portfolio" },
+    home:      { title: "Stagency by New Imagination | Exhibition Booth Design & Event Production in China", description: "Full-service exhibition booth design, construction and corporate event production in China.", path: "/" },
+    expo:      { title: "Expo Design & Construction | Stagency by New Imagination China", description: "Custom exhibition stand design and turnkey booth construction in China.", path: "/expo-design-construction" },
+    events:    { title: "Event Design & Production | Stagency by New Imagination China", description: "Corporate conferences, product launches and brand activations in China.", path: "/event-design-production" },
+    portfolio: { title: "Portfolio | Stagency by New Imagination China", description: "Exhibition booths and corporate events delivered across China.", path: "/portfolio" },
   },
   ru: {
-    home:      { title: "MAKE by New Imagination | Стенды и мероприятия в Китае", description: "Полноцикловая компания по застройке стендов и организации мероприятий в Китае.", path: "/" },
-    expo:      { title: "Стенды и застройка | MAKE by New Imagination Китай", description: "Проектирование и застройка стендов в Китае под ключ.", path: "/expo-design-construction" },
-    events:    { title: "Мероприятия и продакшн | MAKE by New Imagination Китай", description: "Конференции, запуски продуктов и активации в Китае.", path: "/event-design-production" },
-    portfolio: { title: "Портфолио | MAKE by New Imagination Китай", description: "Выставочные стенды и мероприятия по всему Китаю.", path: "/portfolio" },
+    home:      { title: "Stagency by New Imagination | Стенды и мероприятия в Китае", description: "Полноцикловая компания по застройке стендов и организации мероприятий в Китае.", path: "/" },
+    expo:      { title: "Стенды и застройка | Stagency by New Imagination Китай", description: "Проектирование и застройка стендов в Китае под ключ.", path: "/expo-design-construction" },
+    events:    { title: "Мероприятия и продакшн | Stagency by New Imagination Китай", description: "Конференции, запуски продуктов и активации в Китае.", path: "/event-design-production" },
+    portfolio: { title: "Портфолио | Stagency by New Imagination Китай", description: "Выставочные стенды и мероприятия по всему Китаю.", path: "/portfolio" },
   },
 };
 
@@ -122,12 +121,12 @@ export default function App() {
     return acc;
   }, []);
 
-  const h1 = { fontFamily: serif, fontWeight: 800, letterSpacing: "-0.03em" } as const;
-  const h2 = { fontFamily: serif, fontWeight: 700, letterSpacing: "-0.02em" } as const;
-  const h3 = { fontFamily: serif, fontWeight: 700, letterSpacing: "-0.02em" } as const;
+  const h1 = { fontFamily: serif, fontWeight: 600, letterSpacing: "-0.015em" } as const;
+  const h2 = { fontFamily: serif, fontWeight: 600, letterSpacing: "-0.012em" } as const;
+  const h3 = { fontFamily: serif, fontWeight: 600, letterSpacing: "-0.01em" } as const;
 
   return (
-    <div style={{ fontFamily: "'Outfit', sans-serif", backgroundColor: "var(--background)", color: "var(--foreground)" }}>
+    <div style={{ fontFamily: "'Manrope', sans-serif", backgroundColor: "var(--background)", color: "var(--foreground)" }}>
 
       <NavBar c={c} lang={lang} setLang={setLang} scrolled={scrolled}
         menuOpen={menuOpen} setMenuOpen={setMenuOpen} page={page} goto={goto} goPage={goPage} />
@@ -212,37 +211,34 @@ export default function App() {
         <main id="main-content">
 
           {/* ── HERO ─────────────────────────────────────── */}
-          <section id="home" className="relative flex flex-col justify-end" style={{ height: "100svh", minHeight: "580px" }}>
-            <div className="absolute inset-0 overflow-hidden bg-zinc-900">
-              <img src={IMGS.hero} alt="Grand exhibition hall — MAKE by New Imagination DMC China"
-                className="w-full h-full object-cover" style={{ opacity: 0.5 }} />
-              <div className="absolute inset-0"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.1) 100%)" }} />
-            </div>
-            {/* Orange accent bar */}
-            <div className="absolute top-0 left-0 right-0 h-1" style={{ backgroundColor: "var(--accent)" }} />
-            <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 lg:px-12 pb-16 lg:pb-28">
-              <p className="text-[10px] tracking-[0.4em] uppercase font-bold mb-6" style={{ color: "var(--accent)" }}>
-                {c.hero.eyebrow}
-              </p>
-              <h1 className="text-white whitespace-pre-line mb-8"
-                style={{ ...h1, fontSize: "clamp(2.8rem,8vw,7.5rem)", lineHeight: 0.97 }}>
-                {c.hero.headline}
-              </h1>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 lg:gap-10">
-                <p className="text-sm leading-relaxed max-w-sm" style={{ color: "rgba(255,255,255,0.58)" }}>{c.hero.sub}</p>
-                <button onClick={() => goto("contacts")}
-                  className="shrink-0 inline-flex items-center gap-3 px-8 py-4 text-[11px] tracking-[0.2em] uppercase font-bold transition-colors duration-300"
-                  style={{ backgroundColor: "var(--accent)", color: "white" }}
-                  onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "white"; e.currentTarget.style.color = "var(--foreground)"; }}
-                  onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "var(--accent)"; e.currentTarget.style.color = "white"; }}>
-                  {c.hero.cta} <ArrowRight size={13} />
-                </button>
+          <section id="home" className="px-3 sm:px-4 lg:px-5 pt-[76px]" style={{ backgroundColor: "var(--background)" }}>
+            <div className="relative flex flex-col justify-end overflow-hidden rounded-[1.6rem] lg:rounded-[2.2rem]"
+              style={{ height: "calc(100svh - 92px)", minHeight: "560px" }}>
+              <div className="absolute inset-0 overflow-hidden" style={{ backgroundColor: "#7a1e12" }}>
+                <img src={IMGS.hero} alt="Grand exhibition hall — Stagency by New Imagination DMC China"
+                  className="w-full h-full object-cover" style={{ opacity: 0.72, mixBlendMode: "luminosity" }} />
+                {/* Warm brand wash — gives the imagery its signature orange→red identity */}
+                <div className="absolute inset-0" style={{ background: "var(--gradient-warm-soft)", mixBlendMode: "multiply" }} />
+                <div className="absolute inset-0"
+                  style={{ background: "linear-gradient(to top, rgba(60,12,6,0.82) 0%, rgba(60,12,6,0.18) 52%, rgba(60,12,6,0.28) 100%)" }} />
               </div>
-            </div>
-            <div className="absolute right-6 lg:right-12 bottom-8 flex flex-col items-center gap-3 select-none">
-              <span className="text-[9px] tracking-[0.35em] uppercase font-bold" style={{ writingMode: "vertical-rl", color: "rgba(255,255,255,0.3)" }}>{c.hero.scroll}</span>
-              <div className="w-px h-10" style={{ backgroundColor: "var(--accent)", opacity: 0.7 }} />
+              <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 sm:px-8 lg:px-14 pt-10 pb-12 lg:pb-16">
+                <p className="text-[10px] tracking-[0.4em] uppercase font-bold mb-6" style={{ color: "rgba(255,255,255,0.85)" }}>
+                  {c.hero.eyebrow}
+                </p>
+                <h1 className="text-white whitespace-pre-line mb-9"
+                  style={{ ...h1, fontWeight: 500, fontSize: "clamp(3rem,9vw,8.5rem)", lineHeight: 0.98 }}>
+                  {c.hero.headline}
+                </h1>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-7 lg:gap-10">
+                  <PillBtn onClick={() => goto("contacts")} size="lg">{c.hero.cta}</PillBtn>
+                  <p className="text-sm leading-relaxed max-w-sm" style={{ color: "rgba(255,255,255,0.72)" }}>{c.hero.sub}</p>
+                </div>
+              </div>
+              <div className="absolute right-6 lg:right-12 bottom-8 flex flex-col items-center gap-3 select-none">
+                <span className="text-[9px] tracking-[0.35em] uppercase font-bold" style={{ writingMode: "vertical-rl", color: "rgba(255,255,255,0.55)" }}>{c.hero.scroll}</span>
+                <div className="w-px h-10" style={{ backgroundColor: "white", opacity: 0.6 }} />
+              </div>
             </div>
           </section>
 
@@ -262,8 +258,8 @@ export default function App() {
                 <p className="leading-relaxed mb-12 text-[15px]" style={{ color: "var(--muted-foreground)" }}>{c.about.body3}</p>
                 <UnderlineBtn onClick={() => goto("contacts")}>{c.about.cta}</UnderlineBtn>
               </Reveal>
-              <Reveal delay={160} className="relative overflow-hidden bg-zinc-200">
-                <img src={IMGS.about} alt="Exhibition design — MAKE China"
+              <Reveal delay={160} className="relative overflow-hidden rounded-[1.8rem] bg-zinc-200">
+                <img src={IMGS.about} alt="Exhibition design — Stagency China"
                   className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                   style={{ aspectRatio: "3/4" }} loading="lazy" />
               </Reveal>
@@ -279,24 +275,26 @@ export default function App() {
               const isEven = i % 2 === 0;
               return (
                 <div key={item.page} id={i === 1 ? "events" : undefined}
-                  className="flex flex-col lg:flex-row mt-10" style={{ minHeight: "560px" }}>
-                  <div className={`relative overflow-hidden bg-zinc-800 ${isEven ? "lg:order-1" : "lg:order-2"}`} style={{ flex: "0 0 58%" }}>
-                    <img src={IMGS.svc[i]} alt={item.title.replace("\n", " ")}
-                      className="w-full h-full object-cover transition-all duration-700 hover:scale-[1.025]"
-                      loading="lazy" style={{ opacity: 0.82, minHeight: "340px", maxHeight: "720px" }} />
-                  </div>
-                  <div className={`flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 ${isEven ? "lg:order-2" : "lg:order-1"}`}
-                    style={{ flex: "0 0 42%", backgroundColor: isEven ? "var(--foreground)" : "var(--secondary)", color: isEven ? "var(--background)" : "var(--foreground)" }}>
-                    <Reveal>
-                      <span className="text-[10px] tracking-[0.32em] uppercase font-bold block mb-7"
-                        style={{ color: isEven ? "rgba(248,247,243,0.4)" : "var(--muted-foreground)" }}>{item.eyebrow}</span>
-                      <h3 className="whitespace-pre-line leading-[1.05] mb-8" style={{ ...h3, fontSize: "clamp(1.75rem,3vw,3rem)" }}>
-                        {item.title}
-                      </h3>
-                      <p className="leading-relaxed mb-10 text-[15px]"
-                        style={{ color: isEven ? "rgba(248,247,243,0.6)" : "var(--muted-foreground)" }}>{item.body}</p>
-                      <UnderlineBtn onClick={() => goPage(item.page)} light={isEven}>{item.cta}</UnderlineBtn>
-                    </Reveal>
+                  className="max-w-[1440px] mx-auto px-6 lg:px-12 mt-8 lg:mt-10">
+                  <div className="flex flex-col lg:flex-row rounded-[1.8rem] overflow-hidden" style={{ minHeight: "540px" }}>
+                    <div className={`relative overflow-hidden bg-zinc-800 ${isEven ? "lg:order-1" : "lg:order-2"}`} style={{ flex: "0 0 58%" }}>
+                      <img src={IMGS.svc[i]} alt={item.title.replace("\n", " ")}
+                        className="w-full h-full object-cover transition-all duration-700 hover:scale-[1.025]"
+                        loading="lazy" style={{ opacity: 0.9, minHeight: "340px", maxHeight: "720px" }} />
+                    </div>
+                    <div className={`flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 ${isEven ? "lg:order-2" : "lg:order-1"}`}
+                      style={{ flex: "0 0 42%", backgroundColor: isEven ? "var(--foreground)" : "var(--secondary)", color: isEven ? "var(--background)" : "var(--foreground)" }}>
+                      <Reveal>
+                        <span className="text-[10px] tracking-[0.32em] uppercase font-bold block mb-7"
+                          style={{ color: isEven ? "rgba(248,247,243,0.4)" : "var(--muted-foreground)" }}>{item.eyebrow}</span>
+                        <h3 className="whitespace-pre-line leading-[1.05] mb-8" style={{ ...h3, fontSize: "clamp(1.9rem,3.2vw,3.2rem)" }}>
+                          {item.title}
+                        </h3>
+                        <p className="leading-relaxed mb-10 text-[15px]"
+                          style={{ color: isEven ? "rgba(248,247,243,0.6)" : "var(--muted-foreground)" }}>{item.body}</p>
+                        <UnderlineBtn onClick={() => goPage(item.page)} light={isEven}>{item.cta}</UnderlineBtn>
+                      </Reveal>
+                    </div>
                   </div>
                 </div>
               );
@@ -308,9 +306,9 @@ export default function App() {
             <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
               <Reveal>
                 <div className="flex items-center gap-3 mb-4" style={{ color: "rgba(248,247,243,0.28)" }}>
-                  <span style={{ fontFamily: serif, fontWeight: 800, fontSize: "0.6rem", letterSpacing: "0.18em", color: "var(--accent)" }}>{c.advantages.num}</span>
-                  <div style={{ width: "24px", height: "2px", backgroundColor: "var(--accent)", opacity: 0.5 }} />
-                  <span style={{ fontFamily: serif, fontWeight: 700, fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(248,247,243,0.35)" }}>{c.advantages.label}</span>
+                  <span style={{ fontWeight: 800, fontSize: "0.62rem", letterSpacing: "0.14em", color: "var(--accent)" }}>{c.advantages.num}</span>
+                  <div style={{ width: "28px", height: "2px", borderRadius: "2px", background: "var(--gradient-warm)" }} />
+                  <span style={{ fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(248,247,243,0.35)" }}>{c.advantages.label}</span>
                 </div>
                 <h2 className="mb-14" style={{ ...h2, fontSize: "clamp(2rem,4vw,3.5rem)" }}>{c.advantages.headline}</h2>
               </Reveal>
@@ -318,9 +316,9 @@ export default function App() {
                 {c.advantages.items.map((item, i) => (
                   <Reveal key={i} delay={i * 80}>
                     <div className="p-8 lg:p-10 h-full" style={{ backgroundColor: "var(--foreground)" }}>
-                      <div className="w-8 h-1 mb-8" style={{ backgroundColor: "var(--accent)" }} />
-                      <span className="block mb-5" style={{ fontFamily: serif, fontWeight: 800, fontSize: "0.6rem", letterSpacing: "0.2em", color: "var(--accent)" }}>{item.num}</span>
-                      <h3 className="mb-4 leading-snug" style={{ ...h3, fontSize: "clamp(1rem,1.6vw,1.25rem)" }}>{item.title}</h3>
+                      <div className="w-9 h-1 mb-8 rounded-full" style={{ background: "var(--gradient-warm)" }} />
+                      <span className="block mb-4" style={{ fontWeight: 800, fontSize: "0.62rem", letterSpacing: "0.16em", color: "var(--accent)" }}>{item.num}</span>
+                      <h3 className="mb-4 leading-tight" style={{ ...h3, fontSize: "clamp(1.3rem,1.9vw,1.6rem)" }}>{item.title}</h3>
                       <p className="text-[14px] leading-relaxed" style={{ color: "rgba(248,247,243,0.5)" }}>{item.body}</p>
                     </div>
                   </Reveal>
@@ -367,12 +365,12 @@ export default function App() {
       {/* ── FOOTER ───────────────────────────────────────── */}
       <footer className="py-14 lg:py-20" style={{ backgroundColor: "var(--foreground)", color: "var(--background)" }}>
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
-          {/* Orange top rule */}
-          <div className="h-1 mb-12" style={{ backgroundColor: "var(--accent)" }} />
+          {/* Gradient top rule */}
+          <div className="h-1 mb-12 rounded-full" style={{ background: "var(--gradient-warm)" }} />
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10">
             <div>
-              <div style={{ fontFamily: serif, fontWeight: 800, fontSize: "1.2rem", letterSpacing: "0.12em" }} className="uppercase mb-1">MAKE</div>
-              <div className="text-[9px] tracking-[0.18em] uppercase font-semibold mb-3" style={{ color: "rgba(248,247,243,0.35)" }}>
+              <div style={{ fontFamily: serif, fontWeight: 600, fontSize: "2rem", letterSpacing: "-0.01em" }} className="mb-1">Stagency</div>
+              <div className="text-[9px] tracking-[0.2em] uppercase font-semibold mb-3" style={{ color: "rgba(248,247,243,0.4)" }}>
                 by New Imagination · DMC China
               </div>
               <p className="text-[13px]" style={{ color: "rgba(248,247,243,0.38)" }}>{c.footer.tagline}</p>

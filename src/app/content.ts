@@ -51,7 +51,7 @@ export const C = {
     advantages: {
       num: "03",
       label: "Our Advantages",
-      headline: "Why Choose MAKE",
+      headline: "Why Choose Stagency",
       items: [
         {
           num: "01",
@@ -112,7 +112,7 @@ export const C = {
     },
     footer: {
       tagline: "Exhibition & Event Partner in China",
-      legal: "© 2025 MAKE by New Imagination DMC China. All rights reserved.",
+      legal: "© 2026 Stagency by New Imagination DMC China. All rights reserved.",
       links: ["Expo Design & Construction", "Event Design & Production", "Portfolio", "Contacts"],
     },
     expoPage: {
@@ -205,7 +205,7 @@ export const C = {
     advantages: {
       num: "03",
       label: "Наши преимущества",
-      headline: "Почему MAKE",
+      headline: "Почему Stagency",
       items: [
         {
           num: "01",
@@ -266,7 +266,7 @@ export const C = {
     },
     footer: {
       tagline: "Партнёр по выставкам и мероприятиям в Китае",
-      legal: "© 2025 MAKE by New Imagination DMC China. Все права защищены.",
+      legal: "© 2026 Stagency by New Imagination DMC China. Все права защищены.",
       links: ["Стенды и застройка", "Мероприятия и продакшн", "Портфолио", "Контакты"],
     },
     expoPage: {

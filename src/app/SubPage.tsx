@@ -33,15 +33,16 @@ export function SubPage({ c, pageKey, goPage }: SubPageProps) {
       })()}
 
       {/* Compact hero */}
-      <div className="relative overflow-hidden bg-zinc-900" style={{ minHeight: "480px" }}>
+      <div className="relative overflow-hidden mx-3 sm:mx-4 lg:mx-5 mt-[76px] rounded-[1.6rem] lg:rounded-[2.2rem]" style={{ minHeight: "440px", backgroundColor: "#7a1e12" }}>
         <img
           src={IMGS.subHero[imgIdx]}
           alt={pg.headline.replace("\n", " ")}
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.45 }}
+          style={{ opacity: 0.72, mixBlendMode: "luminosity" }}
         />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 100%)" }} />
-        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12 pt-36 pb-20">
+        <div className="absolute inset-0" style={{ background: "var(--gradient-warm-soft)", mixBlendMode: "multiply" }} />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(60,12,6,0.8) 0%, rgba(60,12,6,0.15) 100%)" }} />
+        <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-14 pt-24 pb-16">
           <button
             onClick={() => goPage("home")}
             className="inline-flex items-center gap-2 text-[11px] tracking-[0.2em] uppercase font-medium mb-10 transition-opacity hover:opacity-70"

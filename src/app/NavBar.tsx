@@ -15,9 +15,6 @@ interface NavBarProps {
 }
 
 export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page, goto, goPage }: NavBarProps) {
-  const isSubPage = page !== "home";
-  const forceLight = !scrolled && !isSubPage;
-
   const navLinks: [string, string, Page | null][] = [
     ["home",      c.nav.home,      null],
     ["booths",    c.nav.booths,    "expo"],
@@ -26,26 +23,26 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
     ["contacts",  c.nav.contacts,  null],
   ];
 
-  const navBg = scrolled || isSubPage ? "rgba(248,247,243,0.96)" : "transparent";
-  const navShadow = scrolled || isSubPage ? "0 1px 0 rgba(12,11,9,0.07)" : "none";
+  const navBg = scrolled ? "rgba(248,247,243,0.92)" : "rgba(248,247,243,0.72)";
+  const navShadow = scrolled ? "0 1px 0 rgba(12,11,9,0.07)" : "none";
 
   return (
     <>
       <nav
         aria-label="Main navigation"
         className="fixed top-0 inset-x-0 z-50 transition-all duration-500"
-        style={{ backgroundColor: navBg, backdropFilter: scrolled || isSubPage ? "blur(12px)" : "none", boxShadow: navShadow }}
+        style={{ backgroundColor: navBg, backdropFilter: "blur(14px)", boxShadow: navShadow }}
       >
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex items-center justify-between gap-6" style={{ height: "72px" }}>
 
           {/* Logo */}
-          <button onClick={() => goPage("home")} className="flex flex-col leading-none shrink-0">
-            <span className="text-[15px] font-semibold tracking-[0.22em] uppercase"
-              style={{ color: forceLight ? "white" : "var(--foreground)" }}>
-              MAKE
+          <button onClick={() => goPage("home")} className="flex flex-col leading-none shrink-0 text-left">
+            <span className="text-[22px] tracking-[-0.01em]"
+              style={{ fontFamily: serif, fontWeight: 600, color: "var(--foreground)" }}>
+              Stagency
             </span>
-            <span className="text-[8px] tracking-[0.18em] uppercase whitespace-nowrap m-[0px] px-[0px] py-[5px]"
-              style={{ color: forceLight ? "rgba(255,255,255,0.45)" : "var(--muted-foreground)" }}>by New Imagination · DMC China</span>
+            <span className="text-[8px] tracking-[0.2em] uppercase whitespace-nowrap mt-0.5"
+              style={{ color: "var(--muted-foreground)" }}>by New Imagination · DMC China</span>
           </button>
 
           {/* Desktop links */}
@@ -53,7 +50,7 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
             {navLinks.map(([id, label, target]) => (
               <button key={id} onClick={() => target ? goPage(target) : goto(id)}
                 className="text-[13px] transition-opacity hover:opacity-50 whitespace-nowrap"
-                style={{ color: forceLight ? "rgba(255,255,255,0.8)" : "var(--foreground)" }}>
+                style={{ color: "var(--foreground)" }}>
                 {label}
               </button>
             ))}
@@ -64,27 +61,23 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
             <div className="flex items-center gap-1.5 text-[11px] tracking-[0.22em]">
               {(["en", "ru"] as Lang[]).map((l, i) => (
                 <span key={l} className="flex items-center gap-1.5">
-                  {i > 0 && <span style={{ color: forceLight ? "rgba(255,255,255,0.25)" : "var(--border)" }}>|</span>}
+                  {i > 0 && <span style={{ color: "var(--border)" }}>|</span>}
                   <button onClick={() => setLang(l)} className="uppercase transition-opacity px-0.5"
-                    style={{ color: forceLight ? "white" : "var(--foreground)", opacity: lang === l ? 1 : 0.32, fontWeight: lang === l ? 600 : 400 }}>
+                    style={{ color: "var(--foreground)", opacity: lang === l ? 1 : 0.32, fontWeight: lang === l ? 600 : 400 }}>
                     {l.toUpperCase()}
                   </button>
                 </span>
               ))}
             </div>
             <button onClick={() => goto("contacts")}
-              className="px-5 py-2.5 text-[11px] tracking-[0.18em] uppercase font-medium transition-opacity hover:opacity-75 whitespace-nowrap"
-              style={{
-                backgroundColor: forceLight ? "rgba(255,255,255,0.15)" : "var(--accent)",
-                color: "white",
-                border: forceLight ? "1px solid rgba(255,255,255,0.35)" : "none",
-              }}>
+              className="px-5 py-2.5 rounded-full text-[11px] tracking-[0.16em] uppercase font-semibold text-white transition-all duration-300 hover:shadow-md whitespace-nowrap"
+              style={{ background: "var(--gradient-warm)", boxShadow: "0 6px 18px -8px rgba(185,40,25,0.5)" }}>
               {c.nav.cta}
             </button>
           </div>
 
           <button className="lg:hidden p-1.5" onClick={() => setMenuOpen(true)}
-            style={{ color: forceLight ? "white" : "var(--foreground)" }}>
+            style={{ color: "var(--foreground)" }}>
             <Menu size={22} />
           </button>
         </div>
@@ -97,8 +90,8 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
       >
         <div className="flex justify-between items-center mb-12">
           <div className="flex flex-col leading-none">
-            <span className="text-[15px] font-semibold tracking-[0.22em] uppercase" style={{ color: "var(--background)" }}>MAKE</span>
-            <span className="text-[8px] tracking-[0.18em] uppercase" style={{ color: "rgba(248,247,243,0.4)" }}>by New Imagination · DMC China</span>
+            <span className="text-[22px]" style={{ fontFamily: serif, fontWeight: 600, color: "var(--background)" }}>Stagency</span>
+            <span className="text-[8px] tracking-[0.2em] uppercase mt-0.5" style={{ color: "rgba(248,247,243,0.4)" }}>by New Imagination · DMC China</span>
           </div>
           <button onClick={() => setMenuOpen(false)} style={{ color: "var(--background)" }}><X size={22} /></button>
         </div>
@@ -125,8 +118,8 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
               </span>
             ))}
           </div>
-          <button onClick={() => goto("contacts")} className="block w-full py-4 text-[11px] tracking-[0.2em] uppercase font-medium"
-            style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>
+          <button onClick={() => goto("contacts")} className="block w-full py-4 rounded-full text-[11px] tracking-[0.2em] uppercase font-semibold text-white"
+            style={{ background: "var(--gradient-warm)" }}>
             {c.nav.cta}
           </button>
         </div>
