@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef, type ReactNode, type FormEvent } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
+import { IMGS } from "./images";
 
 export const serif = "'Montserrat', sans-serif";
 
@@ -69,24 +70,6 @@ export function UnderlineBtn({ onClick, children, light = false, className = "" 
   );
 }
 
-// ── Form input ───────────────────────────────────────────
-export function FormField({ label, value, onChange, type = "text", required = false }: {
-  label: string; value: string; onChange: (v: string) => void; type?: string; required?: boolean;
-}) {
-  return (
-    <div>
-      <label className="block text-[10px] tracking-[0.28em] uppercase mb-3 font-semibold" style={{ color: "var(--muted-foreground)" }}>
-        {label}
-      </label>
-      <input type={type} value={value} required={required} onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-transparent border-b py-2.5 text-sm outline-none transition-colors duration-200"
-        style={{ borderColor: "var(--border)" }}
-        onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-        onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")} />
-    </div>
-  );
-}
-
 // ── Portfolio card ───────────────────────────────────────
 export function PortfolioCard({ title, sub, tag, src, onClick }: {
   title: string; sub: string; tag: string; src: string; onClick?: () => void;
@@ -104,7 +87,7 @@ export function PortfolioCard({ title, sub, tag, src, onClick }: {
       </div>
       <div className="absolute bottom-0 left-0 right-0 p-5">
         <h4 className="text-white text-sm font-bold leading-snug">{title}</h4>
-        <p className="text-xs mt-1 leading-snug text-transparent group-hover:text-white/60 transition-colors duration-300">{sub}</p>
+        <p className="text-xs mt-1 leading-snug text-white/60 transition-colors duration-300">{sub}</p>
       </div>
       {/* Click hint */}
       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -202,25 +185,16 @@ export function PortfolioModal({ items, images, initialIndex, onClose }: {
 
 // ── Contact section ──────────────────────────────────────
 export function ContactSection({ c, headline, num, label }: {
-  c: { contact: { sub: string; info: { label: string; value: string }[]; form: { name: string; company: string; email: string; phone: string; message: string; submit: string; sent: string } } };
+  c: { contact: { sub: string; info: { label: string; value: string }[]; form: { submit: string } } };
   headline: string; num: string; label: string;
 }) {
-  const [formSent, setFormSent] = useState(false);
-  const [form, setForm] = useState({ name: "", company: "", email: "", phone: "", message: "" });
-
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry — ${form.name}${form.company ? `, ${form.company}` : ""}`);
-    const body = encodeURIComponent(`Name: ${form.name}\nCompany: ${form.company}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nProject Details:\n${form.message}`);
-    window.location.href = `mailto:info@make-china.cn?subject=${subject}&body=${body}`;
-    setFormSent(true);
-  };
+  const mailto = "mailto:info@make-china.cn?subject=" + encodeURIComponent("Project Inquiry");
 
   return (
     <section id="contacts" className="py-24 lg:py-40" style={{ backgroundColor: "var(--secondary)" }}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
         <Reveal><Mark n={num} label={label} /></Reveal>
-        <div className="mt-14 lg:mt-20 grid lg:grid-cols-2 gap-14 lg:gap-28">
+        <div className="mt-14 lg:mt-20 grid lg:grid-cols-2 gap-14 lg:gap-28 items-start">
           <Reveal>
             <h2 className="whitespace-pre-line leading-[1.05] mb-8"
               style={{ fontFamily: serif, fontWeight: 800, fontSize: "clamp(2rem,4vw,3.5rem)", letterSpacing: "-0.02em" }}>
@@ -241,39 +215,17 @@ export function ContactSection({ c, headline, num, label }: {
             </div>
           </Reveal>
           <Reveal delay={130}>
-            {formSent ? (
-              <div className="flex flex-col justify-center" style={{ minHeight: "360px" }}>
-                <div className="w-8 h-1 mb-7" style={{ backgroundColor: "var(--accent)" }} />
-                <p className="text-lg leading-relaxed font-medium" style={{ color: "var(--muted-foreground)" }}>
-                  {c.contact.form.sent}
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="space-y-7">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <FormField label={c.contact.form.name} value={form.name} onChange={(v) => setForm((p) => ({ ...p, name: v }))} required />
-                  <FormField label={c.contact.form.company} value={form.company} onChange={(v) => setForm((p) => ({ ...p, company: v }))} />
-                </div>
-                <FormField label={c.contact.form.email} type="email" value={form.email} onChange={(v) => setForm((p) => ({ ...p, email: v }))} required />
-                <FormField label={c.contact.form.phone} type="tel" value={form.phone} onChange={(v) => setForm((p) => ({ ...p, phone: v }))} />
-                <div>
-                  <label className="block text-[10px] tracking-[0.28em] uppercase mb-3 font-bold" style={{ color: "var(--muted-foreground)" }}>
-                    {c.contact.form.message}
-                  </label>
-                  <textarea rows={4} value={form.message}
-                    onChange={(e) => setForm((p) => ({ ...p, message: e.target.value }))}
-                    className="w-full bg-transparent border-b py-2.5 text-sm outline-none transition-colors duration-200 resize-none"
-                    style={{ borderColor: "var(--border)" }}
-                    onFocus={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-                    onBlur={(e) => (e.currentTarget.style.borderColor = "var(--border)")} />
-                </div>
-                <button type="submit"
-                  className="w-full py-4 text-[11px] tracking-[0.2em] uppercase font-bold transition-opacity hover:opacity-75"
-                  style={{ backgroundColor: "var(--accent)", color: "white" }}>
-                  {c.contact.form.submit}
-                </button>
-              </form>
-            )}
+            <div className="relative overflow-hidden bg-zinc-200 mb-5">
+              <img src={IMGS.contact} alt="Corporate business event production in China — MAKE"
+                className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                style={{ aspectRatio: "16/10" }} loading="lazy" />
+            </div>
+            <a href={mailto}
+              className="group flex items-center justify-center gap-4 w-full py-6 text-[13px] lg:text-[14px] tracking-[0.2em] uppercase font-bold transition-opacity hover:opacity-85"
+              style={{ backgroundColor: "var(--accent)", color: "white" }}>
+              {c.contact.form.submit}
+              <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1.5" />
+            </a>
           </Reveal>
         </div>
       </div>
