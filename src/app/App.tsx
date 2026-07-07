@@ -39,22 +39,40 @@ const SEO: Record<Lang, Record<Page, { title: string; description: string; path:
   },
 };
 
+const SITE_ORIGIN = "https://make-china.cn";
+const OG_IMAGE = "https://images.unsplash.com/photo-1769667693219-4d8e44b6a3b3?w=1200&h=630&fit=crop&auto=format";
+
 function setMeta(attr: string, key: string, content: string) {
   let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
   if (!el) { el = document.createElement("meta"); el.setAttribute(attr, key); document.head.appendChild(el); }
   el.setAttribute("content", content);
 }
 
+function setCanonical(href: string) {
+  let el = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+  if (!el) { el = document.createElement("link"); el.setAttribute("rel", "canonical"); document.head.appendChild(el); }
+  el.setAttribute("href", href);
+}
+
 function useSEO(page: Page, lang: Lang) {
   useEffect(() => {
     const m = SEO[lang][page];
+    const url = SITE_ORIGIN + m.path;
     document.title = m.title;
     document.documentElement.lang = lang;
     setMeta("name", "description", m.description);
     setMeta("name", "robots", "index, follow");
+    setCanonical(url);
     setMeta("property", "og:title", m.title);
     setMeta("property", "og:description", m.description);
     setMeta("property", "og:type", "website");
+    setMeta("property", "og:url", url);
+    setMeta("property", "og:image", OG_IMAGE);
+    setMeta("property", "og:locale", lang === "ru" ? "ru_RU" : "en_US");
+    setMeta("name", "twitter:card", "summary_large_image");
+    setMeta("name", "twitter:title", m.title);
+    setMeta("name", "twitter:description", m.description);
+    setMeta("name", "twitter:image", OG_IMAGE);
     try {
       if (window.location.pathname !== m.path) history.pushState({ page, lang }, m.title, m.path);
     } catch (_) {}

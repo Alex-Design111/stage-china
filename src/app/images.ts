@@ -1,5 +1,6 @@
 export const IMGS = {
   hero: "https://images.unsplash.com/photo-1769667693219-4d8e44b6a3b3?w=1920&h=1080&fit=crop&auto=format",
+  contact: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop&auto=format",
   about: "https://images.unsplash.com/photo-1706074797611-a02f9ed06439?w=900&h=1200&fit=crop&auto=format",
   svc: [
     "https://images.unsplash.com/photo-1560439514-4e9645039924?w=1400&h=1000&fit=crop&auto=format",
