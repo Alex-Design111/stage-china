@@ -104,10 +104,10 @@ export const C = {
         sent: "Thank you — we will be in touch shortly.",
       },
       info: [
-        { label: "Location", value: "Shanghai, China" },
-        { label: "Email", value: "info@stagencychina.com" },
-        { label: "Phone", value: "+86 21 0000 0000" },
-        { label: "WhatsApp (RU)", value: "+7 000 000 00 00" },
+        { label: "Address", value: "Room 3422, 34th Floor, Block A, Zhongyi Building, No. 580 Nanjing West Road, Jing'an District, Shanghai" },
+        { label: "Email", value: "stagency@newimaginationdmc.com" },
+        { label: "Phone", value: "+86 130 7415 6537" },
+        { label: "Telegram (RU)", value: "+7 937 523 30 37" },
       ],
     },
     footer: {
@@ -258,10 +258,10 @@ export const C = {
         sent: "Спасибо — мы свяжемся с вами в ближайшее время.",
       },
       info: [
-        { label: "Адрес", value: "Шанхай, Китай" },
-        { label: "Email", value: "info@stagencychina.com" },
-        { label: "Телефон", value: "+86 21 0000 0000" },
-        { label: "WhatsApp", value: "+7 000 000 00 00" },
+        { label: "Адрес", value: "Room 3422, 34th Floor, Block A, Zhongyi Building, No. 580 Nanjing West Road, Jing'an District, Shanghai" },
+        { label: "Email", value: "stagency@newimaginationdmc.com" },
+        { label: "Телефон", value: "+86 130 7415 6537" },
+        { label: "Telegram", value: "+7 937 523 30 37" },
       ],
     },
     footer: {
