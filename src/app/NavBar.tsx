@@ -37,8 +37,8 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
 
           {/* Logo */}
           <button onClick={() => goPage("home")} className="shrink-0 flex items-center"
-            aria-label="Stagency by New Imagination DMC China — home">
-            <img src="/assets/stagency-logo.png" alt="Stagency by New Imagination DMC China"
+            aria-label="Stagency China by New Imagination DMC China — home">
+            <img src="/assets/stagency-logo.png" alt="Stagency China by New Imagination DMC China"
               className="h-12 sm:h-[52px] lg:h-[58px] w-auto" />
           </button>
 
@@ -86,7 +86,7 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
         style={{ backgroundColor: "var(--foreground)", opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? "auto" : "none" }}
       >
         <div className="flex justify-between items-center mb-12">
-          <img src="/assets/stagency-logo.png" alt="Stagency by New Imagination DMC China" className="h-11 w-auto" />
+          <img src="/assets/stagency-logo.png" alt="Stagency China by New Imagination DMC China" className="h-11 w-auto" />
           <button onClick={() => setMenuOpen(false)} style={{ color: "var(--background)" }}><X size={22} /></button>
         </div>
 

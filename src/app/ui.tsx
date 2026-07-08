@@ -356,7 +356,7 @@ export function ContactSection({ c, headline, num, label }: {
           </Reveal>
           <Reveal delay={130}>
             <div className="relative overflow-hidden rounded-[1.6rem] bg-zinc-200 mb-5">
-              <img src={IMGS.contact} alt="Corporate business event production in China — Stagency"
+              <img src={IMGS.contact} alt="Corporate business event production in China — Stagency China"
                 className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
                 style={{ aspectRatio: "16/10" }} loading="lazy" />
             </div>

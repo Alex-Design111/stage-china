@@ -51,7 +51,7 @@ export const C = {
     advantages: {
       num: "03",
       label: "Our Advantages",
-      headline: "Why Choose Stagency",
+      headline: "Why Choose Stagency China",
       items: [
         {
           num: "01",
@@ -96,7 +96,7 @@ export const C = {
       num: "05",
       label: "Contact",
       headline: "Start Your\nProject with Us",
-      sub: "Tell us about your upcoming exhibition or event. We respond within 24 hours.",
+      sub: "Tell us about your upcoming exhibition or event.",
       form: {
         name: "Your Name",
         company: "Company",
@@ -115,7 +115,7 @@ export const C = {
     },
     footer: {
       tagline: "Exhibition & Event Partner in China",
-      legal: "© 2026 Stagency by New Imagination DMC China. All rights reserved.",
+      legal: "© 2026 Stagency China by New Imagination DMC China. All rights reserved.",
       links: ["Expo Design & Construction", "Event Design & Production", "Portfolio", "Contacts"],
     },
     expoPage: {
@@ -142,7 +142,7 @@ export const C = {
       sub: "We create immersive corporate events, product launches and brand experiences that leave lasting impressions — from concept through to on-site execution across China.",
       servicesLabel: "Our Services",
       services: [
-        { num: "01", title: "Corporate Conferences & Summits", body: "End-to-end conference management for 50 to 5,000 delegates. Venue sourcing, stage design, AV production, simultaneous interpretation, delegate management and full logistics." },
+        { num: "01", title: "Corporate Conferences & Summits", body: "End-to-end conference management for 50 to 1,000 delegates. Venue sourcing, stage design, AV production, simultaneous interpretation, delegate management and full logistics." },
         { num: "02", title: "Product Launches & Presentations", body: "Memorable launch events that generate media coverage and audience engagement. From intimate press showrooms to large-scale theatrical reveals at China's premier venues." },
         { num: "03", title: "Gala Dinners & Award Ceremonies", body: "Elegant atmospheric dinners and award ceremonies with full décor design, entertainment programming, catering coordination and end-to-end event production." },
         { num: "04", title: "Brand Activations & Pop-Ups", body: "Immersive brand experiences that connect your audience with your product in unexpected, memorable ways. We design, build and operate activations that drive engagement." },
@@ -179,9 +179,9 @@ export const C = {
       num: "01",
       label: "О компании",
       headline: "Ваш надёжный партнёр\nпо выставкам и мероприятиям\nв Китае",
-      body1: "Мы — полноцикловый партнёр в сфере выставок и мероприятий, базирующийся в Китае. Специализируемся на разработке концепций, дизайне, инжиниринге, производстве и реализации «под ключ». Мы работаем с международными брендами и обеспечиваем результат мирового уровня на крупнейших выставочных площадках Китая — Шанхай, Пекин, Гуанчжоу, Шэньчжэнь и другие города.",
+      body1: "Мы — партнёр полного цикла в сфере выставок и мероприятий, базирующийся в Китае. Специализируемся на разработке концепций, дизайне, инжиниринге, производстве и реализации «под ключ». Мы работаем с международными брендами и обеспечиваем результат мирового уровня на крупнейших выставочных площадках Китая — в Шанхае, Пекине, Гуанчжоу, Шэньчжэне и других городах.",
       body2: "Наша опытная команда управляет каждой деталью проекта — от первого брифа до финального демонтажа, обеспечивая прозрачную коммуникацию и контролируемую реализацию на каждом этапе.",
-      body3: "Помимо выставок, мы организуем мероприятия мирового уровня — от камерных деловых ужинов и запусков продуктов до масштабных корпоративных конференций и брендовых активаций. Каждое мероприятие создаётся с той же точностью, креативностью и экспертизой, что определяют нашу выставочную работу.",
+      body3: "Помимо выставок, мы организуем мероприятия мирового уровня — от камерных деловых ужинов и запусков продуктов до масштабных корпоративных конференций и брендовых активаций. Каждое мероприятие создаётся с той же точностью, креативностью и экспертизой, которые определяют нашу выставочную работу.",
       cta: "Начать проект",
     },
     services: {
@@ -208,7 +208,7 @@ export const C = {
     advantages: {
       num: "03",
       label: "Наши преимущества",
-      headline: "Почему Stagency",
+      headline: "Почему Stagency China",
       items: [
         {
           num: "01",
@@ -253,7 +253,7 @@ export const C = {
       num: "05",
       label: "Контакты",
       headline: "Начните ваш\nпроект с нами",
-      sub: "Расскажите о вашем проекте. Мы отвечаем в течение 24 часов.",
+      sub: "Расскажите о вашем проекте.",
       form: {
         name: "Ваше имя",
         company: "Компания",
@@ -272,7 +272,7 @@ export const C = {
     },
     footer: {
       tagline: "Партнёр по выставкам и мероприятиям в Китае",
-      legal: "© 2026 Stagency by New Imagination DMC China. Все права защищены.",
+      legal: "© 2026 Stagency China by New Imagination DMC China. Все права защищены.",
       links: ["Стенды и застройка", "Мероприятия и продакшн", "Портфолио", "Контакты"],
     },
     expoPage: {
@@ -299,10 +299,10 @@ export const C = {
       sub: "Создаём иммерсивные корпоративные мероприятия, запуски продуктов и брендовые активации — от концепции до реализации на площадке по всему Китаю.",
       servicesLabel: "Наши услуги",
       services: [
-        { num: "01", title: "Конференции и корпоративные саммиты", body: "Управление конференциями от 50 до 5000 участников. Подбор площадки, дизайн сцены, AV-продакшн, синхронный перевод, управление участниками и полная логистика." },
+        { num: "01", title: "Конференции и корпоративные саммиты", body: "Управление конференциями от 50 до 1000 участников. Подбор площадки, дизайн сцены, AV-продакшн, синхронный перевод, управление участниками и полная логистика." },
         { num: "02", title: "Запуски продуктов и презентации", body: "Запоминающиеся события для освещения в СМИ и вовлечения аудитории. От камерных пресс-румов до масштабных театральных презентаций на лучших площадках Китая." },
         { num: "03", title: "Гала-ужины и церемонии награждения", body: "Элегантные атмосферные ужины и церемонии награждения — полное оформление, развлекательная программа, координация кейтеринга и продакшн мероприятия под ключ." },
-        { num: "04", title: "Брендовые активации и поп-апы", body: "Иммерсивный брендовый опыт, который связывает вашу аудиторию с продуктом неожиданными и запоминающимися способами. Проектируем, строим и управляем." },
+        { num: "04", title: "Брендовые активации и поп-апы", body: "Иммерсивный брендовый опыт, который связывает вашу аудиторию с продуктом неожиданными и запоминающимися способами. Проектируем, строим и проводим их под ключ." },
         { num: "05", title: "Дизайн сцены и AV-продакшн", body: "Авторские концепции сцен, архитектурный световой дизайн, LED-экраны и видеомэппинг, профессиональное звуковое оформление и решения для прямых трансляций." },
         { num: "06", title: "Управление мероприятием и логистика", body: "Выделенные менеджеры проекта и опытные команды на площадке, обеспечивающие безупречную реализацию от подготовки площадки до финального демонтажа." },
       ],

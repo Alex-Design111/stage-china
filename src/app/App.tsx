@@ -25,16 +25,16 @@ function getInitialPage(): Page {
 
 const SEO: Record<Lang, Record<Page, { title: string; description: string; path: string }>> = {
   en: {
-    home:      { title: "Stagency by New Imagination | Exhibition Booth Design & Event Production in China", description: "Full-service exhibition booth design, construction and corporate event production in China.", path: "/" },
-    expo:      { title: "Expo Design & Construction | Stagency by New Imagination China", description: "Custom exhibition stand design and turnkey booth construction in China.", path: "/expo-design-construction" },
-    events:    { title: "Event Design & Production | Stagency by New Imagination China", description: "Corporate conferences, product launches and brand activations in China.", path: "/event-design-production" },
-    portfolio: { title: "Portfolio | Stagency by New Imagination China", description: "Exhibition booths and corporate events delivered across China.", path: "/portfolio" },
+    home:      { title: "Stagency China | Exhibition Booth Design & Event Production in China", description: "Full-service exhibition booth design, construction and corporate event production in China.", path: "/" },
+    expo:      { title: "Expo Design & Construction | Stagency China", description: "Custom exhibition stand design and turnkey booth construction in China.", path: "/expo-design-construction" },
+    events:    { title: "Event Design & Production | Stagency China", description: "Corporate conferences, product launches and brand activations in China.", path: "/event-design-production" },
+    portfolio: { title: "Portfolio | Stagency China", description: "Exhibition booths and corporate events delivered across China.", path: "/portfolio" },
   },
   ru: {
-    home:      { title: "Stagency by New Imagination | Стенды и мероприятия в Китае", description: "Полноцикловая компания по застройке стендов и организации мероприятий в Китае.", path: "/" },
-    expo:      { title: "Стенды и застройка | Stagency by New Imagination Китай", description: "Проектирование и застройка стендов в Китае под ключ.", path: "/expo-design-construction" },
-    events:    { title: "Мероприятия и продакшн | Stagency by New Imagination Китай", description: "Конференции, запуски продуктов и активации в Китае.", path: "/event-design-production" },
-    portfolio: { title: "Портфолио | Stagency by New Imagination Китай", description: "Выставочные стенды и мероприятия по всему Китаю.", path: "/portfolio" },
+    home:      { title: "Stagency China | Стенды и мероприятия в Китае", description: "Полноцикловая компания по застройке стендов и организации мероприятий в Китае.", path: "/" },
+    expo:      { title: "Стенды и застройка | Stagency China", description: "Проектирование и застройка стендов в Китае под ключ.", path: "/expo-design-construction" },
+    events:    { title: "Мероприятия и продакшн | Stagency China", description: "Конференции, запуски продуктов и активации в Китае.", path: "/event-design-production" },
+    portfolio: { title: "Портфолио | Stagency China", description: "Выставочные стенды и мероприятия по всему Китаю.", path: "/portfolio" },
   },
 };
 
@@ -365,7 +365,7 @@ export default function App() {
           <div className="h-1 mb-12 rounded-full" style={{ background: "var(--gradient-warm)" }} />
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-10">
             <div>
-              <div style={{ fontFamily: serif, fontWeight: 600, fontSize: "2rem", letterSpacing: "-0.01em" }} className="mb-1">Stagency</div>
+              <div style={{ fontFamily: serif, fontWeight: 600, fontSize: "2rem", letterSpacing: "-0.01em" }} className="mb-1">Stagency China</div>
               <div className="text-[9px] tracking-[0.2em] uppercase font-semibold mb-3" style={{ color: "rgba(248,247,243,0.4)" }}>
                 by{" "}
                 <a href="https://newimaginationdmc.com/" target="_blank" rel="noopener noreferrer"
