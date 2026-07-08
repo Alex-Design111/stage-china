@@ -65,11 +65,11 @@ export const VIDEOS = {
 
 export const IMGS = {
   hero: "https://images.unsplash.com/photo-1769667693219-4d8e44b6a3b3?w=1920&h=1080&fit=crop&auto=format",
-  about: "https://images.unsplash.com/photo-1706074797611-a02f9ed06439?w=900&h=1200&fit=crop&auto=format",
-  contact: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop&auto=format",
+  about: "/assets/about-us.jpg",
+  contact: "/assets/contact-us.jpg",
   svc: [
-    "https://images.unsplash.com/photo-1560439514-4e9645039924?w=1400&h=1000&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?w=1400&h=1000&fit=crop&auto=format",
+    "/assets/main-expo.jpg",
+    "/assets/main-events.jpg",
   ],
   subHero: [
     "https://images.unsplash.com/photo-1560439514-4e9645039924?w=1920&h=700&fit=crop&auto=format",

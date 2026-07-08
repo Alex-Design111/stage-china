@@ -246,7 +246,7 @@ export default function App() {
             <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mb-14">
               <Reveal><Mark n={c.about.num} label={c.about.label} /></Reveal>
             </div>
-            <div className="max-w-[1440px] mx-auto px-6 lg:px-12 grid lg:grid-cols-[48fr_52fr] gap-12 lg:gap-16 items-start">
+            <div className="max-w-[1440px] mx-auto px-6 lg:px-12 grid lg:grid-cols-[48fr_52fr] gap-12 lg:gap-16 items-stretch">
               <Reveal className="flex flex-col lg:pr-4">
                 <h2 className="whitespace-pre-line mb-8 leading-[1.05]"
                   style={{ ...h2, fontSize: "clamp(2rem,4vw,3.6rem)" }}>
@@ -254,13 +254,13 @@ export default function App() {
                 </h2>
                 <p className="leading-relaxed mb-4 text-[15px]" style={{ color: "var(--muted-foreground)" }}>{c.about.body1}</p>
                 <p className="leading-relaxed mb-4 text-[15px]" style={{ color: "var(--muted-foreground)" }}>{c.about.body2}</p>
-                <p className="leading-relaxed mb-12 text-[15px]" style={{ color: "var(--muted-foreground)" }}>{c.about.body3}</p>
-                <UnderlineBtn onClick={() => goto("contacts")}>{c.about.cta}</UnderlineBtn>
+                <p className="leading-relaxed mb-10 text-[15px]" style={{ color: "var(--muted-foreground)" }}>{c.about.body3}</p>
+                <UnderlineBtn onClick={() => goto("contacts")} className="mt-auto self-start">{c.about.cta}</UnderlineBtn>
               </Reveal>
-              <Reveal delay={160} className="relative overflow-hidden rounded-[1.8rem] bg-zinc-200">
+              <Reveal delay={160} className="relative overflow-hidden rounded-[1.8rem] bg-zinc-200 h-full min-h-[420px]">
                 <img src={IMGS.about} alt="Exhibition design — Stagency China"
-                  className="w-full object-cover transition-transform duration-700 hover:scale-[1.02]"
-                  style={{ aspectRatio: "3/4" }} loading="lazy" />
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-[1.02]"
+                  loading="lazy" />
               </Reveal>
             </div>
           </section>
@@ -301,24 +301,21 @@ export default function App() {
           </section>
 
           {/* ── ADVANTAGES ───────────────────────────────── */}
-          <section className="py-20 lg:py-32" style={{ backgroundColor: "var(--foreground)", color: "var(--background)" }}>
+          <section className="pt-24 lg:pt-40 pb-12 lg:pb-16">
             <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
               <Reveal>
-                <div className="flex items-center gap-3 mb-4" style={{ color: "rgba(248,247,243,0.28)" }}>
-                  <span style={{ fontWeight: 800, fontSize: "0.62rem", letterSpacing: "0.14em", color: "var(--accent)" }}>{c.advantages.num}</span>
-                  <div style={{ width: "28px", height: "2px", borderRadius: "2px", background: "var(--gradient-warm)" }} />
-                  <span style={{ fontWeight: 700, fontSize: "0.62rem", letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(248,247,243,0.35)" }}>{c.advantages.label}</span>
-                </div>
-                <h2 className="mb-14" style={{ ...h2, fontSize: "clamp(2rem,4vw,3.5rem)" }}>{c.advantages.headline}</h2>
+                <Mark n={c.advantages.num} label={c.advantages.label} />
+                <h2 className="mt-5 mb-12 lg:mb-16" style={{ ...h2, fontSize: "clamp(2rem,4vw,3.5rem)" }}>{c.advantages.headline}</h2>
               </Reveal>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px" style={{ backgroundColor: "rgba(248,247,243,0.07)" }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
                 {c.advantages.items.map((item, i) => (
-                  <Reveal key={i} delay={i * 80}>
-                    <div className="p-8 lg:p-10 h-full" style={{ backgroundColor: "var(--foreground)" }}>
+                  <Reveal key={i} delay={i * 80} className="h-full">
+                    <div className="h-full rounded-[1.4rem] p-8 lg:p-9 transition-shadow duration-300 hover:shadow-lg"
+                      style={{ backgroundColor: "var(--card)", border: "1px solid var(--border)", boxShadow: "0 12px 34px -22px rgba(12,11,9,0.28)" }}>
                       <div className="w-9 h-1 mb-8 rounded-full" style={{ background: "var(--gradient-warm)" }} />
                       <span className="block mb-4" style={{ fontWeight: 800, fontSize: "0.62rem", letterSpacing: "0.16em", color: "var(--accent)" }}>{item.num}</span>
                       <h3 className="mb-4 leading-tight" style={{ ...h3, fontSize: "clamp(1.3rem,1.9vw,1.6rem)" }}>{item.title}</h3>
-                      <p className="text-[14px] leading-relaxed" style={{ color: "rgba(248,247,243,0.5)" }}>{item.body}</p>
+                      <p className="text-[14px] leading-relaxed" style={{ color: "var(--muted-foreground)" }}>{item.body}</p>
                     </div>
                   </Reveal>
                 ))}
@@ -327,7 +324,7 @@ export default function App() {
           </section>
 
           {/* ── PORTFOLIO ────────────────────────────────── */}
-          <section id="portfolio" className="py-24 lg:py-40">
+          <section id="portfolio" className="pt-12 lg:pt-16 pb-24 lg:pb-40">
             <div className="max-w-[1440px] mx-auto px-6 lg:px-12">
               <Reveal>
                 <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 lg:mb-16">
