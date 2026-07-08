@@ -38,8 +38,8 @@ const SEO: Record<Lang, Record<Page, { title: string; description: string; path:
   },
 };
 
-const SITE_ORIGIN = "https://make-china.cn";
-const OG_IMAGE = "https://images.unsplash.com/photo-1769667693219-4d8e44b6a3b3?w=1200&h=630&fit=crop&auto=format";
+const SITE_ORIGIN = "https://stagencychina.com";
+const OG_IMAGE = "https://stagencychina.com/assets/og-image.jpg";
 
 function setMeta(attr: string, key: string, content: string) {
   let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;

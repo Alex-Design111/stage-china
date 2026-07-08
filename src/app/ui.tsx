@@ -328,7 +328,7 @@ export function ContactSection({ c, headline, num, label }: {
   c: { contact: { sub: string; info: { label: string; value: string }[]; form: { submit: string } } };
   headline: string; num: string; label: string;
 }) {
-  const mailto = "mailto:info@make-china.cn?subject=" + encodeURIComponent("Project Inquiry");
+  const mailto = "mailto:info@stagencychina.com?subject=" + encodeURIComponent("Project Inquiry");
 
   return (
     <section id="contacts" className="py-24 lg:py-40" style={{ backgroundColor: "var(--secondary)" }}>

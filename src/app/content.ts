@@ -105,7 +105,7 @@ export const C = {
       },
       info: [
         { label: "Location", value: "Shanghai, China" },
-        { label: "Email", value: "info@make-china.cn" },
+        { label: "Email", value: "info@stagencychina.com" },
         { label: "Phone", value: "+86 21 0000 0000" },
         { label: "WhatsApp (RU)", value: "+7 000 000 00 00" },
       ],
@@ -259,7 +259,7 @@ export const C = {
       },
       info: [
         { label: "Адрес", value: "Шанхай, Китай" },
-        { label: "Email", value: "info@make-china.cn" },
+        { label: "Email", value: "info@stagencychina.com" },
         { label: "Телефон", value: "+86 21 0000 0000" },
         { label: "WhatsApp", value: "+7 000 000 00 00" },
       ],

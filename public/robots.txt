@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://make-china.cn/sitemap.xml
+Sitemap: https://stagencychina.com/sitemap.xml
