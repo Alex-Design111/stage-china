@@ -54,22 +54,13 @@ const projectGalleries = {
 // ── Hero background videos (Pexels License — free for commercial use) ──
 // Each has a matching poster (the clip's own first frame) for instant paint
 // and graceful fallback if the video can't load.
+// Self-hosted hero clips (web-optimized H.264 mp4, faststart) with a poster
+// extracted from each clip's opening frame so the hero never shows black
+// while the video loads.
 export const VIDEOS = {
-  // Homepage: nighttime concert gathering, crowd + stage + city lights, 1920x1080
-  home: {
-    src: "https://videos.pexels.com/video-files/31482944/13423061_1920_1080_60fps.mp4",
-    poster: "https://images.pexels.com/videos/31482944/flycam-le-trao-bang-tot-nghiep-2024-31482944.jpeg?auto=compress&cs=tinysrgb&h=760&w=1280",
-  },
-  // Expo subpage: modern event venue aglow at twilight (gala / corporate), 1920x1080
-  expo: {
-    src: "https://videos.pexels.com/video-files/31501460/13430853_1920_1080_60fps.mp4",
-    poster: "https://images.pexels.com/videos/31501460/event-marquee-wedding-31501460.jpeg?auto=compress&cs=tinysrgb&h=760&w=1280",
-  },
-  // Events subpage: vibrant night event at a modern venue, aerial, city lights, 1920x1080
-  events: {
-    src: "https://videos.pexels.com/video-files/31693760/13503819_1920_1080_25fps.mp4",
-    poster: "https://images.pexels.com/videos/31693760/pexels-photo-31693760.jpeg?auto=compress&cs=tinysrgb&h=760&w=1280",
-  },
+  home:   { src: "/assets/main-hero.mp4",  poster: "/assets/main-hero.jpg" },
+  expo:   { src: "/assets/expo-hero.mp4",  poster: "/assets/expo-hero.jpg" },
+  events: { src: "/assets/event-hero.mp4", poster: "/assets/event-hero.jpg" },
 };
 
 export const IMGS = {
