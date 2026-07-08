@@ -21,6 +21,41 @@ export function useInView(threshold = 0.1) {
   return { ref, inView };
 }
 
+// ── Looping background video ─────────────────────────────
+// Poster paints instantly (great on slow connections); the video source is
+// attached after first paint, plays muted+looped, and silently falls back to
+// the poster if it can't load or the user prefers reduced motion.
+export function VideoBg({ src, poster }: { src: string; poster: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setTimeout(() => {
+      if (v.getAttribute("src")) return;
+      v.setAttribute("src", src);
+      v.load();
+      const play = () => v.play().catch(() => {});
+      if (v.readyState >= 2) play();
+      else v.addEventListener("canplay", play, { once: true });
+    }, 180);
+    return () => window.clearTimeout(id);
+  }, [src]);
+
+  return (
+    <>
+      <img src={poster} alt="" aria-hidden="true"
+        className="absolute inset-0 w-full h-full object-cover" />
+      <video ref={ref} poster={poster} muted loop playsInline autoPlay preload="none"
+        aria-hidden="true" onCanPlay={() => setReady(true)}
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+        style={{ opacity: ready ? 1 : 0 }} />
+    </>
+  );
+}
+
 // ── Section label ────────────────────────────────────────
 export function Mark({ n, label, light = false }: { n: string; label: string; light?: boolean }) {
   return (

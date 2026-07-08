@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { C, type Lang, type Page } from "./content";
-import { IMGS } from "./images";
-import { serif, Mark, Reveal, UnderlineBtn, PillBtn, PortfolioCard, PortfolioModal, ContactSection, ImageGallery } from "./ui";
+import { IMGS, VIDEOS } from "./images";
+import { serif, Mark, Reveal, UnderlineBtn, PillBtn, VideoBg, PortfolioCard, PortfolioModal, ContactSection, ImageGallery } from "./ui";
 import { NavBar } from "./NavBar";
 import { SubPage } from "./SubPage";
 
@@ -214,13 +214,12 @@ export default function App() {
           <section id="home" className="px-3 sm:px-4 lg:px-5 pt-[76px]" style={{ backgroundColor: "var(--background)" }}>
             <div className="relative flex flex-col justify-end overflow-hidden rounded-[1.6rem] lg:rounded-[2.2rem]"
               style={{ height: "calc(100svh - 92px)", minHeight: "560px" }}>
-              <div className="absolute inset-0 overflow-hidden" style={{ backgroundColor: "#7a1e12" }}>
-                <img src={IMGS.hero} alt="Grand exhibition hall — Stagency by New Imagination DMC China"
-                  className="w-full h-full object-cover" style={{ opacity: 0.72, mixBlendMode: "luminosity" }} />
-                {/* Warm brand wash — gives the imagery its signature orange→red identity */}
-                <div className="absolute inset-0" style={{ background: "var(--gradient-warm-soft)", mixBlendMode: "multiply" }} />
-                <div className="absolute inset-0"
-                  style={{ background: "linear-gradient(to top, rgba(60,12,6,0.82) 0%, rgba(60,12,6,0.18) 52%, rgba(60,12,6,0.28) 100%)" }} />
+              <div className="absolute inset-0 overflow-hidden" style={{ backgroundColor: "#120a07" }}>
+                <VideoBg src={VIDEOS.home.src} poster={VIDEOS.home.poster} />
+                {/* Red→orange brand tint — keeps the footage's real color range */}
+                <div className="absolute inset-0" style={{ background: "var(--video-tint)" }} />
+                {/* Bottom shade for headline legibility */}
+                <div className="absolute inset-0" style={{ background: "var(--video-shade)" }} />
               </div>
               <div className="relative z-10 max-w-[1440px] mx-auto w-full px-6 sm:px-8 lg:px-14 pt-10 pb-12 lg:pb-16">
                 <p className="text-[10px] tracking-[0.4em] uppercase font-bold mb-6" style={{ color: "rgba(255,255,255,0.85)" }}>

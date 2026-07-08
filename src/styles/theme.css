@@ -19,6 +19,11 @@
   --accent-foreground: #FFFFFF;
   --gradient-warm: linear-gradient(135deg, #F26A2E 0%, #DB3F23 52%, #B92819 100%);
   --gradient-warm-soft: linear-gradient(135deg, rgba(242,106,46,0.92) 0%, rgba(185,40,25,0.92) 100%);
+  /* Hero video tint: red→orange, semi-transparent so the footage keeps its
+     real color range (no monochrome/desaturated look) */
+  --video-tint: linear-gradient(118deg, rgba(198,46,28,0.50) 0%, rgba(224,81,42,0.40) 46%, rgba(242,120,55,0.32) 100%);
+  /* Bottom shade purely for text legibility */
+  --video-shade: linear-gradient(to top, rgba(26,10,5,0.82) 0%, rgba(26,10,5,0.14) 46%, rgba(26,10,5,0) 100%);
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
   --border: rgba(12, 11, 9, 0.09);

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import type { ContentType, Page } from "./content";
-import { IMGS } from "./images";
-import { serif, Mark, Reveal, PortfolioCard, ContactSection, ImageGallery } from "./ui";
+import { IMGS, VIDEOS } from "./images";
+import { serif, Mark, Reveal, VideoBg, PortfolioCard, ContactSection, ImageGallery } from "./ui";
 
 interface SubPageProps {
   c: ContentType;
@@ -13,7 +13,7 @@ interface SubPageProps {
 export function SubPage({ c, pageKey, goPage }: SubPageProps) {
   const [galleryProjectId, setGalleryProjectId] = useState<string | null>(null);
   const pg = c[pageKey];
-  const imgIdx = pageKey === "expoPage" ? 0 : 1;
+  const vid = pageKey === "expoPage" ? VIDEOS.expo : VIDEOS.events;
 
   return (
     <div style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}>
@@ -33,15 +33,10 @@ export function SubPage({ c, pageKey, goPage }: SubPageProps) {
       })()}
 
       {/* Compact hero */}
-      <div className="relative overflow-hidden mx-3 sm:mx-4 lg:mx-5 mt-[76px] rounded-[1.6rem] lg:rounded-[2.2rem]" style={{ minHeight: "440px", backgroundColor: "#7a1e12" }}>
-        <img
-          src={IMGS.subHero[imgIdx]}
-          alt={pg.headline.replace("\n", " ")}
-          className="absolute inset-0 w-full h-full object-cover"
-          style={{ opacity: 0.72, mixBlendMode: "luminosity" }}
-        />
-        <div className="absolute inset-0" style={{ background: "var(--gradient-warm-soft)", mixBlendMode: "multiply" }} />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(60,12,6,0.8) 0%, rgba(60,12,6,0.15) 100%)" }} />
+      <div className="relative overflow-hidden mx-3 sm:mx-4 lg:mx-5 mt-[76px] rounded-[1.6rem] lg:rounded-[2.2rem]" style={{ minHeight: "440px", backgroundColor: "#120a07" }}>
+        <VideoBg src={vid.src} poster={vid.poster} />
+        <div className="absolute inset-0" style={{ background: "var(--video-tint)" }} />
+        <div className="absolute inset-0" style={{ background: "var(--video-shade)" }} />
         <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-14 pt-24 pb-16">
           <button
             onClick={() => goPage("home")}
