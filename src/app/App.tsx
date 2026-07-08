@@ -282,16 +282,16 @@ export default function App() {
                         loading="lazy" style={{ opacity: 0.9, minHeight: "340px", maxHeight: "720px" }} />
                     </div>
                     <div className={`flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 ${isEven ? "lg:order-2" : "lg:order-1"}`}
-                      style={{ flex: "0 0 42%", backgroundColor: isEven ? "var(--foreground)" : "var(--secondary)", color: isEven ? "var(--background)" : "var(--foreground)" }}>
+                      style={{ flex: "0 0 42%", backgroundColor: "var(--foreground)", color: "var(--background)" }}>
                       <Reveal>
                         <span className="text-[10px] tracking-[0.32em] uppercase font-bold block mb-7"
-                          style={{ color: isEven ? "rgba(248,247,243,0.4)" : "var(--muted-foreground)" }}>{item.eyebrow}</span>
+                          style={{ color: "rgba(248,247,243,0.4)" }}>{item.eyebrow}</span>
                         <h3 className="whitespace-pre-line leading-[1.05] mb-8" style={{ ...h3, fontSize: "clamp(1.9rem,3.2vw,3.2rem)" }}>
                           {item.title}
                         </h3>
                         <p className="leading-relaxed mb-10 text-[15px]"
-                          style={{ color: isEven ? "rgba(248,247,243,0.6)" : "var(--muted-foreground)" }}>{item.body}</p>
-                        <UnderlineBtn onClick={() => goPage(item.page)} light={isEven}>{item.cta}</UnderlineBtn>
+                          style={{ color: "rgba(248,247,243,0.6)" }}>{item.body}</p>
+                        <UnderlineBtn onClick={() => goPage(item.page)} light>{item.cta}</UnderlineBtn>
                       </Reveal>
                     </div>
                   </div>

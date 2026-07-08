@@ -132,7 +132,7 @@ export const C = {
         { num: "05", title: "Installation & Dismantling", body: "Professional installation crews across all major Chinese venues — Shanghai NECC, Beijing CNCC, Guangzhou CIEC and more. We handle permits, logistics and full on-site coordination." },
         { num: "06", title: "Furniture, Lighting & Accessories", body: "Curated furniture packages, custom lighting design and branded accessories that elevate the overall experience and deliver a complete, polished result." },
       ],
-      portfolioHeadline: "Expo Projects",
+      portfolioHeadline: "Our Projects",
       contactHeadline: "Ready to Build\nYour Next Stand?",
     },
     eventsPage: {
@@ -149,7 +149,7 @@ export const C = {
         { num: "05", title: "Stage Design & AV Production", body: "Custom stage concepts, architectural lighting design, LED walls and video mapping, professional sound engineering and live streaming solutions for any scale of event." },
         { num: "06", title: "On-Site Management & Logistics", body: "Dedicated project managers and experienced on-site teams who ensure flawless execution from venue setup through post-event breakdown. Your single point of contact throughout." },
       ],
-      portfolioHeadline: "Event Projects",
+      portfolioHeadline: "Our Projects",
       contactHeadline: "Ready to Create\nYour Next Event?",
     },
     portfolioPage: {
@@ -289,7 +289,7 @@ export const C = {
         { num: "05", title: "Монтаж и демонтаж", body: "Профессиональные монтажные бригады на всех крупных площадках Китая — NECC Шанхай, CNCC Пекин, CIEC Гуанчжоу. Разрешения, логистика и координация на площадке." },
         { num: "06", title: "Мебель, освещение и аксессуары", body: "Мебельные пакеты, дизайн освещения и фирменные аксессуары, которые создают целостный, профессиональный образ вашего стенда." },
       ],
-      portfolioHeadline: "Проекты стендов",
+      portfolioHeadline: "Наши проекты",
       contactHeadline: "Готовы построить\nваш следующий стенд?",
     },
     eventsPage: {
@@ -306,7 +306,7 @@ export const C = {
         { num: "05", title: "Дизайн сцены и AV-продакшн", body: "Авторские концепции сцен, архитектурный световой дизайн, LED-экраны и видеомэппинг, профессиональное звуковое оформление и решения для прямых трансляций." },
         { num: "06", title: "Управление мероприятием и логистика", body: "Выделенные менеджеры проекта и опытные команды на площадке, обеспечивающие безупречную реализацию от подготовки площадки до финального демонтажа." },
       ],
-      portfolioHeadline: "Проекты мероприятий",
+      portfolioHeadline: "Наши проекты",
       contactHeadline: "Готовы создать\nваше следующее мероприятие?",
     },
     portfolioPage: {
