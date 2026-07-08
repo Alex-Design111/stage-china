@@ -33,7 +33,7 @@ export function SubPage({ c, pageKey, goPage }: SubPageProps) {
       })()}
 
       {/* Compact hero */}
-      <div className="relative overflow-hidden mx-3 sm:mx-4 lg:mx-5 mt-[76px] rounded-[1.6rem] lg:rounded-[2.2rem]" style={{ minHeight: "440px", backgroundColor: "#120a07" }}>
+      <div className="relative overflow-hidden mx-3 sm:mx-4 lg:mx-5 mt-[92px] rounded-[1.6rem] lg:rounded-[2.2rem]" style={{ minHeight: "440px", backgroundColor: "#120a07" }}>
         <VideoBg src={vid.src} poster={vid.poster} />
         <div className="absolute inset-0" style={{ background: "var(--video-tint)" }} />
         <div className="absolute inset-0" style={{ background: "var(--video-shade)" }} />

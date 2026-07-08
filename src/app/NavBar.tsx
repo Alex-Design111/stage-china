@@ -33,20 +33,20 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
         className="fixed top-0 inset-x-0 z-50 transition-all duration-500"
         style={{ backgroundColor: navBg, backdropFilter: "blur(14px)", boxShadow: navShadow }}
       >
-        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex items-center justify-between gap-6" style={{ height: "72px" }}>
+        <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex items-center justify-between gap-6" style={{ height: "88px" }}>
 
           {/* Logo */}
           <button onClick={() => goPage("home")} className="shrink-0 flex items-center"
             aria-label="Stagency by New Imagination DMC China — home">
             <img src="/assets/stagency-logo.png" alt="Stagency by New Imagination DMC China"
-              className="h-10 sm:h-11 lg:h-[46px] w-auto" />
+              className="h-12 sm:h-[52px] lg:h-[58px] w-auto" />
           </button>
 
           {/* Desktop links */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map(([id, label, target]) => (
               <button key={id} onClick={() => target ? goPage(target) : goto(id)}
-                className="text-[13px] transition-opacity hover:opacity-50 whitespace-nowrap"
+                className="text-[15px] font-medium transition-opacity hover:opacity-50 whitespace-nowrap"
                 style={{ color: "var(--foreground)" }}>
                 {label}
               </button>
@@ -67,7 +67,7 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
               ))}
             </div>
             <button onClick={() => goto("contacts")}
-              className="px-5 py-2.5 rounded-full text-[11px] tracking-[0.16em] uppercase font-semibold text-white transition-all duration-300 hover:shadow-md whitespace-nowrap"
+              className="px-6 py-3 rounded-full text-[12px] tracking-[0.16em] uppercase font-semibold text-white transition-all duration-300 hover:shadow-md whitespace-nowrap"
               style={{ background: "var(--gradient-warm)", boxShadow: "0 6px 18px -8px rgba(185,40,25,0.5)" }}>
               {c.nav.cta}
             </button>

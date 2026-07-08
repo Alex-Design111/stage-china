@@ -9,20 +9,21 @@ const projectGalleries = {
       "/assets/MF_3.jpg",
     ],
   },
-  "automotive-launch": {
-    preview: "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?w=800&h=600&fit=crop&auto=format",
+  "tech-lounge": {
+    preview: "/assets/SC_1.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1526745925052-dd824d27b9ab?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=1400&h=900&fit=crop&auto=format",
+      "/assets/SC_1.jpg",
+      "/assets/SC_2.jpg",
+      "/assets/SC_3.jpg",
     ],
   },
-  "fashion-popup": {
-    preview: "https://images.unsplash.com/photo-1762028892701-692dc360db08?w=800&h=600&fit=crop&auto=format",
+  "beauty-pavilion": {
+    preview: "/assets/F_1.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1762028892701-692dc360db08?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1441986300351-dda4d4dbf6b0?w=1400&h=900&fit=crop&auto=format",
+      "/assets/F_1.jpg",
+      "/assets/F_2.jpg",
+      "/assets/F_3.jpg",
+      "/assets/F_4.jpg",
     ],
   },
   "executive-forum": {

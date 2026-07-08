@@ -211,9 +211,9 @@ export default function App() {
         <main id="main-content">
 
           {/* ── HERO ─────────────────────────────────────── */}
-          <section id="home" className="px-3 sm:px-4 lg:px-5 pt-[76px]" style={{ backgroundColor: "var(--background)" }}>
+          <section id="home" className="px-3 sm:px-4 lg:px-5 pt-[92px]" style={{ backgroundColor: "var(--background)" }}>
             <div className="relative flex flex-col justify-end overflow-hidden rounded-[1.6rem] lg:rounded-[2.2rem]"
-              style={{ height: "calc(100svh - 92px)", minHeight: "560px" }}>
+              style={{ height: "calc(100svh - 108px)", minHeight: "560px" }}>
               <div className="absolute inset-0 overflow-hidden" style={{ backgroundColor: "#120a07" }}>
                 <VideoBg src={VIDEOS.home.src} poster={VIDEOS.home.poster} />
                 {/* Red→orange brand tint — keeps the footage's real color range */}
@@ -367,7 +367,12 @@ export default function App() {
             <div>
               <div style={{ fontFamily: serif, fontWeight: 600, fontSize: "2rem", letterSpacing: "-0.01em" }} className="mb-1">Stagency</div>
               <div className="text-[9px] tracking-[0.2em] uppercase font-semibold mb-3" style={{ color: "rgba(248,247,243,0.4)" }}>
-                by New Imagination · DMC China
+                by{" "}
+                <a href="https://newimaginationdmc.com/" target="_blank" rel="noopener noreferrer"
+                  className="underline-offset-2 transition-colors hover:text-white focus-visible:text-white"
+                  style={{ textDecoration: "underline", textDecorationColor: "rgba(248,247,243,0.25)" }}>
+                  New Imagination DMC China
+                </a>
               </div>
               <p className="text-[13px]" style={{ color: "rgba(248,247,243,0.38)" }}>{c.footer.tagline}</p>
             </div>
