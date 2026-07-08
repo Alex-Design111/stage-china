@@ -36,13 +36,10 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
         <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex items-center justify-between gap-6" style={{ height: "72px" }}>
 
           {/* Logo */}
-          <button onClick={() => goPage("home")} className="flex flex-col leading-none shrink-0 text-left">
-            <span className="text-[22px] tracking-[-0.01em]"
-              style={{ fontFamily: serif, fontWeight: 600, color: "var(--foreground)" }}>
-              Stagency
-            </span>
-            <span className="text-[8px] tracking-[0.2em] uppercase whitespace-nowrap mt-0.5"
-              style={{ color: "var(--muted-foreground)" }}>by New Imagination · DMC China</span>
+          <button onClick={() => goPage("home")} className="shrink-0 flex items-center"
+            aria-label="Stagency by New Imagination DMC China — home">
+            <img src="/assets/stagency-logo.png" alt="Stagency by New Imagination DMC China"
+              className="h-10 sm:h-11 lg:h-[46px] w-auto" />
           </button>
 
           {/* Desktop links */}
@@ -89,10 +86,7 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
         style={{ backgroundColor: "var(--foreground)", opacity: menuOpen ? 1 : 0, pointerEvents: menuOpen ? "auto" : "none" }}
       >
         <div className="flex justify-between items-center mb-12">
-          <div className="flex flex-col leading-none">
-            <span className="text-[22px]" style={{ fontFamily: serif, fontWeight: 600, color: "var(--background)" }}>Stagency</span>
-            <span className="text-[8px] tracking-[0.2em] uppercase mt-0.5" style={{ color: "rgba(248,247,243,0.4)" }}>by New Imagination · DMC China</span>
-          </div>
+          <img src="/assets/stagency-logo.png" alt="Stagency by New Imagination DMC China" className="h-11 w-auto" />
           <button onClick={() => setMenuOpen(false)} style={{ color: "var(--background)" }}><X size={22} /></button>
         </div>
 
