@@ -26,29 +26,34 @@ const projectGalleries = {
       "/assets/F_4.jpg",
     ],
   },
-  "executive-forum": {
-    preview: "https://images.unsplash.com/photo-1510511233900-1982d92bd835?w=800&h=600&fit=crop&auto=format",
+  "timber-booth": {
+    preview: "/assets/TB1.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1510511233900-1982d92bd835?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1517457373614-b7152f800fd1?w=1400&h=900&fit=crop&auto=format",
+      "/assets/TB1.jpg",
+      "/assets/TB2.jpg",
+      "/assets/TB3.jpg",
     ],
   },
-  "luxury-retail": {
-    preview: "https://images.unsplash.com/photo-1608494604059-7971195e13e1?w=800&h=600&fit=crop&auto=format",
-    gallery: [
-      "https://images.unsplash.com/photo-1608494604059-7971195e13e1?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1536459935869-836ea697b5e2?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1593062096033-9a26b09da705?w=1400&h=900&fit=crop&auto=format",
-    ],
+  // ── Events (EV image sets) ──────────────────────────────
+  "ev1": {
+    preview: "/assets/EV1_1.jpg",
+    gallery: ["/assets/EV1_1.jpg", "/assets/EV1_2.jpg"],
   },
-  "industry-summit": {
-    preview: "https://images.unsplash.com/photo-1773405286291-d470befc09d6?w=800&h=600&fit=crop&auto=format",
-    gallery: [
-      "https://images.unsplash.com/photo-1773405286291-d470befc09d6?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1400&h=900&fit=crop&auto=format",
-      "https://images.unsplash.com/photo-1556740738-b6a63e27c4df?w=1400&h=900&fit=crop&auto=format",
-    ],
+  "ev2": {
+    preview: "/assets/EV2_1.jpg",
+    gallery: ["/assets/EV2_1.jpg", "/assets/EV2_2.jpg"],
+  },
+  "ev3": {
+    preview: "/assets/EV3_1.jpg",
+    gallery: ["/assets/EV3_1.jpg", "/assets/EV3_2.jpg", "/assets/EV3_3.jpg"],
+  },
+  "ev5": {
+    preview: "/assets/EV5_1.jpg",
+    gallery: ["/assets/EV5_1.jpg", "/assets/EV5_2.jpg", "/assets/EV5_3.jpg"],
+  },
+  "ev6": {
+    preview: "/assets/EV6_1.jpg",
+    gallery: ["/assets/EV6_1.jpg", "/assets/EV6_2.jpg"],
   },
 };
 

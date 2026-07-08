@@ -106,7 +106,7 @@ export function SubPage({ c, pageKey, goPage }: SubPageProps) {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {c.portfolio.items.map((item, i) => (
               <Reveal key={i} delay={i * 55}>
-                <PortfolioCard {...item} src={IMGS.portfolio[i]} projectId={item.id} onClick={() => setGalleryProjectId(item.id)} />
+                <PortfolioCard {...item} src={IMGS.getProject(item.id)?.preview || ""} projectId={item.id} onClick={() => setGalleryProjectId(item.id)} />
               </Reveal>
             ))}
           </div>

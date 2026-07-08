@@ -196,7 +196,7 @@ export default function App() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredItems.map((item, fi) => (
                 <Reveal key={filteredIndices[fi]} delay={fi * 50}>
-                  <PortfolioCard {...item} src={IMGS.portfolio[filteredIndices[fi]]}
+                  <PortfolioCard {...item} src={IMGS.getProject(item.id)?.preview || ""}
                     onClick={() => setGalleryProjectId(item.id)} projectId={item.id} />
                 </Reveal>
               ))}
@@ -342,7 +342,7 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {c.portfolio.items.map((item, i) => (
                   <Reveal key={i} delay={i * 55}>
-                    <PortfolioCard {...item} src={IMGS.portfolio[i]} onClick={() => setGalleryProjectId(item.id)} projectId={item.id} />
+                    <PortfolioCard {...item} src={IMGS.getProject(item.id)?.preview || ""} onClick={() => setGalleryProjectId(item.id)} projectId={item.id} />
                   </Reveal>
                 ))}
               </div>
