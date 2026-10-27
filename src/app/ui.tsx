@@ -77,11 +77,14 @@ export function Mark({ n, label, light = false }: { n: string; label: string; li
 // ── Scroll-triggered fade-in ─────────────────────────────
 export function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const { ref, inView } = useInView();
+  const reduce = typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
   return (
     <div ref={ref} className={className} style={{
       opacity: inView ? 1 : 0,
-      transform: inView ? "translateY(0)" : "translateY(22px)",
-      transition: `opacity 0.7s cubic-bezier(0.4,0,0.2,1) ${delay}ms, transform 0.7s cubic-bezier(0.4,0,0.2,1) ${delay}ms`,
+      transform: reduce ? "none" : inView ? "translateY(0)" : "translateY(18px)",
+      transition: reduce
+        ? `opacity 0.4s ease ${delay}ms`
+        : `opacity 0.5s cubic-bezier(0.23,1,0.32,1) ${delay}ms, transform 0.5s cubic-bezier(0.23,1,0.32,1) ${delay}ms`,
     }}>
       {children}
     </div>
@@ -92,13 +95,10 @@ export function Reveal({ children, delay = 0, className = "" }: { children: Reac
 export function UnderlineBtn({ onClick, children, light = false, className = "" }: {
   onClick?: () => void; children: ReactNode; light?: boolean; className?: string;
 }) {
-  const base = light ? "rgba(255,255,255,0.22)" : "rgba(12,11,9,0.22)";
   return (
     <button onClick={onClick}
-      className={`inline-flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase font-bold pb-0.5 border-b transition-all duration-200 hover:gap-5 ${className}`}
-      style={{ borderColor: base, color: light ? "white" : "var(--foreground)" }}
-      onMouseEnter={(e) => (e.currentTarget.style.borderColor = "var(--accent)")}
-      onMouseLeave={(e) => (e.currentTarget.style.borderColor = base)}>
+      className={`inline-flex items-center gap-3 text-[11px] tracking-[0.22em] uppercase font-bold pb-0.5 border-b ${light ? "border-white/25" : "border-black/20"} transition-[border-color,gap] duration-200 hover:gap-5 hover:border-[color:var(--accent)] ${className}`}
+      style={{ color: light ? "white" : "var(--foreground)" }}>
       {children}
       <ArrowRight size={11} />
     </button>
@@ -114,7 +114,7 @@ export function PillBtn({ onClick, children, className = "", size = "md" }: {
   const icon = size === "lg" ? 18 : size === "sm" ? 13 : 15;
   return (
     <button onClick={onClick}
-      className={`group inline-flex items-center gap-4 rounded-full text-white font-semibold uppercase tracking-[0.14em] text-[11px] transition-all duration-300 hover:shadow-lg ${pad} ${className}`}
+      className={`group inline-flex items-center gap-4 rounded-full text-white font-semibold uppercase tracking-[0.14em] text-[11px] transition-[transform,box-shadow] duration-200 hover:shadow-lg active:scale-[0.97] ${pad} ${className}`}
       style={{ background: "var(--gradient-warm)", boxShadow: "0 6px 20px -8px rgba(185,40,25,0.55)" }}>
       <span>{children}</span>
       <span className={`shrink-0 ${dot} rounded-full flex items-center justify-center bg-white/18 transition-transform duration-300 group-hover:translate-x-0.5`}>
@@ -361,7 +361,7 @@ export function ContactSection({ c, headline, num, label }: {
                 style={{ aspectRatio: "16/10" }} loading="lazy" />
             </div>
             <a href={mailto}
-              className="group flex items-center justify-center gap-4 w-full py-6 rounded-full text-[13px] lg:text-[14px] tracking-[0.2em] uppercase font-bold text-white transition-all duration-300 hover:shadow-lg"
+              className="group flex items-center justify-center gap-4 w-full py-6 rounded-full text-[13px] lg:text-[14px] tracking-[0.2em] uppercase font-bold text-white transition-[transform,box-shadow] duration-200 hover:shadow-lg active:scale-[0.99]"
               style={{ background: "var(--gradient-warm)", boxShadow: "0 10px 30px -12px rgba(185,40,25,0.6)" }}>
               {c.contact.form.submit}
               <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1.5" />

@@ -278,7 +278,7 @@ export default function App() {
                   <div className="flex flex-col lg:flex-row rounded-[1.8rem] overflow-hidden" style={{ minHeight: "540px" }}>
                     <div className={`relative overflow-hidden bg-zinc-800 ${isEven ? "lg:order-1" : "lg:order-2"}`} style={{ flex: "0 0 58%" }}>
                       <img src={IMGS.svc[i]} alt={item.title.replace("\n", " ")}
-                        className="w-full h-full object-cover transition-all duration-700 hover:scale-[1.025]"
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-[1.025]"
                         loading="lazy" style={{ opacity: 0.9, minHeight: "340px", maxHeight: "720px" }} />
                     </div>
                     <div className={`flex flex-col justify-center px-8 lg:px-16 py-16 lg:py-24 ${isEven ? "lg:order-2" : "lg:order-1"}`}

@@ -67,7 +67,7 @@ export function NavBar({ c, lang, setLang, scrolled, menuOpen, setMenuOpen, page
               ))}
             </div>
             <button onClick={() => goto("contacts")}
-              className="px-6 py-3 rounded-full text-[12px] tracking-[0.16em] uppercase font-semibold text-white transition-all duration-300 hover:shadow-md whitespace-nowrap"
+              className="px-6 py-3 rounded-full text-[12px] tracking-[0.16em] uppercase font-semibold text-white transition-[transform,box-shadow] duration-200 hover:shadow-md active:scale-[0.97] whitespace-nowrap"
               style={{ background: "var(--gradient-warm)", boxShadow: "0 6px 18px -8px rgba(185,40,25,0.5)" }}>
               {c.nav.cta}
             </button>
