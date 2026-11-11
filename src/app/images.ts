@@ -1,6 +1,7 @@
 // ── Project gallery images ────────────────────────────────
 // Each project has a preview (first image) and full gallery
-const projectGalleries = {
+type Project = { preview: string; gallery: string[]; video?: string | null; poster?: string };
+const projectGalleries: Record<string, Project> = {
   "tech-pavilion": {
     preview: "/assets/MF_1.jpg",
     gallery: [
@@ -34,56 +35,79 @@ const projectGalleries = {
       "/assets/TB3.jpg",
     ],
   },
-  // ── Events (EV image sets) ──────────────────────────────
-  "ev1": {
-    preview: "/assets/EV1_1.jpg",
-    gallery: ["/assets/EV1_1.jpg", "/assets/EV1_2.jpg"],
+  // ── Events: video reels (logos blurred, music added) + photo galleries ──
+  "great-wall-gala-beijing": {
+    preview: "/assets/projects/great-wall-gala-beijing-3.jpg",
+    poster: "/assets/projects/great-wall-gala-beijing-poster.jpg",
+    video: "/assets/projects/great-wall-gala-beijing.mp4",
+    gallery: ["/assets/projects/great-wall-gala-beijing-1.jpg", "/assets/projects/great-wall-gala-beijing-2.jpg", "/assets/projects/great-wall-gala-beijing-3.jpg", "/assets/projects/great-wall-gala-beijing-4.jpg", "/assets/projects/great-wall-gala-beijing-5.jpg", "/assets/projects/great-wall-gala-beijing-6.jpg", "/assets/projects/great-wall-gala-beijing-7.jpg"],
   },
-  "ev2": {
-    preview: "/assets/EV2_1.jpg",
-    gallery: ["/assets/EV2_1.jpg", "/assets/EV2_2.jpg"],
+  "wild-dining-yangshuo": {
+    preview: "/assets/projects/wild-dining-yangshuo-8.jpg",
+    poster: "/assets/projects/wild-dining-yangshuo-poster.jpg",
+    video: "/assets/projects/wild-dining-yangshuo.mp4",
+    gallery: ["/assets/projects/wild-dining-yangshuo-1.jpg", "/assets/projects/wild-dining-yangshuo-2.jpg", "/assets/projects/wild-dining-yangshuo-3.jpg", "/assets/projects/wild-dining-yangshuo-4.jpg", "/assets/projects/wild-dining-yangshuo-5.jpg", "/assets/projects/wild-dining-yangshuo-6.jpg", "/assets/projects/wild-dining-yangshuo-7.jpg", "/assets/projects/wild-dining-yangshuo-8.jpg", "/assets/projects/wild-dining-yangshuo-9.jpg"],
   },
-  "ev3": {
-    preview: "/assets/EV3_1.jpg",
-    gallery: ["/assets/EV3_1.jpg", "/assets/EV3_2.jpg", "/assets/EV3_3.jpg"],
+  "gala-1000-beijing": {
+    preview: "/assets/projects/gala-1000-beijing-1.jpg",
+    poster: "/assets/projects/gala-1000-beijing-poster.jpg",
+    video: "/assets/projects/gala-1000-beijing.mp4",
+    gallery: ["/assets/projects/gala-1000-beijing-1.jpg", "/assets/projects/gala-1000-beijing-2.jpg", "/assets/projects/gala-1000-beijing-3.jpg", "/assets/projects/gala-1000-beijing-4.jpg", "/assets/projects/gala-1000-beijing-5.jpg", "/assets/projects/gala-1000-beijing-6.jpg"],
   },
-  "ev5": {
-    preview: "/assets/EV5_1.jpg",
-    gallery: ["/assets/EV5_1.jpg", "/assets/EV5_2.jpg", "/assets/EV5_3.jpg"],
+  "conference-250-beijing": {
+    preview: "/assets/projects/conference-250-beijing-1.jpg",
+    poster: "/assets/projects/conference-250-beijing-poster.jpg",
+    video: "/assets/projects/conference-250-beijing.mp4",
+    gallery: ["/assets/projects/conference-250-beijing-1.jpg", "/assets/projects/conference-250-beijing-2.jpg", "/assets/projects/conference-250-beijing-3.jpg", "/assets/projects/conference-250-beijing-4.jpg"],
   },
-  "ev6": {
-    preview: "/assets/EV6_1.jpg",
-    gallery: ["/assets/EV6_1.jpg", "/assets/EV6_2.jpg"],
+  "skyline-party-beijing": {
+    preview: "/assets/projects/skyline-party-beijing-poster.jpg",
+    video: "/assets/projects/skyline-party-beijing.mp4",
+    gallery: ["/assets/projects/skyline-party-beijing-1.jpg", "/assets/projects/skyline-party-beijing-2.jpg", "/assets/projects/skyline-party-beijing-3.jpg", "/assets/projects/skyline-party-beijing-4.jpg"],
+  },
+  "gala-400-shanghai": {
+    preview: "/assets/projects/gala-400-shanghai-1.jpg",
+    video: null,
+    gallery: ["/assets/projects/gala-400-shanghai-1.jpg", "/assets/projects/gala-400-shanghai-2.jpg", "/assets/projects/gala-400-shanghai-3.jpg", "/assets/projects/gala-400-shanghai-4.jpg", "/assets/projects/gala-400-shanghai-5.jpg", "/assets/projects/gala-400-shanghai-6.jpg", "/assets/projects/gala-400-shanghai-7.jpg"],
+  },
+  "conference-1000-beijing": {
+    preview: "/assets/projects/conference-1000-beijing-2.jpg",
+    poster: "/assets/projects/conference-1000-beijing-poster.jpg",
+    video: "/assets/projects/conference-1000-beijing.mp4",
+    gallery: ["/assets/projects/conference-1000-beijing-1.jpg", "/assets/projects/conference-1000-beijing-2.jpg", "/assets/projects/conference-1000-beijing-3.jpg", "/assets/projects/conference-1000-beijing-4.jpg"],
+  },
+  "event-80th-floor-beijing": {
+    preview: "/assets/projects/event-80th-floor-beijing-poster.jpg",
+    video: "/assets/projects/event-80th-floor-beijing.mp4",
+    gallery: ["/assets/projects/event-80th-floor-beijing-1.jpg"],
+  },
+  "dinner-200-beijing": {
+    preview: "/assets/projects/dinner-200-beijing-1.jpg",
+    video: null,
+    gallery: ["/assets/projects/dinner-200-beijing-1.jpg", "/assets/projects/dinner-200-beijing-2.jpg"],
+  },
+  "conference-400-shanghai": {
+    preview: "/assets/projects/conference-400-shanghai-1.jpg",
+    video: null,
+    gallery: ["/assets/projects/conference-400-shanghai-1.jpg", "/assets/projects/conference-400-shanghai-2.jpg", "/assets/projects/conference-400-shanghai-3.jpg", "/assets/projects/conference-400-shanghai-4.jpg"],
+  },
+  "conference-100-shanghai": {
+    preview: "/assets/projects/conference-100-shanghai-1.jpg",
+    video: null,
+    gallery: ["/assets/projects/conference-100-shanghai-1.jpg", "/assets/projects/conference-100-shanghai-2.jpg", "/assets/projects/conference-100-shanghai-3.jpg"],
   },
 };
 
-// ── Hero background videos (Pexels License — free for commercial use) ──
-// Each has a matching poster (the clip's own first frame) for instant paint
-// and graceful fallback if the video can't load.
 // Self-hosted hero clips (web-optimized H.264 mp4, faststart) with a poster
 // extracted from each clip's opening frame so the hero never shows black
 // while the video loads.
 export const VIDEOS = {
-  home:   { src: "/assets/main-hero.mp4",  poster: "/assets/main-hero.jpg" },
+  home:   { src: "/assets/promo-hero.mp4", poster: "/assets/promo-hero.jpg" },
   expo:   { src: "/assets/expo-hero.mp4",  poster: "/assets/expo-hero.jpg" },
   events: { src: "/assets/event-hero.mp4", poster: "/assets/event-hero.jpg" },
 };
 
 export const IMGS = {
-  hero: "https://images.unsplash.com/photo-1769667693219-4d8e44b6a3b3?w=1920&h=1080&fit=crop&auto=format",
-  about: "/assets/about-us.jpg",
-  contact: "/assets/contact-us.jpg",
-  svc: [
-    "/assets/main-expo.jpg",
-    "/assets/main-events.jpg",
-  ],
-  subHero: [
-    "https://images.unsplash.com/photo-1560439514-4e9645039924?w=1920&h=700&fit=crop&auto=format",
-    "https://images.unsplash.com/photo-1653821355736-0c2598d0a63e?w=1920&h=700&fit=crop&auto=format",
-  ],
   projects: projectGalleries,
-  // Legacy support: flat portfolio array (uses preview image)
-  portfolio: Object.values(projectGalleries).map(p => p.preview),
-  // Helper to get project gallery by ID
-  getProject: (id: string) => projectGalleries[id as keyof typeof projectGalleries],
+  getProject: (id: string): Project | undefined => projectGalleries[id],
 };

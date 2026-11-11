@@ -1,321 +1,285 @@
-export type Lang = "en" | "ru";
-export type Page = "home" | "expo" | "events" | "portfolio";
+export type Page = "home" | "portfolio";
+
+export type CaseItem = {
+  id: string;
+  title: string;
+  sub: string;
+  tag: "Event" | "Booth";
+  story?: { brief: string; idea: string; result: string; guests?: string };
+};
 
 export const C = {
-  en: {
-    nav: {
-      home: "Home",
-      booths: "Expo Design & Construction",
-      events: "Event Design & Production",
-      portfolio: "Portfolio",
-      contacts: "Contacts",
-      cta: "Request a Proposal",
-    },
-    hero: {
-      eyebrow: "Full-Service Exhibition & Event Partner · China",
-      headline: "We Build Your\nVision in China",
-      sub: "From concept to completion — exhibition booth design, construction, and corporate event production across China's major venues.",
-      cta: "Request a Proposal",
-      scroll: "Scroll",
-    },
-    about: {
-      num: "01",
-      label: "About Us",
-      headline: "Your Trusted\nExhibition & Event\nPartner in China",
-      body1: "We are a full-service exhibition and event company based in China, specializing in concept development, design, engineering, production and on-site execution. We partner with international brands to deliver world-class results across China's major exhibition centers — Shanghai, Beijing, Guangzhou, Shenzhen and beyond.",
-      body2: "Our experienced team manages every project detail from initial briefing through to final dismantling, ensuring seamless communication and transparent delivery at every step of the process.",
-      body3: "Beyond exhibitions, we deliver world-class event production — from intimate executive dinners and product launches to large-scale corporate conferences and brand activations. Every event is crafted with the same precision, creativity and on-the-ground expertise that defines our exhibition work.",
-      cta: "Start a Project",
-    },
-    services: {
-      num: "02",
-      label: "Our Main Directions",
-      headline: "What We Do",
-      items: [
-        {
-          page: "expo" as Page,
-          eyebrow: "01 / Exhibition",
-          title: "Expo Design\n& Construction",
-          body: "Custom booth concepts tailored to your brand identity. We handle everything: concept development, engineering, material sourcing, production, installation and dismantling — end to end.",
-          cta: "Explore Service",
-        },
-        {
-          page: "events" as Page,
-          eyebrow: "02 / Events",
-          title: "Event Design\n& Production",
-          body: "Corporate conferences, product launches, gala dinners and brand activations. We create immersive experiences across China's premier venues that leave lasting impressions on your audience.",
-          cta: "Explore Service",
-        },
-      ],
-    },
-    advantages: {
-      num: "03",
-      label: "Our Advantages",
-      headline: "Why Choose Stagency China",
-      items: [
-        {
-          num: "01",
-          title: "We Speak Your Language",
-          body: "Our team communicates fluently in English, Russian, Italian and Chinese. No intermediaries, no misunderstandings — just clear, direct communication that keeps your project on track.",
-        },
-        {
-          num: "02",
-          title: "Your Trusted Partner in China",
-          body: "We are your reliable eyes and hands on the ground. Full local presence, transparent reporting and complete accountability — from first brief to final handover.",
-        },
-        {
-          num: "03",
-          title: "Direct Vendor & Supplier Access",
-          body: "Established relationships with China's best local manufacturers and suppliers give you competitive pricing, quality materials and faster production timelines than any overseas coordinator can offer.",
-        },
-        {
-          num: "04",
-          title: "Outstanding Design Capacity",
-          body: "Our creative studio delivers remarkable, award-worthy designs for pavilions and events. We combine international aesthetics with deep knowledge of Chinese production capabilities.",
-        },
-      ],
-    },
-    portfolio: {
-      num: "04",
-      label: "Portfolio",
-      headline: "Selected Works",
-      cta: "View All Projects",
-      items: [
-        { id: "tech-pavilion", title: "Medical AI Pavilion", sub: "Shanghai · 260 sqm · 2024", tag: "Booth" },
-        { id: "ev3", title: "Great Wall Gala Dinner", sub: "Beijing · 2025", tag: "Event" },
-        { id: "tech-lounge", title: "Tech Company Lounge", sub: "Beijing · 80 sqm · 2025", tag: "Booth" },
-        { id: "ev1", title: "Chinese Inspired Gala", sub: "Shanghai · 2025", tag: "Event" },
-        { id: "beauty-pavilion", title: "Beauty Brand Pavilion", sub: "Saint Petersburg · 30 sqm · 2023", tag: "Booth" },
-        { id: "ev6", title: "Partners Conference", sub: "Shenzhen · 2026", tag: "Event" },
-        { id: "timber-booth", title: "Timber Harvesting Booth", sub: "Shanghai · 50 sqm · 2026", tag: "Booth" },
-        { id: "ev2", title: "Tech Company Conference", sub: "Guangzhou · 2026", tag: "Event" },
-        { id: "ev5", title: "Wild Dining Event", sub: "Yangshuo · 2026", tag: "Event" },
-      ],
-    },
-    contact: {
-      num: "05",
-      label: "Contact",
-      headline: "Start Your\nProject with Us",
-      sub: "Tell us about your upcoming exhibition or event.",
-      form: {
-        name: "Your Name",
-        company: "Company",
-        email: "Email Address",
-        phone: "Phone / WhatsApp",
-        message: "Project Details",
-        submit: "Contact Us",
-        sent: "Thank you — we will be in touch shortly.",
-      },
-      info: [
-        { label: "Address", value: "Room 3422, 34th Floor, Block A, Zhongyi Building, No. 580 Nanjing West Road, Jing'an District, Shanghai" },
-        { label: "Email", value: "stagency@newimaginationdmc.com" },
-        { label: "Phone", value: "+86 130 7415 6537" },
-        { label: "Telegram (RU)", value: "+7 937 523 30 37" },
-      ],
-    },
-    footer: {
-      tagline: "Exhibition & Event Partner in China",
-      legal: "© 2026 Stagency China by New Imagination DMC China. All rights reserved.",
-      links: ["Expo Design & Construction", "Event Design & Production", "Portfolio", "Contacts"],
-    },
-    expoPage: {
-      back: "Back to Home",
-      breadcrumb: "Expo Design & Construction",
-      headline: "Expo Design\n& Construction",
-      sub: "From bespoke concept and engineering through to turnkey production and installation — we handle every aspect of your exhibition presence in China.",
-      servicesLabel: "Our Services",
-      services: [
-        { num: "01", title: "Custom Stand Concept & Design", body: "Tailored design from initial brief to final 3D renders and walkthroughs. We ensure your booth reflects your brand identity perfectly while meeting venue regulations and audience expectations." },
-        { num: "02", title: "Engineering & Technical Documentation", body: "Full structural engineering, material specifications and technical drawings compliant with Chinese exhibition venue requirements. Approved and ready for production." },
-        { num: "03", title: "Turnkey Production & Manufacturing", body: "In-house and partner manufacturing across China. We oversee quality control at every production stage, ensuring your stand is delivered on time and to specification." },
-        { num: "04", title: "Graphics, Branding & AV Integration", body: "Large-format printing, digital displays, LED walls and AV systems integrated seamlessly into your stand design. Consistent branding at every touchpoint." },
-        { num: "05", title: "Installation & Dismantling", body: "Professional installation crews across all major Chinese venues — Shanghai NECC, Beijing CNCC, Guangzhou CIEC and more. We handle permits, logistics and full on-site coordination." },
-        { num: "06", title: "Furniture, Lighting & Accessories", body: "Curated furniture packages, custom lighting design and branded accessories that elevate the overall experience and deliver a complete, polished result." },
-      ],
-      portfolioHeadline: "Our Projects",
-      contactHeadline: "Ready to Build\nYour Next Stand?",
-    },
-    eventsPage: {
-      back: "Back to Home",
-      breadcrumb: "Event Design & Production",
-      headline: "Event Design\n& Production",
-      sub: "We create immersive corporate events, product launches and brand experiences that leave lasting impressions — from concept through to on-site execution across China.",
-      servicesLabel: "Our Services",
-      services: [
-        { num: "01", title: "Corporate Conferences & Summits", body: "End-to-end conference management for 50 to 1,000 delegates. Venue sourcing, stage design, AV production, simultaneous interpretation, delegate management and full logistics." },
-        { num: "02", title: "Product Launches & Presentations", body: "Memorable launch events that generate media coverage and audience engagement. From intimate press showrooms to large-scale theatrical reveals at China's premier venues." },
-        { num: "03", title: "Gala Dinners & Award Ceremonies", body: "Elegant atmospheric dinners and award ceremonies with full décor design, entertainment programming, catering coordination and end-to-end event production." },
-        { num: "04", title: "Brand Activations & Pop-Ups", body: "Immersive brand experiences that connect your audience with your product in unexpected, memorable ways. We design, build and operate activations that drive engagement." },
-        { num: "05", title: "Stage Design & AV Production", body: "Custom stage concepts, architectural lighting design, LED walls and video mapping, professional sound engineering and live streaming solutions for any scale of event." },
-        { num: "06", title: "On-Site Management & Logistics", body: "Dedicated project managers and experienced on-site teams who ensure flawless execution from venue setup through post-event breakdown. Your single point of contact throughout." },
-      ],
-      portfolioHeadline: "Our Projects",
-      contactHeadline: "Ready to Create\nYour Next Event?",
-    },
-    portfolioPage: {
-      headline: "All Projects",
-      sub: "Exhibition booths, corporate events and brand experiences delivered across China.",
-      filters: { all: "All Projects", booth: "Booths", event: "Events" },
-      cta: "Start Your Project",
-    },
+  nav: {
+    links: [
+      { id: "what-we-do", label: "What we do" },
+      { id: "cases", label: "Cases" },
+      { id: "services", label: "Services" },
+      { id: "who-we-are", label: "Who we are" },
+      { id: "contact", label: "Contact" },
+    ],
+    cta: "Start a project",
   },
-  ru: {
-    nav: {
-      home: "Главная",
-      booths: "Стенды и застройка",
-      events: "Мероприятия и продакшн",
-      portfolio: "Портфолио",
-      contacts: "Контакты",
-      cta: "Запросить предложение",
-    },
-    hero: {
-      eyebrow: "Полный цикл услуг по выставкам и мероприятиям · Китай",
-      headline: "Воплощаем ваше\nвидение в Китае",
-      sub: "От концепции до реализации — проектирование и строительство стендов, организация корпоративных мероприятий по всему Китаю.",
-      cta: "Запросить предложение",
-      scroll: "Листать",
-    },
-    about: {
-      num: "01",
-      label: "О компании",
-      headline: "Ваш надёжный партнёр\nпо выставкам и мероприятиям\nв Китае",
-      body1: "Мы — партнёр полного цикла в сфере выставок и мероприятий, базирующийся в Китае. Специализируемся на разработке концепций, дизайне, инжиниринге, производстве и реализации «под ключ». Мы работаем с международными брендами и обеспечиваем результат мирового уровня на крупнейших выставочных площадках Китая — в Шанхае, Пекине, Гуанчжоу, Шэньчжэне и других городах.",
-      body2: "Наша опытная команда управляет каждой деталью проекта — от первого брифа до финального демонтажа, обеспечивая прозрачную коммуникацию и контролируемую реализацию на каждом этапе.",
-      body3: "Помимо выставок, мы организуем мероприятия мирового уровня — от камерных деловых ужинов и запусков продуктов до масштабных корпоративных конференций и брендовых активаций. Каждое мероприятие создаётся с той же точностью, креативностью и экспертизой, которые определяют нашу выставочную работу.",
-      cta: "Начать проект",
-    },
-    services: {
-      num: "02",
-      label: "Наши направления",
-      headline: "Что мы делаем",
-      items: [
-        {
-          page: "expo" as Page,
-          eyebrow: "01 / Стенды",
-          title: "Стенды и\nзастройка",
-          body: "Индивидуальные концепции, адаптированные к вашему бренду. Дизайн, инжиниринг, закупка материалов, производство, монтаж и демонтаж — всё под ключ.",
-          cta: "Подробнее",
-        },
-        {
-          page: "events" as Page,
-          eyebrow: "02 / Мероприятия",
-          title: "Мероприятия\nи продакшн",
-          body: "Конференции, запуски продуктов, гала-ужины и брендовые активации. Создаём иммерсивные пространства на лучших площадках Китая, которые запоминаются надолго.",
-          cta: "Подробнее",
-        },
-      ],
-    },
-    advantages: {
-      num: "03",
-      label: "Наши преимущества",
-      headline: "Почему Stagency China",
-      items: [
-        {
-          num: "01",
-          title: "Мы говорим на вашем языке",
-          body: "Наша команда свободно общается на английском, русском, итальянском и китайском языках. Никаких посредников и недопонимания — только чёткая и прямая коммуникация, которая держит ваш проект под контролем.",
-        },
-        {
-          num: "02",
-          title: "Ваш надёжный партнёр в Китае",
-          body: "Мы — ваши глаза и руки на месте. Полное локальное присутствие, прозрачная отчётность и полная ответственность — от первого брифа до финальной сдачи.",
-        },
-        {
-          num: "03",
-          title: "Прямой доступ к поставщикам и производителям",
-          body: "Налаженные связи с лучшими китайскими производителями и поставщиками обеспечивают конкурентные цены, качественные материалы и более короткие сроки производства, чем может предложить любой зарубежный координатор.",
-        },
-        {
-          num: "04",
-          title: "Выдающийся дизайн-потенциал",
-          body: "Наша творческая студия создаёт яркие, достойные наград проекты для павильонов и мероприятий, сочетая международную эстетику с глубоким знанием возможностей китайского производства.",
-        },
-      ],
-    },
-    portfolio: {
-      num: "04",
-      label: "Портфолио",
-      headline: "Избранные проекты",
-      cta: "Все проекты",
-      items: [
-        { id: "tech-pavilion", title: "Павильон Medical AI", sub: "Шанхай · 260 м² · 2024", tag: "Стенд" },
-        { id: "ev3", title: "Гала-ужин на Великой стене", sub: "Пекин · 2025", tag: "Мероприятие" },
-        { id: "tech-lounge", title: "Лаундж технологической компании", sub: "Пекин · 80 м² · 2025", tag: "Стенд" },
-        { id: "ev1", title: "Гала в китайском стиле", sub: "Шанхай · 2025", tag: "Мероприятие" },
-        { id: "beauty-pavilion", title: "Павильон бьюти-бренда", sub: "Санкт-Петербург · 30 м² · 2023", tag: "Стенд" },
-        { id: "ev6", title: "Партнёрская конференция", sub: "Шэньчжэнь · 2026", tag: "Мероприятие" },
-        { id: "timber-booth", title: "Стенд лесозаготовительной компании", sub: "Шанхай · 50 м² · 2026", tag: "Стенд" },
-        { id: "ev2", title: "Конференция tech-компании", sub: "Гуанчжоу · 2026", tag: "Мероприятие" },
-        { id: "ev5", title: "Ужин на природе", sub: "Яншо · 2026", tag: "Мероприятие" },
-      ],
-    },
-    contact: {
-      num: "05",
-      label: "Контакты",
-      headline: "Начните ваш\nпроект с нами",
-      sub: "Расскажите о вашем проекте.",
-      form: {
-        name: "Ваше имя",
-        company: "Компания",
-        email: "Электронная почта",
-        phone: "Телефон / WhatsApp",
-        message: "Детали проекта",
-        submit: "Связаться с нами",
-        sent: "Спасибо — мы свяжемся с вами в ближайшее время.",
+
+  hero: {
+    slogan: "WE STAGE YOUR VISION.",
+    cta: "Start a project",
+    ctaSecondary: "See our cases",
+    // PLACEHOLDER — paste a showreel URL (an .mp4 in /public/assets or a hosted file) and set ready: true
+    reel: { ready: false, label: "Watch our reel", url: "" },
+  },
+
+  // PLACEHOLDER — replace with real figures, then set ready: true
+  stats: {
+    ready: false,
+    items: [
+      { value: "000+", label: "Events delivered" },
+      { value: "00,000+", label: "Guests hosted" },
+      { value: "00", label: "Cities across China" },
+      { value: "4", label: "Working languages" },
+    ],
+  },
+
+  whatWeDo: {
+    headline: "What we do",
+    intro: "Three formats, each one built from scratch for your guests.",
+    items: [
+      {
+        title: "Gala dinners",
+        body: "From a table on the Great Wall to a palace built indoors. Décor, show programme, catering and the whole night produced end to end.",
+        image: "/assets/projects/great-wall-gala-beijing-1.jpg",
+        alt: "Gala dinner stage with dragons beneath the Great Wall",
       },
-      info: [
-        { label: "Адрес", value: "Room 3422, 34th Floor, Block A, Zhongyi Building, No. 580 Nanjing West Road, Jing'an District, Shanghai" },
-        { label: "Email", value: "stagency@newimaginationdmc.com" },
-        { label: "Телефон", value: "+86 130 7415 6537" },
-        { label: "Telegram", value: "+7 937 523 30 37" },
+      {
+        title: "Conferences",
+        body: "Partner summits and corporate conferences for 50 to 1,000 delegates. Stage, AV, interpretation and delegate logistics in one plan.",
+        image: "/assets/projects/conference-250-beijing-1.jpg",
+        alt: "Conference hall with moving-head light show over the audience",
+      },
+      {
+        title: "Events & activities",
+        body: "Team activities, cultural experiences, outdoor dinners and brand activations in places your guests won't expect.",
+        image: "/assets/projects/wild-dining-yangshuo-8.jpg",
+        alt: "Outdoor dinner under chandeliers in Yangshuo with performers in local costume",
+      },
+    ],
+    extra: {
+      title: "Planning something truly outstanding?",
+      body: "A launch, a show or a night no one has done before. We'll build it.",
+      cta: "Tell us your idea",
+    },
+    secondary: "We also design and build exhibition stands at China's trade fairs.",
+    secondaryLink: "See stand projects",
+  },
+
+  whoWeAre: {
+    headline: "Event production with a DMC behind it",
+    body: [
+      "Stagency China is the event production team of New Imagination DMC China, a destination management company based in Shanghai.",
+      "So the people building your stage can also book the hotel, move your guests and handle everything in between. One partner and one point of contact, from the airport pickup to the final encore.",
+    ],
+    dmcTitle: "What our DMC side covers",
+    dmc: [
+      "Venues and permits",
+      "Hotels",
+      "Airport and ground transfers",
+      "Guides and interpreters",
+      "Excursions and incentive programmes",
+      "Restaurants and catering",
+    ],
+    advantages: [
+      {
+        title: "Full DMC support",
+        body: "Production and destination management under one roof. No hand-offs between agencies, no gaps between the stage and the hotel.",
+      },
+      {
+        title: "We speak your language",
+        body: "Our team works in English, Russian, Italian and Chinese. Briefs, contracts and show calls happen without a middleman.",
+      },
+      {
+        title: "Direct supplier network",
+        body: "Long-standing relationships with China's AV, staging, décor and production suppliers mean fair prices and short lead times.",
+      },
+      {
+        title: "On site, start to finish",
+        body: "Our producers are there from load-in to the last guest leaving, with clear reporting so you always know where things stand.",
+      },
+    ],
+  },
+
+  audiences: {
+    headline: "Who we work with",
+    items: [
+      {
+        title: "Companies",
+        body: "Leadership summits, partner conferences, incentive trips and celebrations for companies bringing their people to China.",
+      },
+      {
+        title: "Event agencies",
+        body: "A reliable local partner for agencies abroad. We produce your client's event in China and keep you in control at every step.",
+      },
+      {
+        title: "Associations",
+        body: "Congresses, member meetings and delegations, with venues, accommodation and delegate logistics handled for you.",
+      },
+    ],
+  },
+
+  process: {
+    headline: "How we work",
+    intro: "Five steps, one team, no hand-offs.",
+    steps: [
+      { title: "Brief", body: "We start with your people and your goals, not a template. A call, a brief and the right questions." },
+      { title: "Concept", body: "Ideas, venues and a clear budget. You see the event before anything is built." },
+      { title: "Production", body: "Stage, AV, décor, artists, hotels and transfers, managed by one team with direct suppliers." },
+      { title: "Show day", body: "Our producers run the event on site, from load-in to the last guest leaving." },
+      { title: "Wrap-up", body: "Photos, video and a final report. Then we're ready for the next one." },
+    ],
+  },
+
+  services: {
+    headline: "Our services",
+    intro: "Everything a live event in China needs, from the first sketch to the last cue.",
+    extra: {
+      title: "Need something that isn't on the list?",
+      body: "If it can be built, booked or brought to China, we'll find a way.",
+      cta: "Ask us",
+    },
+    groups: [
+      {
+        title: "AV & technical",
+        intro: "Sound, light and show technology, with engineers on site.",
+        items: [
+          { name: "AV equipment" },
+          { name: "Lighting equipment" },
+          { name: "Technical support and maintenance" },
+          { name: "Show equipment", note: "Spray machines, fireworks" },
+          { name: "Unique solutions", note: "Holograms, projection mapping, laser shows, immersive rooms" },
+          { name: "Live streaming and hybrid events" },
+          { name: "Photo, video and aftermovie" },
+        ],
+      },
+      {
+        title: "Event production",
+        intro: "Spaces built around your brand and your guests.",
+        items: [
+          { name: "Concept and theming" },
+          { name: "Space design and production" },
+          { name: "Stage design and production" },
+          { name: "Photo zones and welcome areas" },
+          { name: "Table setup" },
+          { name: "Brand activations" },
+        ],
+      },
+      {
+        title: "Performances & shows",
+        intro: "The people and moments your guests will talk about.",
+        items: [
+          { name: "Artists and talents" },
+          { name: "Engagement activities" },
+          { name: "Cultural activities" },
+        ],
+      },
+      {
+        title: "Gifts & souvenirs",
+        intro: "Something worth taking home.",
+        items: [
+          { name: "Unique gifts and souvenirs" },
+          { name: "Branded items" },
+          { name: "Printed items" },
+        ],
+      },
+    ],
+  },
+
+  // Each case can get an optional story shown in its gallery:
+  //   story: { brief: "...", idea: "...", result: "...", guests: "250" }
+  // Until a case has one, the gallery shows a placeholder in dev mode only.
+  cases: {
+    headline: "Our cases",
+    cta: "All cases",
+    items: [
+      { id: "great-wall-gala-beijing", title: "Great Wall Gala Dinner", sub: "Beijing, 250 guests, 2026", tag: "Event" },
+      { id: "wild-dining-yangshuo", title: "Wild Gala Dinner", sub: "Yangshuo, 2025", tag: "Event" },
+      { id: "gala-1000-beijing", title: "Gala Dinner for 1,000", sub: "Beijing, 2026", tag: "Event" },
+      { id: "conference-250-beijing", title: "Conference with Laser Show", sub: "Beijing, 250 delegates, 2026", tag: "Event" },
+      { id: "skyline-party-beijing", title: "Rooftop Party with Skyline Views", sub: "Beijing, 2026", tag: "Event" },
+      { id: "gala-400-shanghai", title: "Gala Dinner in a Historic Villa", sub: "Shanghai, 400 guests, 2025", tag: "Event" },
+      { id: "conference-1000-beijing", title: "Conference for 1,000", sub: "Beijing, 2026", tag: "Event" },
+      { id: "event-80th-floor-beijing", title: "Party on the 80th Floor", sub: "Beijing, 200 guests, 2026", tag: "Event" },
+      { id: "dinner-200-beijing", title: "Themed Dinner", sub: "Beijing, 200 guests, 2026", tag: "Event" },
+      { id: "conference-400-shanghai", title: "Conference in a Dome Venue", sub: "Shanghai, 400 delegates, 2025", tag: "Event" },
+      { id: "conference-100-shanghai", title: "Partner Conference", sub: "Shanghai, 100 delegates, 2025", tag: "Event" },
+      { id: "tech-pavilion", title: "Medical AI Pavilion", sub: "Shanghai, 260 m², 2024", tag: "Booth" },
+      { id: "tech-lounge", title: "Tech Company Lounge", sub: "Beijing, 80 m², 2025", tag: "Booth" },
+      { id: "timber-booth", title: "Timber Harvesting Booth", sub: "Shanghai, 50 m², 2026", tag: "Booth" },
+      { id: "beauty-pavilion", title: "Beauty Brand Pavilion", sub: "Saint Petersburg, 30 m², 2023", tag: "Booth" },
+    ] as CaseItem[],
+  },
+
+  // PLACEHOLDER — add logo files to /public/assets/clients/ (or sector names if under NDA), then set ready: true
+  clients: {
+    ready: false,
+    headline: "Trusted by",
+    logos: [
+      { name: "Client 1", src: "" },
+      { name: "Client 2", src: "" },
+      { name: "Client 3", src: "" },
+      { name: "Client 4", src: "" },
+      { name: "Client 5", src: "" },
+      { name: "Client 6", src: "" },
+    ],
+  },
+
+  // PLACEHOLDER — add photos to /public/assets/team/ and real names, then set ready: true
+  team: {
+    ready: false,
+    headline: "The people on site",
+    intro: "You'll work directly with the people who run your event.",
+    members: [
+      { name: "Name Surname", role: "CEO", languages: "English, Russian, Chinese", photo: "" },
+      { name: "Name Surname", role: "Head of production", languages: "English, Chinese", photo: "" },
+      { name: "Name Surname", role: "Senior producer", languages: "English, Italian", photo: "" },
+      { name: "Name Surname", role: "DMC manager", languages: "English, Russian", photo: "" },
+    ],
+  },
+
+  portfolioPage: {
+    back: "Home",
+    headline: "Our cases",
+    sub: "Gala dinners, conferences, activities and exhibition stands delivered for international clients.",
+    filters: { all: "All", event: "Events", booth: "Exhibition stands" },
+  },
+
+  ending: {
+    headline: "Let's stage\nyour vision.",
+    sub: "Tell us the city, the date and how many guests you expect. We'll come back with ideas and a budget.",
+    cta: "stagency@newimaginationdmc.com",
+    ctaLabel: "Write to us",
+    mailto: "mailto:stagency@newimaginationdmc.com?subject=" + encodeURIComponent("Event in China") + "&body=" + encodeURIComponent("Hello Stagency team,\n\nCity:\nDates:\nNumber of guests:\nFormat (gala dinner, conference, event...):\n\nAbout the event:\n"),
+    photo: "/assets/projects/wild-dining-yangshuo-3.jpg",
+    photoAlt: "Long tables under chandeliers at dusk among Yangshuo's karst mountains",
+    contacts: [
+      { label: "Email", value: "stagency@newimaginationdmc.com", href: "mailto:stagency@newimaginationdmc.com?subject=Project%20inquiry" },
+      { label: "Phone", value: "+86 130 7415 6537", href: "tel:+8613074156537" },
+      { label: "Telegram", value: "+7 937 523 30 37", href: "https://t.me/+79375233037" },
+      { label: "Office", value: "Room 3422, 34th Floor, Block A, Zhongyi Building, 580 Nanjing West Road, Jing'an District, Shanghai" },
+    ],
+  },
+
+  footer: {
+    tagline: "We stage your vision.",
+    // PLACEHOLDER — add profile URLs, then set ready: true
+    socials: {
+      ready: false,
+      links: [
+        { name: "LinkedIn", url: "" },
+        { name: "Instagram", url: "" },
+        { name: "WeChat", url: "" },
       ],
     },
-    footer: {
-      tagline: "Партнёр по выставкам и мероприятиям в Китае",
-      legal: "© 2026 Stagency China by New Imagination DMC China. Все права защищены.",
-      links: ["Стенды и застройка", "Мероприятия и продакшн", "Портфолио", "Контакты"],
-    },
-    expoPage: {
-      back: "На главную",
-      breadcrumb: "Стенды и застройка",
-      headline: "Стенды и\nзастройка",
-      sub: "От авторской концепции и инжиниринга до производства и монтажа под ключ — мы берём на себя все аспекты вашего выставочного присутствия в Китае.",
-      servicesLabel: "Наши услуги",
-      services: [
-        { num: "01", title: "Концепция и дизайн стенда", body: "Авторский дизайн от брифа до финального 3D-рендера и виртуального тура. Ваш стенд безупречно отражает идентичность бренда и соответствует требованиям площадки." },
-        { num: "02", title: "Инжиниринг и техническая документация", body: "Полный комплект конструкторской документации, соответствующий требованиям китайских выставочных площадок. Согласованный и готовый к производству." },
-        { num: "03", title: "Производство и изготовление", body: "Собственное и партнёрское производство по всему Китаю с контролем качества на каждом этапе. Сдача в срок и в соответствии со спецификацией." },
-        { num: "04", title: "Графика, брендинг и AV-интеграция", body: "Широкоформатная печать, цифровые дисплеи, LED-экраны и AV-системы, органично интегрированные в дизайн стенда. Единый фирменный стиль во всех точках контакта." },
-        { num: "05", title: "Монтаж и демонтаж", body: "Профессиональные монтажные бригады на всех крупных площадках Китая — NECC Шанхай, CNCC Пекин, CIEC Гуанчжоу. Разрешения, логистика и координация на площадке." },
-        { num: "06", title: "Мебель, освещение и аксессуары", body: "Мебельные пакеты, дизайн освещения и фирменные аксессуары, которые создают целостный, профессиональный образ вашего стенда." },
-      ],
-      portfolioHeadline: "Наши проекты",
-      contactHeadline: "Готовы построить\nваш следующий стенд?",
-    },
-    eventsPage: {
-      back: "На главную",
-      breadcrumb: "Мероприятия и продакшн",
-      headline: "Мероприятия\nи продакшн",
-      sub: "Создаём иммерсивные корпоративные мероприятия, запуски продуктов и брендовые активации — от концепции до реализации на площадке по всему Китаю.",
-      servicesLabel: "Наши услуги",
-      services: [
-        { num: "01", title: "Конференции и корпоративные саммиты", body: "Управление конференциями от 50 до 1000 участников. Подбор площадки, дизайн сцены, AV-продакшн, синхронный перевод, управление участниками и полная логистика." },
-        { num: "02", title: "Запуски продуктов и презентации", body: "Запоминающиеся события для освещения в СМИ и вовлечения аудитории. От камерных пресс-румов до масштабных театральных презентаций на лучших площадках Китая." },
-        { num: "03", title: "Гала-ужины и церемонии награждения", body: "Элегантные атмосферные ужины и церемонии награждения — полное оформление, развлекательная программа, координация кейтеринга и продакшн мероприятия под ключ." },
-        { num: "04", title: "Брендовые активации и поп-апы", body: "Иммерсивный брендовый опыт, который связывает вашу аудиторию с продуктом неожиданными и запоминающимися способами. Проектируем, строим и проводим их под ключ." },
-        { num: "05", title: "Дизайн сцены и AV-продакшн", body: "Авторские концепции сцен, архитектурный световой дизайн, LED-экраны и видеомэппинг, профессиональное звуковое оформление и решения для прямых трансляций." },
-        { num: "06", title: "Управление мероприятием и логистика", body: "Выделенные менеджеры проекта и опытные команды на площадке, обеспечивающие безупречную реализацию от подготовки площадки до финального демонтажа." },
-      ],
-      portfolioHeadline: "Наши проекты",
-      contactHeadline: "Готовы создать\nваше следующее мероприятие?",
-    },
-    portfolioPage: {
-      headline: "Все проекты",
-      sub: "Выставочные стенды, корпоративные мероприятия и брендовые активации по всему Китаю.",
-      filters: { all: "Все проекты", booth: "Стенды", event: "Мероприятия" },
-      cta: "Начать проект",
-    },
+    dmc: "Part of New Imagination DMC China",
+    legal: "© 2026 Stagency China by New Imagination DMC China. All rights reserved.",
   },
 };
 
-export type ContentType = typeof C.en;
+export type ContentType = typeof C;

@@ -2,6 +2,17 @@
   command = "vite build"
   publish = "dist"
 
+# Old service pages were merged into the home page — send visitors and search engines there
+[[redirects]]
+  from = "/expo-design-construction"
+  to = "/"
+  status = 301
+
+[[redirects]]
+  from = "/event-design-production"
+  to = "/"
+  status = 301
+
 # SPA fallback — direct hits / shared deep links serve index.html (200, not 404)
 [[redirects]]
   from = "/*"

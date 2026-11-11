@@ -2,51 +2,54 @@
 
 :root {
   --font-size: 16px;
-  --background: #F8F7F3;
-  --foreground: #0C0B09;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Brand — taken from the Stagency logo gradient */
+  --signal: #FF9100;        /* logo orange */
+  --stage-red: #FF2A00;     /* logo red */
+  --brand-gradient: linear-gradient(100deg, #FF9100 0%, #FF5A00 48%, #FF2A00 100%);
+  --ink: #000000;
+  --paper: #FFFFFF;
+  --concrete: #EDEDED;
+  --steel: #6B6B6B;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
   --card: #FFFFFF;
-  --card-foreground: #0C0B09;
+  --card-foreground: #000000;
   --popover: #FFFFFF;
-  --popover-foreground: #0C0B09;
-  --primary: #0C0B09;
-  --primary-foreground: #F8F7F3;
-  --secondary: #EDEBE4;
-  --secondary-foreground: #0C0B09;
-  --muted: #E7E2D8;
-  --muted-foreground: #8A8676;
-  --accent: #E0512A;
-  --accent-2: #C42E1C;
+  --popover-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--concrete);
+  --secondary-foreground: #000000;
+  --muted: var(--concrete);
+  --muted-foreground: var(--steel);
+  --accent: var(--stage-red);
   --accent-foreground: #FFFFFF;
-  --gradient-warm: linear-gradient(135deg, #F26A2E 0%, #DB3F23 52%, #B92819 100%);
-  --gradient-warm-soft: linear-gradient(135deg, rgba(242,106,46,0.92) 0%, rgba(185,40,25,0.92) 100%);
-  /* Hero video tint: red→orange, semi-transparent so the footage keeps its
-     real color range (no monochrome/desaturated look) */
-  --video-tint: linear-gradient(118deg, rgba(198,46,28,0.50) 0%, rgba(224,81,42,0.40) 46%, rgba(242,120,55,0.32) 100%);
-  /* Bottom shade purely for text legibility */
-  --video-shade: linear-gradient(to top, rgba(26,10,5,0.82) 0%, rgba(26,10,5,0.14) 46%, rgba(26,10,5,0) 100%);
   --destructive: #d4183d;
   --destructive-foreground: #ffffff;
-  --border: rgba(12, 11, 9, 0.09);
+  --border: rgba(0, 0, 0, 0.12);
   --input: transparent;
-  --input-background: #EDEBE4;
-  --switch-background: #C4C0B4;
+  --input-background: var(--concrete);
+  --switch-background: #C4C4C4;
   --font-weight-medium: 500;
   --font-weight-normal: 400;
-  --ring: rgba(12, 11, 9, 0.2);
+  --ring: var(--stage-red);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.9rem;
-  --sidebar: #F8F7F3;
-  --sidebar-foreground: #0C0B09;
-  --sidebar-primary: #0C0B09;
-  --sidebar-primary-foreground: #F8F7F3;
-  --sidebar-accent: #EDEBE4;
-  --sidebar-accent-foreground: #0C0B09;
-  --sidebar-border: rgba(12, 11, 9, 0.09);
-  --sidebar-ring: rgba(12, 11, 9, 0.2);
+  --radius: 0px;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #000000;
+  --sidebar-primary: #000000;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: var(--concrete);
+  --sidebar-accent-foreground: #000000;
+  --sidebar-border: rgba(0, 0, 0, 0.12);
+  --sidebar-ring: var(--stage-red);
 }
 
 .dark {
@@ -187,3 +190,97 @@
     line-height: 1.5;
   }
 }
+
+
+/* ── Stagency site styles ───────────────────────────────── */
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+
+/* Display type: heavy, tight Helvetica */
+.display {
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 0.92;
+}
+
+/* The angled corner from the logo: 28.44° from horizontal
+   (the cut runs 1.85× further across than it drops) */
+.cut-sm { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 33px) 100%, 0 100%); }
+.cut-md { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 55px) 100%, 0 100%); }
+.cut-lg { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 56px), calc(100% - 104px) 100%, 0 100%); }
+@media (max-width: 640px) {
+  .cut-lg { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 55px) 100%, 0 100%); }
+}
+
+.bg-brand { background: var(--brand-gradient); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  font-weight: 700; font-size: 15px; letter-spacing: 0;
+  padding: 1rem 2.6rem 1rem 1.6rem; line-height: 1;
+  transition: transform 160ms cubic-bezier(0.23,1,0.32,1), filter 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+.btn:active { transform: scale(0.97); }
+.btn-brand { background: var(--brand-gradient); color: #fff; }
+.btn-brand:hover { filter: brightness(1.08); }
+.btn-ink { background: #000; color: #fff; }
+.btn-ink:hover { background: #222; }
+.btn-ghost { color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7); padding-right: 1.6rem; }
+.btn-ghost:hover { background: #fff; color: #000; }
+
+/* Text link with growing underline */
+.link-line {
+  font-weight: 700;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 2px; background-position: 0 100%; background-repeat: no-repeat;
+  padding-bottom: 3px;
+  transition: background-size 220ms cubic-bezier(0.23,1,0.32,1), color 160ms ease;
+}
+.link-line:hover { color: var(--stage-red); }
+
+/* Hero entrance — the page's one orchestrated motion moment */
+@keyframes hero-in {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hero-logo {
+  from { opacity: 0; transform: scale(0.94); clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; transform: none; clip-path: inset(0 0 0 0); }
+}
+.hero-in   { opacity: 0; animation: hero-in 700ms cubic-bezier(0.23,1,0.32,1) forwards; }
+.hero-logo { opacity: 0; animation: hero-logo 900ms cubic-bezier(0.77,0,0.175,1) 150ms forwards; }
+.d-1 { animation-delay: 0ms; }
+.d-3 { animation-delay: 850ms; }
+.d-4 { animation-delay: 1000ms; }
+.d-5 { animation-delay: 1150ms; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero-in, .hero-logo { animation: none; opacity: 1; }
+}
+
+/* ── Full-screen slides with scroll snapping (home page) ── */
+html.snap { scroll-snap-type: y mandatory; }
+.slide {
+  min-height: 100svh;
+  scroll-snap-align: start;
+  display: flex; flex-direction: column; justify-content: center;
+  padding-top: 6.5rem; padding-bottom: 3rem;
+}
+.snap-end { scroll-snap-align: end; }
+.slide-anim > * {
+  transition: opacity 700ms cubic-bezier(0.23,1,0.32,1), transform 700ms cubic-bezier(0.23,1,0.32,1);
+}
+.slide-anim:not(.is-in) > * { opacity: 0; transform: translateY(56px); }
+@media (prefers-reduced-motion: reduce) {
+  html.snap { scroll-snap-type: none; }
+  .slide-anim > * { transition: none; }
+  .slide-anim:not(.is-in) > * { opacity: 1; transform: none; }
+}
+.slide > * { width: 100%; }
+.display { text-wrap: balance; }
