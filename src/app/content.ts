@@ -63,7 +63,7 @@ export const C = {
       },
     ],
     extra: {
-      title: "Planning something truly outstanding?",
+      title: "Planning something truly outstanding? We'll build it.",
       body: "A launch, a show or a night no one has done before. We'll build it.",
       cta: "Tell us your idea",
     },
@@ -77,6 +77,7 @@ export const C = {
       "Stagency China is the event production team of New Imagination DMC China, a destination management company based in Shanghai.",
       "So the people building your stage can also book the hotel, move your guests and handle everything in between. One partner and one point of contact, from the airport pickup to the final encore.",
     ],
+    lead: "We're the event production team of New Imagination DMC China. So the people building your stage also book the hotels, move your guests and handle everything in between.",
     dmcTitle: "What our DMC side covers",
     dmc: [
       "Venues and permits",
@@ -89,18 +90,22 @@ export const C = {
     advantages: [
       {
         title: "Full DMC support",
+        short: "Production and destination management under one roof.",
         body: "Production and destination management under one roof. No hand-offs between agencies, no gaps between the stage and the hotel.",
       },
       {
         title: "We speak your language",
+        short: "English, Russian, Italian and Chinese. No middleman.",
         body: "Our team works in English, Russian, Italian and Chinese. Briefs, contracts and show calls happen without a middleman.",
       },
       {
         title: "Direct supplier network",
+        short: "Fair prices and short lead times across China.",
         body: "Long-standing relationships with China's AV, staging, décor and production suppliers mean fair prices and short lead times.",
       },
       {
         title: "On site, start to finish",
+        short: "Our producers stay from load-in to the last guest.",
         body: "Our producers are there from load-in to the last guest leaving, with clear reporting so you always know where things stand.",
       },
     ],

@@ -96,7 +96,7 @@ export function SectionHeading({ children, light = false, className = "" }: {
 }) {
   return (
     <h2 className={`display ${className}`}
-      style={{ fontSize: "clamp(2.6rem, 6vw, 5.75rem)", color: light ? "#fff" : "#000" }}>
+      style={{ fontSize: "clamp(2.6rem, 5.4vw, 5.25rem)", color: light ? "#fff" : "#000" }}>
       {children}
     </h2>
   );
@@ -128,15 +128,14 @@ export function CaseCard({ title, sub, tag, src, video, onClick, large = false }
           <Play size={11} fill="currentColor" /> Video
         </span>
       )}
-      <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7 pr-16">
+      <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7 pb-8 lg:pb-9 pl-7 lg:pl-8">
         <h3 className="text-white font-bold leading-[1.02]"
           style={{ fontSize: large ? "clamp(1.8rem,3vw,2.8rem)" : "1.45rem", letterSpacing: "-0.008em" }}>
           {title}
         </h3>
         <p className="text-white/70 text-[14px] mt-2">{sub}</p>
       </div>
-      <span className="absolute bottom-0 right-0 w-[55px] h-[30px] bg-brand opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }} aria-hidden="true" />
+      <span className="absolute bottom-0 left-[76px] right-0 h-[4px] bg-brand origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" aria-hidden="true" />
     </button>
   );
 }
@@ -239,31 +238,21 @@ function CaseStory({ story }: { story: NonNullable<CaseItem["story"]> }) {
 }
 
 // ── Ending section: CTA, big email button, photo ─────────
-export function EndingSection({ c }: { c: ContentType }) {
+export function EndingSection({ c, dark = false }: { c: ContentType; dark?: boolean }) {
   const e = c.ending;
   return (
-    <section id="contact" className="slide slide-anim px-5 lg:px-10 !pb-6 bg-white" aria-labelledby="contact-heading">
-      <div className="max-w-[1600px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
+    <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 !pb-6 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
+      <div className="max-w-[1360px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
         <div className="text-black px-6 sm:px-10 lg:px-14 pt-10 lg:pt-14 pb-16 lg:pb-24 flex flex-col">
           <h2 id="contact-heading" className="display whitespace-pre-line" style={{ fontSize: "clamp(3rem, 5.6vw, 6rem)" }}>
             {e.headline}
           </h2>
           <p className="mt-6 text-[18px] lg:text-[20px] leading-snug max-w-[34ch] font-medium">{e.sub}</p>
           <a href={e.mailto}
-            className="group mt-8 lg:mt-10 self-start max-w-full inline-flex flex-col gap-1 bg-black text-white pl-6 pr-14 py-5 lg:pl-8 lg:pr-20 lg:py-6 cut-sm transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
+            className="group mt-8 lg:mt-10 self-start max-w-full inline-flex flex-col gap-1 bg-black text-white pl-9 pr-8 py-5 lg:pl-11 lg:pr-12 lg:py-6 cut-sm transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
             <span className="text-[14px] font-bold" style={{ color: "var(--signal)" }}>{e.ctaLabel}</span>
             <span className="font-bold leading-tight [overflow-wrap:anywhere]" style={{ fontSize: "clamp(1rem, 1.55vw, 1.6rem)" }}>{e.cta}</span>
           </a>
-          <dl className="mt-10 grid sm:grid-cols-2 gap-x-8 gap-y-4">
-            {e.contacts.filter((x) => x.label !== "Email").map((item) => (
-              <div key={item.label} className={item.label === "Office" ? "sm:col-span-2" : ""}>
-                <dt className="text-[14px] font-bold text-black/60 mb-0.5">{item.label}</dt>
-                <dd className="text-[16px] font-bold leading-snug max-w-[46ch]">
-                  {item.href ? <a href={item.href} className="hover:underline underline-offset-4 decoration-2">{item.value}</a> : item.value}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
         <div className="relative min-h-[300px] lg:min-h-0">
           <img src={e.photo} alt={e.photoAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
