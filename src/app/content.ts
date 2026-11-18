@@ -24,8 +24,7 @@ export const C = {
     slogan: "WE STAGE YOUR VISION.",
     cta: "Start a project",
     ctaSecondary: "See our cases",
-    // PLACEHOLDER — paste a showreel URL (an .mp4 in /public/assets or a hosted file) and set ready: true
-    reel: { ready: false, label: "Watch our reel", url: "" },
+    reel: { ready: true, label: "Watch promo", url: "/assets/stagency-showreel.mp4", poster: "/assets/stagency-showreel.jpg" },
   },
 
   // PLACEHOLDER — replace with real figures, then set ready: true

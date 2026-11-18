@@ -88,6 +88,13 @@ export default function App() {
   const [galleryId, setGalleryId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const [reelOpen, setReelOpen] = useState(false);
+  useEffect(() => {
+    if (!reelOpen) return;
+    document.body.style.overflow = "hidden";
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setReelOpen(false); };
+    window.addEventListener("keydown", esc);
+    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", esc); };
+  }, [reelOpen]);
   const navMode = useNavMode(page);
   const [fading, setFading] = useState(false);
   useSectionPaging(page === "home");
@@ -172,12 +179,13 @@ export default function App() {
       )}
 
       {reelOpen && c.hero.reel.url && (
-        <div className="fixed inset-0 z-[300] bg-black/95 flex items-center justify-center p-4 lg:p-10" role="dialog" aria-modal="true" aria-label={c.hero.reel.label}
+        <div className="reel-in fixed inset-0 z-[300] bg-black/95 flex items-center justify-center p-4 lg:p-10" role="dialog" aria-modal="true" aria-label={c.hero.reel.label}
           onClick={() => setReelOpen(false)}>
-          <button onClick={() => setReelOpen(false)} className="absolute top-5 right-5 w-11 h-11 flex items-center justify-center bg-white text-black" aria-label="Close reel">
+          <button onClick={() => setReelOpen(false)} className="absolute top-5 right-5 lg:top-7 lg:right-7 w-11 h-11 flex items-center justify-center bg-white text-black hover:bg-[color:var(--signal)] transition-colors" aria-label="Close promo video">
             <X size={20} />
           </button>
-          <video src={c.hero.reel.url} controls autoPlay playsInline className="w-full max-w-6xl max-h-[85vh] bg-black" onClick={(e) => e.stopPropagation()} />
+          <video src={c.hero.reel.url} poster={c.hero.reel.poster} controls autoPlay playsInline
+            className="cut-lg w-full max-w-6xl max-h-[82vh] aspect-video bg-black" onClick={(e) => e.stopPropagation()} />
         </div>
       )}
 
@@ -241,10 +249,8 @@ export default function App() {
               <div className="hero-in d-5 mt-7 empty:hidden">
                 <Placeholder ready={c.hero.reel.ready} label="showreel" compact>
                   <button onClick={() => c.hero.reel.url && setReelOpen(true)}
-                    className="inline-flex items-center gap-3 text-white font-bold text-[13px] group">
-                    <span className="w-10 h-10 rounded-full bg-white text-black flex items-center justify-center transition-transform duration-200 group-hover:scale-110">
-                      <Play size={16} fill="currentColor" className="ml-0.5" />
-                    </span>
+                    className="btn btn-brand cut-sm gap-3 !text-[13px]">
+                    <Play size={15} fill="currentColor" aria-hidden="true" />
                     {c.hero.reel.label}
                   </button>
                 </Placeholder>
