@@ -1,1 +1,23 @@
-/* Type: Helvetica Neue / Helvetica / Arial system stack — see --font-sans in theme.css. No web fonts loaded. */
+/* Type: Unbounded Straight (Unbounded with straight-edged letters, matching the Stagency logo).
+   SIL Open Font License 1.1, see /public/fonts/unbounded-straight/OFL.txt */
+@font-face {
+  font-family: "Unbounded Straight";
+  src: url("/fonts/unbounded-straight/UnboundedStraight-Medium.woff2?v=2") format("woff2");
+  font-weight: 100 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Unbounded Straight";
+  src: url("/fonts/unbounded-straight/UnboundedStraight-SemiBold.woff2?v=2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Unbounded Straight";
+  src: url("/fonts/unbounded-straight/UnboundedStraight-Bold.woff2?v=2") format("woff2");
+  font-weight: 700 900;
+  font-style: normal;
+  font-display: swap;
+}

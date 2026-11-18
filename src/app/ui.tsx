@@ -96,7 +96,7 @@ export function SectionHeading({ children, light = false, className = "" }: {
 }) {
   return (
     <h2 className={`display ${className}`}
-      style={{ fontSize: "clamp(2.6rem, 5.4vw, 5.25rem)", color: light ? "#fff" : "#000" }}>
+      style={{ fontSize: "clamp(2.1rem, 4.2vw, 4.1rem)", color: light ? "#fff" : "#000" }}>
       {children}
     </h2>
   );
@@ -122,18 +122,18 @@ export function CaseCard({ title, sub, tag, src, video, onClick, large = false }
           className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       )}
       <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0) 100%)" }} />
-      <span className="absolute top-4 left-4 bg-white text-black text-[12px] font-bold px-2.5 py-1">{tag}</span>
+      <span className="absolute top-3 sm:top-4 left-3 sm:left-4 bg-white text-black text-[11px] sm:text-[12px] font-bold px-2 sm:px-2.5 py-0.5 sm:py-1">{tag}</span>
       {video && (
-        <span className="absolute top-4 right-4 flex items-center gap-1.5 bg-black/55 text-white text-[12px] font-bold px-2.5 py-1">
+        <span className="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1.5 bg-black/55 text-white text-[11px] sm:text-[12px] font-bold px-2 sm:px-2.5 py-0.5 sm:py-1">
           <Play size={11} fill="currentColor" /> Video
         </span>
       )}
-      <div className="absolute bottom-0 left-0 right-0 p-6 lg:p-7 pb-8 lg:pb-9 pl-7 lg:pl-8">
+      <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-7 pb-4 sm:pb-8 lg:pb-9 pl-6 sm:pl-7 lg:pl-8">
         <h3 className="text-white font-bold leading-[1.02]"
-          style={{ fontSize: large ? "clamp(1.8rem,3vw,2.8rem)" : "1.45rem", letterSpacing: "-0.008em" }}>
+          style={{ fontSize: large ? "clamp(1.45rem,2.3vw,2.2rem)" : "1.15rem", letterSpacing: "-0.008em" }}>
           {title}
         </h3>
-        <p className="text-white/70 text-[14px] mt-2">{sub}</p>
+        <p className="text-white/70 text-[12px] mt-2">{sub}</p>
       </div>
       <span className="absolute bottom-0 left-[76px] right-0 h-[4px] bg-brand origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" aria-hidden="true" />
     </button>
@@ -145,6 +145,7 @@ export function ImageGallery({ images, video, poster, title, subtitle, tag, stor
   images: string[]; video?: string | null; poster?: string; title: string; subtitle?: string; tag?: string; story?: CaseItem["story"]; onClose: () => void;
 }) {
   const [idx, setIdx] = useState(0);
+  const swipe = useRef(0);
   // The project reel (if any) is the first slide, followed by the photos
   const media: { kind: "video" | "photo"; src: string }[] = [
     ...(video ? [{ kind: "video" as const, src: video }] : []),
@@ -176,7 +177,7 @@ export function ImageGallery({ images, video, poster, title, subtitle, tag, stor
         <div className="flex items-end justify-between gap-6 mb-4 text-white">
           <div>
             {tag && <span className="inline-block bg-white text-black text-[12px] font-bold px-2.5 py-1 mb-3">{tag}</span>}
-            <h3 className="font-bold leading-none" style={{ fontSize: "clamp(1.5rem,3vw,2.4rem)", letterSpacing: "-0.008em" }}>{title}</h3>
+            <h3 className="font-bold leading-none" style={{ fontSize: "clamp(1.25rem,2.3vw,1.9rem)", letterSpacing: "-0.008em" }}>{title}</h3>
             {subtitle && <p className="text-white/60 text-sm mt-2">{subtitle}</p>}
           </div>
           <div className="flex items-center gap-5 shrink-0">
@@ -186,7 +187,12 @@ export function ImageGallery({ images, video, poster, title, subtitle, tag, stor
             </button>
           </div>
         </div>
-        <div className="relative overflow-hidden bg-zinc-900 cut-lg" style={{ aspectRatio: "16/9", maxHeight: "68vh", width: "100%" }}>
+        <div className="relative overflow-hidden bg-zinc-900 cut-lg" style={{ aspectRatio: "16/9", maxHeight: "68vh", width: "100%" }}
+          onTouchStart={(e) => { swipe.current = e.touches[0].clientX; }}
+          onTouchEnd={(e) => {
+            const dx = e.changedTouches[0].clientX - swipe.current;
+            if (total > 1 && Math.abs(dx) > 45) setIdx((i) => (i + (dx < 0 ? 1 : -1) + total) % total);
+          }}>
           {cur.kind === "video"
             ? <video key={cur.src} src={cur.src} poster={poster} controls autoPlay playsInline className="w-full h-full object-cover bg-black" />
             : <img key={cur.src} src={cur.src} alt={`${title}, photo ${idx + (video ? 0 : 1)} of ${images.length}`} className="w-full h-full object-cover" />}
@@ -228,11 +234,11 @@ function CaseStory({ story }: { story: NonNullable<CaseItem["story"]> }) {
     <div className="grid sm:grid-cols-3 gap-6 sm:gap-8 mt-8 pt-6 border-t border-white/20 text-white">
       {parts.map(([label, text]) => (
         <div key={label}>
-          <h4 className="text-[14px] font-bold mb-2" style={{ color: "var(--signal)" }}>{label}</h4>
-          <p className="text-[15px] leading-relaxed text-white/80">{text}</p>
+          <h4 className="text-[12px] font-bold mb-2" style={{ color: "var(--signal)" }}>{label}</h4>
+          <p className="text-[13px] leading-relaxed text-white/80">{text}</p>
         </div>
       ))}
-      {story.guests && <p className="sm:col-span-3 text-[15px] font-bold">{story.guests} guests</p>}
+      {story.guests && <p className="sm:col-span-3 text-[13px] font-bold">{story.guests} guests</p>}
     </div>
   );
 }
@@ -241,20 +247,23 @@ function CaseStory({ story }: { story: NonNullable<CaseItem["story"]> }) {
 export function EndingSection({ c, dark = false }: { c: ContentType; dark?: boolean }) {
   const e = c.ending;
   return (
-    <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 !pb-6 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
+    <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
       <div className="max-w-[1360px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
-        <div className="text-black px-6 sm:px-10 lg:px-14 pt-10 lg:pt-14 pb-16 lg:pb-24 flex flex-col">
-          <h2 id="contact-heading" className="display whitespace-pre-line" style={{ fontSize: "clamp(3rem, 5.6vw, 6rem)" }}>
+        <div className="text-black px-6 sm:px-10 lg:px-14 pt-7 lg:pt-14 pb-12 lg:pb-24 flex flex-col">
+          <h2 id="contact-heading" className="display whitespace-pre-line" style={{ fontSize: "clamp(2.3rem, 3.9vw, 4.2rem)" }}>
             {e.headline}
           </h2>
-          <p className="mt-6 text-[18px] lg:text-[20px] leading-snug max-w-[34ch] font-medium">{e.sub}</p>
+          <p className="mt-4 lg:mt-6 text-[13px] lg:text-[17px] leading-snug max-w-[34ch] font-medium">{e.sub}</p>
           <a href={e.mailto}
-            className="group mt-8 lg:mt-10 self-start max-w-full inline-flex flex-col gap-1 bg-black text-white pl-9 pr-8 py-5 lg:pl-11 lg:pr-12 lg:py-6 cut-sm transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
-            <span className="text-[14px] font-bold" style={{ color: "var(--signal)" }}>{e.ctaLabel}</span>
-            <span className="font-bold leading-tight [overflow-wrap:anywhere]" style={{ fontSize: "clamp(1rem, 1.55vw, 1.6rem)" }}>{e.cta}</span>
+            className="group mt-5 lg:mt-10 self-start max-w-full inline-flex flex-col gap-1 bg-black text-white pl-9 pr-8 py-5 lg:pl-11 lg:pr-12 lg:py-6 cut-sm transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
+            <span className="text-[12px] font-bold" style={{ color: "var(--signal)" }}>{e.ctaLabel}</span>
+            <span className="font-bold leading-tight" style={{ fontSize: "clamp(0.85rem, 1.12vw, 1.2rem)" }}>
+              {/* break only after the @ on narrow screens */}
+              {e.cta.split("@")[0]}@<wbr />{e.cta.split("@")[1]}
+            </span>
           </a>
         </div>
-        <div className="relative min-h-[300px] lg:min-h-0">
+        <div className="relative h-[clamp(0px,calc(100svh-590px),300px)] lg:h-auto lg:min-h-0">
           <img src={e.photo} alt={e.photoAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
         </div>
       </div>

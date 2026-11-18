@@ -1,4 +1,4 @@
-// Calm, one-section-at-a-time scrolling for the home page on desktop.
+// Calm, one-section-at-a-time scrolling for the home page (mouse, trackpad, keyboard and touch).
 // A burst of wheel ticks (or a long trackpad swipe) moves exactly one section,
 // with an eased glide, instead of flying past several sections.
 import { useEffect } from "react";
@@ -34,9 +34,10 @@ export function animateScrollTo(target: number, duration = DURATION): Promise<vo
 export function useSectionPaging(enabled: boolean) {
   useEffect(() => {
     if (!enabled) return;
-    const wide = window.matchMedia("(min-width: 1024px) and (pointer: fine)");
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (!wide.matches || reduce.matches) return;
+    if (reduce.matches) return;
+    // the section-per-screen layout needs enough height; very short landscape phones scroll freely
+    if (window.innerHeight < 480) return;
     const root = document.documentElement;
     root.classList.add("js-paging");
 
@@ -45,6 +46,9 @@ export function useSectionPaging(enabled: boolean) {
     let lastWheel = 0;
     let lastAbs = 0;
     let acc = 0;             // wheel distance gathered toward the next step
+
+    // When the visitor has zoomed in (pinch, smart zoom), scrolling must pan the page normally
+    const zoomed = () => (window.visualViewport?.scale ?? 1) > 1.01;
 
     const sections = () =>
       Array.from(document.querySelectorAll<HTMLElement>("main [data-bg], footer[data-bg]"))
@@ -82,7 +86,7 @@ export function useSectionPaging(enabled: boolean) {
     };
 
     const onWheel = (e: WheelEvent) => {
-      if (e.ctrlKey) return; // pinch-zoom
+      if (e.ctrlKey || zoomed()) return; // pinch-zoom gesture, or the page is zoomed in
       if (document.body.style.overflow === "hidden") return; // a modal is open
       e.preventDefault();
       const now = performance.now();
@@ -100,10 +104,47 @@ export function useSectionPaging(enabled: boolean) {
       if (!go(dir)) { window.scrollBy(0, acc); acc = 0; }
     };
 
+    // Touch: one swipe = one section. The finger drag is replaced by an eased glide,
+    // taps and pinch-zoom are left alone, and nothing happens while a modal is open.
+    let ty = 0, tx = 0, tt = 0, tracking = false;
+    const modalOpen = () => document.body.style.overflow === "hidden" || zoomed();
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1 || modalOpen()) { tracking = false; return; }
+      tracking = true; ty = e.touches[0].clientY; tx = e.touches[0].clientX; tt = performance.now();
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (!tracking || e.touches.length !== 1 || modalOpen()) return;
+      const dy = Math.abs(e.touches[0].clientY - ty), dx = Math.abs(e.touches[0].clientX - tx);
+      if (dy >= dx && e.cancelable) e.preventDefault(); // vertical drags are ours
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0]; if (!t) return;
+      const dy = ty - t.clientY, dx = tx - t.clientX;
+      const fast = Math.abs(dy) / Math.max(1, performance.now() - tt) > 0.3;
+      if (Math.abs(dy) < Math.abs(dx) || (Math.abs(dy) < 40 && !(fast && Math.abs(dy) > 15))) return;
+      if (animating) return;
+      const dir = dy > 0 ? 1 : -1;
+      if (!go(dir)) window.scrollBy({ top: dy * 2, behavior: "smooth" });
+    };
+
+    // keep the screen on a section after rotation / address-bar resizes
+    let rt = 0;
+    const onResize = () => {
+      clearTimeout(rt);
+      rt = window.setTimeout(() => {
+        if (animating || zoomed()) return;
+        const list = sections(); const y = window.scrollY;
+        const near = list.reduce((a, s) => (Math.abs(s.top - y) < Math.abs(a.top - y) ? s : a), list[0]);
+        if (near && Math.abs(near.top - y) < window.innerHeight * 0.5 && near.height <= window.innerHeight + 4) window.scrollTo(0, near.top);
+      }, 250);
+    };
+
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (e.target as HTMLElement)?.isContentEditable) return;
-      if (document.body.style.overflow === "hidden") return;
+      if (document.body.style.overflow === "hidden" || zoomed()) return;
       const down = ["PageDown", "ArrowDown"].includes(e.key) || (e.key === " " && !e.shiftKey);
       const up = ["PageUp", "ArrowUp"].includes(e.key) || (e.key === " " && e.shiftKey);
       if (!down && !up) return;
@@ -114,7 +155,16 @@ export function useSectionPaging(enabled: boolean) {
 
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    window.addEventListener("resize", onResize);
     return () => {
+      clearTimeout(rt);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("resize", onResize);
       root.classList.remove("js-paging");
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKey);

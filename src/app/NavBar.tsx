@@ -15,7 +15,6 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
   // Contrast with the section underneath: white section -> black bar, black section -> white bar
   const bar = mode === "hero" ? "transparent" : mode === "light" ? "#000" : "#fff";
   const ink = mode === "dark" ? "#000" : "#fff";
-  const showLogo = mode !== "hero";
   return (
     <>
       <nav aria-label="Main navigation"
@@ -25,18 +24,17 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
           <button onClick={() => goPage("home")} className="shrink-0 flex items-center"
             aria-label="Stagency China, home">
             <img src="/assets/stagency-logo-nav.png" alt="Stagency China by New Imagination DMC Group China"
-              className="h-10 lg:h-12 w-auto transition-opacity duration-300"
-              style={{ opacity: showLogo ? 1 : 0 }} />
+              className="h-10 lg:h-12 w-auto" />
           </button>
 
-          <div className="hidden lg:flex items-center gap-9">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-9">
             {c.nav.links.map((l) => (
               <button key={l.id} onClick={() => goto(l.id)}
-                className="text-[15px] font-bold text-inherit hover:text-[color:var(--signal)] transition-colors whitespace-nowrap">
+                className="text-[13px] font-bold text-inherit hover:text-[color:var(--signal)] transition-colors whitespace-nowrap">
                 {l.label}
               </button>
             ))}
-            <button onClick={() => goto("contact")} className="btn btn-brand cut-sm !py-3 !text-[14px]">
+            <button onClick={() => goto("contact")} className="btn btn-brand cut-sm !py-3 !text-[12px] whitespace-nowrap">
               {c.nav.cta}
             </button>
           </div>
@@ -61,7 +59,7 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
           {c.nav.links.map((l) => (
             <button key={l.id} onClick={() => goto(l.id)}
               className="display text-left text-white hover:text-[color:var(--signal)] transition-colors"
-              style={{ fontSize: "clamp(2.4rem, 11vw, 3.6rem)" }}>
+              style={{ fontSize: "clamp(1.9rem, 8.5vw, 2.8rem)" }}>
               {l.label}
             </button>
           ))}
