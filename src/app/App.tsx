@@ -241,7 +241,7 @@ export default function App() {
             <div className="relative z-10 flex flex-col items-center justify-center px-5">
               <div style={{ width: "min(500px, 78vw)", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4)) drop-shadow(0 2px 8px rgba(0,0,0,0.22))" }}>
                 <h1 className="hero-logo m-0">
-                  <img src="/assets/stagency-logo-white.png" alt="Stagency China by New Imagination DMC Group China"
+                  <img src="/assets/stagency-logo-hero.png" alt="Stagency China by New Imagination DMC Group China"
                     className="block w-full h-auto" />
                 </h1>
                 <FitText text={c.hero.slogan} className="hero-in d-3 display text-white mt-5 lg:mt-6 text-center" />
@@ -359,7 +359,14 @@ export default function App() {
                 <h2 id="wwa-heading" className="display" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3.5rem)" }}>
                   {c.whoWeAre.headline}
                 </h2>
-                <p className="text-[13px] lg:text-[17px] leading-relaxed text-white/75 max-w-[44ch] lg:pt-2">{c.whoWeAre.lead}</p>
+                <p className="text-[13px] lg:text-[17px] leading-relaxed text-white/75 max-w-[44ch] lg:pt-2">
+                  {c.whoWeAre.lead.split(c.whoWeAre.leadLink)[0]}
+                  <a href={c.newImaginationUrl} target="_blank" rel="noopener noreferrer"
+                    className="text-white underline decoration-[color:var(--signal)] decoration-2 underline-offset-4 hover:text-[color:var(--signal)] transition-colors">
+                    {c.whoWeAre.leadLink}
+                  </a>
+                  {c.whoWeAre.lead.split(c.whoWeAre.leadLink)[1]}
+                </p>
               </div>
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 lg:gap-x-10 gap-y-5 lg:gap-y-10 mt-[clamp(1rem,6svh,6rem)]">
                 {c.whoWeAre.advantages.map((a, i) => (
@@ -430,7 +437,7 @@ export default function App() {
             <div>
               <img src="/assets/stagency-logo-nav.png" alt="Stagency China by New Imagination DMC Group China" className="h-16 w-auto" />
               <p className="mt-6 text-[18px] font-bold" style={{ letterSpacing: "-0.008em" }}>{c.footer.tagline}</p>
-              <a href="https://newimaginationdmc.com/" target="_blank" rel="noopener noreferrer"
+              <a href={c.newImaginationUrl} target="_blank" rel="noopener noreferrer"
                 className="inline-block mt-2 text-[12px] text-white/60 hover:text-white underline underline-offset-4">
                 {c.footer.dmc}
               </a>
@@ -439,7 +446,7 @@ export default function App() {
                   <ul className="flex gap-3">
                     {c.footer.socials.links.map((sl) => (
                       <li key={sl.name}>
-                        <a href={sl.url || undefined} target="_blank" rel="noopener noreferrer"
+                        <a href={sl.url} target="_blank" rel="noopener noreferrer" aria-label={`Stagency China on ${sl.name}`}
                           className="inline-block px-3.5 py-2 text-[12px] font-bold bg-white text-black hover:bg-[color:var(--signal)] transition-colors">
                           {sl.name}
                         </a>

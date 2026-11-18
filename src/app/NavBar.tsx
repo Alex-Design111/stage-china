@@ -64,7 +64,15 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
             </button>
           ))}
         </nav>
-        <button onClick={() => goto("contact")} className="btn btn-brand cut-sm mt-auto w-full !py-5">
+        <ul className="mt-auto mb-5 flex gap-3">
+          {c.footer.socials.links.map((sl) => (
+            <li key={sl.name}>
+              <a href={sl.url} target="_blank" rel="noopener noreferrer" aria-label={`Stagency China on ${sl.name}`}
+                className="inline-block px-3.5 py-2 text-[12px] font-bold bg-white text-black">{sl.name}</a>
+            </li>
+          ))}
+        </ul>
+        <button onClick={() => goto("contact")} className="btn btn-brand cut-sm w-full !py-5">
           {c.nav.cta}
         </button>
       </div>

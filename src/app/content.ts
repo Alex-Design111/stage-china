@@ -77,6 +77,8 @@ export const C = {
       "So the people building your stage can also book the hotel, move your guests and handle everything in between. One partner and one point of contact, from the airport pickup to the final encore.",
     ],
     lead: "We're the event production team of New Imagination DMC China. So the people building your stage also book the hotels, move your guests and handle everything in between.",
+    // the part of the lead that links to the parent company
+    leadLink: "New Imagination DMC China",
     dmcTitle: "What our DMC side covers",
     dmc: [
       "Venues and permits",
@@ -270,15 +272,15 @@ export const C = {
     ],
   },
 
+  newImaginationUrl: "https://www.newimaginationdmc.com",
+
   footer: {
     tagline: "We stage your vision.",
-    // PLACEHOLDER — add profile URLs, then set ready: true
     socials: {
-      ready: false,
+      ready: true,
       links: [
-        { name: "LinkedIn", url: "" },
-        { name: "Instagram", url: "" },
-        { name: "WeChat", url: "" },
+        { name: "Instagram", url: "https://www.instagram.com/stagencychina/" },
+        { name: "LinkedIn", url: "https://www.linkedin.com/company/stagencychina/" },
       ],
     },
     dmc: "Part of New Imagination DMC China",
