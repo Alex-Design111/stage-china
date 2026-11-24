@@ -249,7 +249,7 @@ export function EndingSection({ c, dark = false }: { c: ContentType; dark?: bool
   return (
     <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
       <div className="max-w-[1360px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
-        <div className="text-black px-6 sm:px-10 lg:px-14 pt-7 lg:pt-14 pb-12 lg:pb-24 flex flex-col">
+        <div className="text-black px-6 sm:px-10 lg:px-14 pt-6 lg:pt-14 pb-12 lg:pb-24 flex flex-col">
           <h2 id="contact-heading" className="display whitespace-pre-line" style={{ fontSize: "clamp(2.3rem, 3.9vw, 4.2rem)" }}>
             {e.headline}
           </h2>
@@ -263,7 +263,8 @@ export function EndingSection({ c, dark = false }: { c: ContentType; dark?: bool
             </span>
           </a>
         </div>
-        <div className="relative h-[clamp(0px,calc(100svh-590px),300px)] lg:h-auto lg:min-h-0">
+        {/* phones: the full venue photo sits on top, uncropped by the corner cut */}
+        <div className="relative order-first lg:order-none aspect-[3/2] lg:aspect-auto lg:min-h-0">
           <img src={e.photo} alt={e.photoAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
         </div>
       </div>

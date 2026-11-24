@@ -258,14 +258,8 @@ export default function App() {
             </div>
 
             <div className="absolute bottom-0 inset-x-0 z-10 px-6 lg:px-20 hero-in d-5">
-              <div className="max-w-[1360px] mx-auto border-t border-white/25 py-5 flex items-center justify-between gap-6">
-                <ul className="hidden sm:flex gap-8 lg:gap-12">
-                  {c.whatWeDo.items.map((it) => (
-                    <li key={it.title}>
-                      <button onClick={() => goto("what-we-do")} className="text-white/80 hover:text-white text-[13px] font-bold transition-colors">{it.title}</button>
-                    </li>
-                  ))}
-                </ul>
+              <div className="max-w-[1360px] mx-auto border-t border-white/25 py-5 text-center">
+                <p className="text-white/90 text-[12px] sm:text-[13px] lg:text-[14px] font-bold leading-snug text-balance">{c.whatWeDo.heroLine}</p>
               </div>
             </div>
           </section>
@@ -294,9 +288,10 @@ export default function App() {
                   <article key={item.title}>
                     <div className="relative overflow-hidden bg-zinc-800 cut-md h-[clamp(90px,calc((100svh-370px)/3),260px)] md:h-[clamp(200px,calc(100svh-400px),520px)]">
                       <img src={item.image} alt={item.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                      <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)" }} />
-                      <h3 className="display absolute left-6 md:left-7 lg:left-9 bottom-4 md:bottom-9 lg:bottom-11 right-6 text-white"
-                        style={{ fontSize: "clamp(1.3rem, 2.3vw, 2.4rem)" }}>
+                      {/* even shade so the centred title reads on any photo */}
+                      <div className="absolute inset-0 bg-black/35" />
+                      <h3 className="display absolute inset-0 flex items-center justify-center text-center px-10 md:px-8 lg:px-10 text-white text-balance"
+                        style={{ fontSize: "clamp(1.3rem, 2.3vw, 2.4rem)", textShadow: "0 1px 12px rgba(0,0,0,0.35)" }}>
                         {item.title}
                       </h3>
                     </div>
@@ -316,7 +311,7 @@ export default function App() {
             <div className="max-w-[1360px] mx-auto">
               <div className="flex flex-row items-end justify-between gap-4 mb-[clamp(1rem,4svh,3.5rem)]">
                 <SectionHeading light><span id="cases-heading">{c.cases.headline}</span></SectionHeading>
-                <button onClick={() => openCases("all")} className="link-line text-white text-[13px] lg:text-[15px] mb-1 lg:mb-3 shrink-0">
+                <button onClick={() => openCases("all")} className="btn btn-brand cut-sm shrink-0 !py-3 lg:!py-3.5 !text-[12px] lg:!text-[13px] mb-1 lg:mb-2">
                   {c.cases.cta}
                 </button>
               </div>
@@ -335,15 +330,15 @@ export default function App() {
           <section data-bg="light" id="services" className="slide slide-anim bg-white px-6 lg:px-20" aria-labelledby="svc-heading">
             <div className="max-w-[1360px] mx-auto">
               <SectionHeading className="mb-[clamp(1rem,4svh,3.5rem)]"><span id="svc-heading">{c.services.headline}</span></SectionHeading>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 sm:gap-x-10 gap-y-6 lg:gap-y-12">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 sm:gap-x-10 gap-y-3 lg:gap-y-12">
                 {c.services.groups.map((g) => (
-                  <div key={g.title} className="border-t-2 border-black pt-3 lg:pt-6">
-                    <h3 className="font-bold leading-tight mb-2 lg:mb-5" style={{ fontSize: "clamp(0.95rem, 1.6vw, 1.6rem)", letterSpacing: "-0.008em" }}>
+                  <div key={g.title} className="border-t-2 border-black pt-2 lg:pt-6">
+                    <h3 className="font-bold leading-tight mb-1 lg:mb-5 min-h-[2.5em]" style={{ fontSize: "clamp(0.9rem, 1.6vw, 1.6rem)", letterSpacing: "-0.008em" }}>
                       {g.title}
                     </h3>
                     <ul>
                       {g.items.map((it) => (
-                        <li key={it.name} className="py-[3px] lg:py-1.5 text-[11px] sm:text-[13px] lg:text-[14px] leading-snug text-black/80">{it.name}</li>
+                        <li key={it.name} className="py-[1.5px] lg:py-1.5 text-[10.5px] sm:text-[13px] lg:text-[14px] leading-tight lg:leading-snug text-black/80">{it.name}</li>
                       ))}
                     </ul>
                   </div>
@@ -435,8 +430,11 @@ export default function App() {
         <div className="max-w-[1360px] mx-auto">
           <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
             <div>
-              <img src="/assets/stagency-logo-nav.png" alt="Stagency China by New Imagination DMC Group China" className="h-16 w-auto" />
-              <p className="mt-6 text-[18px] font-bold" style={{ letterSpacing: "-0.008em" }}>{c.footer.tagline}</p>
+              {/* logo and slogan share one width */}
+              <div className="w-[260px] lg:w-[300px]">
+                <img src="/assets/stagency-logo-footer.png" alt="Stagency China by New Imagination DMC Group China" className="w-full h-auto" />
+                <FitText text={c.footer.tagline} className="mt-5 font-bold" />
+              </div>
               <a href={c.newImaginationUrl} target="_blank" rel="noopener noreferrer"
                 className="inline-block mt-2 text-[12px] text-white/60 hover:text-white underline underline-offset-4">
                 {c.footer.dmc}
