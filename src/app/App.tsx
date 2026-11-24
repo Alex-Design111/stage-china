@@ -6,7 +6,6 @@ import { Play, X } from "lucide-react";
 import { NavBar } from "./NavBar";
 import { animateScrollTo, useSectionPaging } from "./smoothScroll";
 
-type Filter = "all" | "event" | "booth";
 
 // Which background sits under the top menu: "hero" (video), "dark" or "light"
 type NavMode = "hero" | "dark" | "light";
@@ -86,7 +85,6 @@ export default function App() {
   const [page, setPage] = useState<Page>(getInitialPage);
   const [menuOpen, setMenuOpen] = useState(false);
   const [galleryId, setGalleryId] = useState<string | null>(null);
-  const [filter, setFilter] = useState<Filter>("all");
   const [reelOpen, setReelOpen] = useState(false);
   useEffect(() => {
     if (!reelOpen) return;
@@ -143,7 +141,7 @@ export default function App() {
     if (p === "home") window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   });
 
-  const openCases = (f: Filter) => { setFilter(f); goPage("portfolio"); };
+  const openCases = () => goPage("portfolio");
 
   const goto = (id: string) => {
     const scroll = (instant = false) => {
@@ -160,8 +158,7 @@ export default function App() {
   const galleryProject = galleryId ? IMGS.getProject(galleryId) : null;
   const galleryItem = galleryId ? c.cases.items.find((i) => i.id === galleryId) : null;
 
-  const visibleCases = c.cases.items.filter((i) =>
-    filter === "all" || (filter === "event" ? i.tag === "Event" : i.tag === "Booth"));
+  const visibleCases = c.cases.items;
 
   return (
     <div className="bg-white text-black">
@@ -195,19 +192,9 @@ export default function App() {
       {page === "portfolio" && (
         <main id="main-content">
           <section data-bg="dark" className="bg-black text-white pt-28 lg:pt-32 pb-8 lg:pb-10 px-6 lg:px-20" style={{ scrollSnapAlign: "start end" }}>
-            <div className="max-w-[1360px] mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-              <div>
-                <h1 className="display" style={{ fontSize: "clamp(2.2rem, 4.4vw, 4.2rem)" }}>{c.portfolioPage.headline}</h1>
-                <p className="mt-4 text-[15px] text-white/70 max-w-[52ch]">{c.portfolioPage.sub}</p>
-              </div>
-              <div className="flex flex-wrap gap-3 shrink-0" role="group" aria-label="Filter cases">
-                {(["all", "event", "booth"] as const).map((f) => (
-                  <button key={f} onClick={() => setFilter(f)} aria-pressed={filter === f}
-                    className={`btn !py-3 !text-[12px] ${filter === f ? "btn-brand cut-sm" : "btn-ghost"}`}>
-                    {c.portfolioPage.filters[f]}
-                  </button>
-                ))}
-              </div>
+            <div className="max-w-[1360px] mx-auto">
+              <h1 className="display" style={{ fontSize: "clamp(2.2rem, 4.4vw, 4.2rem)" }}>{c.portfolioPage.headline}</h1>
+              <p className="mt-4 text-[15px] text-white/70 max-w-[52ch]">{c.portfolioPage.sub}</p>
             </div>
           </section>
           <section data-bg="light" className="px-6 lg:px-20 pt-6 lg:pt-8 pb-4" style={{ scrollSnapAlign: "start end", scrollMarginTop: "84px" }} aria-label="Projects">
@@ -311,7 +298,7 @@ export default function App() {
             <div className="max-w-[1360px] mx-auto">
               <div className="flex flex-row items-end justify-between gap-4 mb-[clamp(1rem,4svh,3.5rem)]">
                 <SectionHeading light><span id="cases-heading">{c.cases.headline}</span></SectionHeading>
-                <button onClick={() => openCases("all")} className="btn btn-brand cut-sm shrink-0 !py-3 lg:!py-3.5 !text-[12px] lg:!text-[13px] mb-1 lg:mb-2">
+                <button onClick={() => openCases()} className="btn btn-brand cut-sm shrink-0 !py-3 lg:!py-3.5 !text-[12px] lg:!text-[13px] mb-1 lg:mb-2">
                   {c.cases.cta}
                 </button>
               </div>
@@ -462,7 +449,7 @@ export default function App() {
                     <button onClick={() => goto(l.id)} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">{l.label}</button>
                   </li>
                 ))}
-                <li><button onClick={() => openCases("all")} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">All cases</button></li>
+                <li><button onClick={() => openCases()} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">All cases</button></li>
               </ul>
             </nav>
             <div>

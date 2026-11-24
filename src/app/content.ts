@@ -258,7 +258,6 @@ export const C = {
     back: "Home",
     headline: "Our cases",
     sub: "Gala dinners, conferences, activities and exhibition stands delivered for international clients.",
-    filters: { all: "All", event: "Events", booth: "Exhibition stands" },
   },
 
   ending: {
