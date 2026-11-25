@@ -1,4 +1,4 @@
-export type Page = "home" | "portfolio";
+export type Page = "home" | "portfolio" | "case";
 
 export type CaseItem = {
   id: string;
@@ -169,6 +169,7 @@ export const C = {
           { name: "Table setup and floral design" },
           { name: "Event branding and signage" },
           { name: "Gifts and souvenirs" },
+          { name: "Exhibition stands" },
         ],
       },
       {
@@ -223,7 +224,6 @@ export const C = {
       { id: "tech-pavilion", title: "Medical AI Pavilion", sub: "Shanghai, 260 m², 2024", tag: "Booth" },
       { id: "tech-lounge", title: "Tech Company Lounge", sub: "Beijing, 80 m², 2025", tag: "Booth" },
       { id: "timber-booth", title: "Timber Harvesting Booth", sub: "Shanghai, 50 m², 2026", tag: "Booth" },
-      { id: "beauty-pavilion", title: "Beauty Brand Pavilion", sub: "Saint Petersburg, 30 m², 2023", tag: "Booth" },
     ] as CaseItem[],
   },
 
@@ -266,6 +266,33 @@ export const C = {
     cta: "stagency@newimaginationdmc.com",
     ctaLabel: "Write to us",
     mailto: "mailto:stagency@newimaginationdmc.com?subject=" + encodeURIComponent("Event in China") + "&body=" + encodeURIComponent("Hello Stagency team,\n\nCity:\nDates:\nNumber of guests:\nFormat (gala dinner, conference, event...):\n\nAbout the event:\n"),
+    briefCta: "Send your brief",
+    briefCtaLabel: "Takes a minute",
+    orEmail: "Or email us at",
+    form: {
+      title: "Tell us about your event",
+      intro: "A few details are enough. We reply within one working day with first ideas and a budget range.",
+      fields: {
+        name: "Your name",
+        email: "Work email",
+        company: "Company",
+        phone: "WhatsApp, WeChat or phone",
+        city: "City",
+        dates: "Dates",
+        guests: "Number of guests",
+        format: "Format",
+        budget: "Budget range",
+        message: "About the event",
+      },
+      formats: ["Gala dinner", "Conference", "Event or activity", "Exhibition stand", "Something else"],
+      budgets: ["Under US$30,000", "US$30,000–100,000", "US$100,000–300,000", "Over US$300,000", "Not sure yet"],
+      submit: "Send brief",
+      sending: "Sending…",
+      sentTitle: "Thank you, your brief is with us.",
+      sentBody: "We'll reply within one working day. If it's urgent, call or message us on +86 130 7415 6537.",
+      error: "Something went wrong and the brief wasn't sent. Please email us instead:",
+      close: "Close",
+    },
     photo: "/assets/projects/wild-dining-yangshuo-1.jpg",
     photoAlt: "Long tables under chandeliers at dusk among Yangshuo's karst mountains",
     contacts: [

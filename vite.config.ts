@@ -17,7 +17,12 @@ function figmaAssetResolver() {
 }
 
 export default defineConfig({
-  base: './',
+  // absolute paths: pages live at /, /portfolio and /cases/…
+  base: '/',
+  build: {
+    // hashed bundles get their own folder so they can be cached for a year
+    assetsDir: 'static',
+  },
   plugins: [
     figmaAssetResolver(),
     // The React and Tailwind plugins are both required for Make, even if

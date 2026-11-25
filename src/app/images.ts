@@ -18,15 +18,6 @@ const projectGalleries: Record<string, Project> = {
       "/assets/SC_3.jpg",
     ],
   },
-  "beauty-pavilion": {
-    preview: "/assets/F_1.jpg",
-    gallery: [
-      "/assets/F_1.jpg",
-      "/assets/F_2.jpg",
-      "/assets/F_3.jpg",
-      "/assets/F_4.jpg",
-    ],
-  },
   "timber-booth": {
     preview: "/assets/TB1.jpg",
     gallery: [
@@ -109,7 +100,7 @@ const projectGalleries: Record<string, Project> = {
 // extracted from each clip's opening frame so the hero never shows black
 // while the video loads.
 export const VIDEOS = {
-  home:   { src: "/assets/promo-hero.mp4", poster: "/assets/promo-hero.jpg" },
+  home:   { src: "/assets/promo-hero.mp4", mobileSrc: "/assets/promo-hero-mobile.mp4", poster: "/assets/promo-hero.jpg" },
   expo:   { src: "/assets/expo-hero.mp4",  poster: "/assets/expo-hero.jpg" },
   events: { src: "/assets/event-hero.mp4", poster: "/assets/event-hero.jpg" },
 };

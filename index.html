@@ -42,17 +42,17 @@
       "name": "Stagency China",
       "legalName": "Stagency China by New Imagination DMC Group China",
       "url": "https://stagencychina.com/",
-      "logo": "https://stagencychina.com/assets/stagency-logo.png",
+      "logo": "https://stagencychina.com/assets/stagency-logo-footer.png",
       "image": "https://stagencychina.com/assets/og-image.jpg",
-      "description": "Event production in China for international companies: gala dinners, conferences, events and activities, AV and shows, backed by full DMC support.",
+      "description": "Event production in China for international companies: gala dinners, conferences and events with full DMC support from New Imagination DMC Group China.",
       "email": "stagency@newimaginationdmc.com",
       "telephone": "+8613074156537",
       "address": { "@type": "PostalAddress", "streetAddress": "Room 3422, 34th Floor, Block A, Zhongyi Building, No. 580 Nanjing West Road, Jing'an District", "addressLocality": "Shanghai", "addressCountry": "CN" },
       "slogan": "We stage your vision.",
-      "areaServed": ["Shanghai", "Beijing", "Guangzhou", "Shenzhen", "China"],
+      "areaServed": ["China", "Shanghai", "Beijing", "Shenzhen", "Hong Kong", "Guilin"],
       "knowsLanguage": ["en", "ru", "it", "zh"],
       "parentOrganization": { "@type": "Organization", "name": "New Imagination DMC Group China", "url": "https://www.newimaginationdmc.com" },
-      "sameAs": ["https://newimaginationdmc.com/"]
+      "sameAs": ["https://www.instagram.com/stagencychina/", "https://www.linkedin.com/company/stagencychina/"]
     }
     </script>
 
@@ -61,6 +61,13 @@
 
   <body>
     <div id="root"></div>
+
+    <!-- Static copy of the brief form so Netlify Forms registers it at deploy (the live form is rendered by the app) -->
+    <form name="brief" data-netlify="true" netlify-honeypot="company-website" hidden>
+      <input name="name" /><input name="email" /><input name="company" /><input name="phone" />
+      <input name="city" /><input name="dates" /><input name="guests" /><input name="format" />
+      <input name="budget" /><textarea name="message"></textarea><input name="company-website" />
+    </form>
 
     <script type="module" src="/src/main.tsx"></script>
   </body>

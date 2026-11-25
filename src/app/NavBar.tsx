@@ -11,6 +11,12 @@ interface NavBarProps {
   goPage: (p: Page) => void;
 }
 
+// Real links for crawlers; ordinary clicks stay in-page (new-tab clicks still work)
+const click = (fn: () => void) => (e: React.MouseEvent) => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  e.preventDefault(); fn();
+};
+
 export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarProps) {
   // Contrast with the section underneath: white section -> black bar, black section -> white bar
   const bar = mode === "hero" ? "transparent" : mode === "light" ? "#000" : "#fff";
@@ -21,22 +27,22 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
         className="fixed top-0 inset-x-0 z-50 transition-[background-color,color] duration-500 ease-out"
         style={{ backgroundColor: bar, color: ink }}>
         <div className="px-6 lg:px-20"><div className="max-w-[1360px] mx-auto flex items-center justify-between gap-6 h-[72px] lg:h-[84px]">
-          <button onClick={() => goPage("home")} className="shrink-0 flex items-center"
+          <a href="/" onClick={click(() => goPage("home"))} className="shrink-0 flex items-center"
             aria-label="Stagency China, home">
             <img src="/assets/stagency-logo-nav.png" alt="Stagency China by New Imagination DMC Group China"
               className="h-10 lg:h-12 w-auto" />
-          </button>
+          </a>
 
           <div className="hidden lg:flex items-center gap-6 xl:gap-9">
             {c.nav.links.map((l) => (
-              <button key={l.id} onClick={() => goto(l.id)}
+              <a key={l.id} href={`/#${l.id}`} onClick={click(() => goto(l.id))}
                 className="text-[13px] font-bold text-inherit hover:text-[color:var(--signal)] transition-colors whitespace-nowrap">
                 {l.label}
-              </button>
+              </a>
             ))}
-            <button onClick={() => goto("contact")} className="btn btn-brand cut-sm !py-3 !text-[12px] whitespace-nowrap">
+            <a href="/#contact" onClick={click(() => goto("contact"))} className="btn btn-brand cut-sm !py-3 !text-[12px] whitespace-nowrap">
               {c.nav.cta}
-            </button>
+            </a>
           </div>
 
           <button className="lg:hidden w-11 h-11 flex items-center justify-center text-inherit"
@@ -57,11 +63,11 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
         </div>
         <nav className="flex flex-col gap-3">
           {c.nav.links.map((l) => (
-            <button key={l.id} onClick={() => goto(l.id)}
+            <a key={l.id} href={`/#${l.id}`} onClick={click(() => goto(l.id))}
               className="display text-left text-white hover:text-[color:var(--signal)] transition-colors"
               style={{ fontSize: "clamp(1.9rem, 8.5vw, 2.8rem)" }}>
               {l.label}
-            </button>
+            </a>
           ))}
         </nav>
         <ul className="mt-auto mb-5 flex gap-3">
@@ -72,9 +78,9 @@ export function NavBar({ c, mode, menuOpen, setMenuOpen, goto, goPage }: NavBarP
             </li>
           ))}
         </ul>
-        <button onClick={() => goto("contact")} className="btn btn-brand cut-sm w-full !py-5">
+        <a href="/#contact" onClick={click(() => goto("contact"))} className="btn btn-brand cut-sm w-full !py-5">
           {c.nav.cta}
-        </button>
+        </a>
       </div>
     </>
   );

@@ -63,11 +63,19 @@ export function useSectionPaging(enabled: boolean) {
       if (i < 0) return null;
       const cur = list[i];
       if (dir === 1) {
-        if (cur.top + cur.height > y + vh + 2) return Math.min(y + vh * 0.85, cur.top + cur.height - vh); // read the rest of a tall section
+        // read the rest of a tall section; a sliver left below the screen isn't worth a stop
+        if (cur.top + cur.height - vh - y > vh * 0.25) {
+          const end = cur.top + cur.height - vh;
+          const t = Math.min(y + vh * 0.85, end);
+          return end - t < vh * 0.25 ? end : t;
+        }
         const next = list[i + 1];
         return next ? next.top : null;
       } else {
-        if (cur.top < y - 2) return Math.max(cur.top, y - vh * 0.85);
+        if (y - cur.top > vh * 0.25) {
+          const t = Math.max(cur.top, y - vh * 0.85);
+          return t - cur.top < vh * 0.25 ? cur.top : t;
+        }
         const prev = list[i - 1];
         return prev ? Math.max(prev.top, prev.top + prev.height - vh) : 0;
       }

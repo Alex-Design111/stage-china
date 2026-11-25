@@ -1,6 +1,10 @@
-import { useState, useEffect, useLayoutEffect, useRef, type ReactNode, type CSSProperties } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback, type ReactNode, type CSSProperties } from "react";
+import { BriefForm } from "./BriefForm";
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
 import type { ContentType, CaseItem } from "./content";
+
+// useLayoutEffect in the browser, a no-op-safe useEffect during the build-time render
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 // ── Placeholder sections ─────────────────────────────────
 // Content marked ready: false in content.ts shows with an orange outline in
@@ -27,7 +31,7 @@ export function Placeholder({ ready, label, children, compact = false }: {
 // Poster paints instantly; the video source is attached after first paint,
 // plays muted + looped, and stays on the poster if it can't load or the
 // visitor prefers reduced motion.
-export function VideoBg({ src, poster }: { src: string; poster: string }) {
+export function VideoBg({ src, mobileSrc, poster }: { src: string; mobileSrc?: string; poster: string }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [ready, setReady] = useState(false);
 
@@ -35,20 +39,24 @@ export function VideoBg({ src, poster }: { src: string; poster: string }) {
     const v = ref.current;
     if (!v) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    // data-saver on: stay on the still image
+    if ((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData) return;
+    // phones get the small loop (about 2 MB) instead of the full 1080p file
+    const file = mobileSrc && window.matchMedia?.("(max-width: 767px)").matches ? mobileSrc : src;
     const id = window.setTimeout(() => {
       if (v.getAttribute("src")) return;
-      v.setAttribute("src", src);
+      v.setAttribute("src", file);
       v.load();
       const play = () => v.play().catch(() => {});
       if (v.readyState >= 2) play();
       else v.addEventListener("canplay", play, { once: true });
     }, 180);
     return () => window.clearTimeout(id);
-  }, [src]);
+  }, [src, mobileSrc]);
 
   return (
     <>
-      <img src={poster} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover" />
+      <img src={poster} alt="" aria-hidden="true" {...{ fetchpriority: "high" }} className="absolute inset-0 w-full h-full object-cover" />
       <video ref={ref} poster={poster} muted loop playsInline autoPlay preload="none"
         aria-hidden="true" onCanPlay={() => setReady(true)}
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
@@ -62,7 +70,7 @@ export function FitText({ text, className = "", style }: { text: string; classNa
   const wrap = useRef<HTMLDivElement>(null);
   const span = useRef<HTMLSpanElement>(null);
   const [size, setSize] = useState<number | null>(null);
-  useLayoutEffect(() => {
+  useIsoLayoutEffect(() => {
     const fit = () => {
       const w = wrap.current, s = span.current;
       if (!w || !s) return;
@@ -102,20 +110,39 @@ export function SectionHeading({ children, light = false, className = "" }: {
   );
 }
 
+// ── Responsive photo ─────────────────────────────────────
+// Every JPG in /assets has WebP copies at 800 and 1600 px (made by scripts/make-webp.py);
+// browsers pick the smallest that fits, and the JPG stays as the fallback.
+export function Picture({ src, alt, sizes = "100vw", className, loading = "lazy", draggable }: {
+  src: string; alt: string; sizes?: string; className?: string; loading?: "lazy" | "eager"; draggable?: boolean;
+}) {
+  const responsive = /^\/assets\/.+\.jpe?g$/i.test(src);
+  const base = src.replace(/\.jpe?g$/i, "");
+  return (
+    <picture className="contents">
+      {responsive && <source type="image/webp" srcSet={`${base}-800.webp 800w, ${base}-1600.webp 1600w`} sizes={sizes} />}
+      <img src={src} alt={alt} loading={loading} decoding="async" draggable={draggable} className={className} />
+    </picture>
+  );
+}
+
 // ── Case card ────────────────────────────────────────────
-export function CaseCard({ title, sub, tag, src, video, onClick, large = false }: {
-  title: string; sub: string; tag: string; src: string; video?: string | null; onClick?: () => void; large?: boolean;
+export function CaseCard({ title, sub, tag, src, video, href, onClick, large = false }: {
+  title: string; sub: string; tag: string; src: string; video?: string | null; href: string; onClick?: (e: React.MouseEvent) => void; large?: boolean;
 }) {
   const vid = useRef<HTMLVideoElement>(null);
-  const canHover = typeof window !== "undefined" && window.matchMedia?.("(hover: hover)").matches
-    && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  // decided after load, so the prerendered page and the live page start out identical
+  const [canHover, setCanHover] = useState(false);
+  useEffect(() => {
+    setCanHover(!!window.matchMedia?.("(hover: hover)").matches && !window.matchMedia?.("(prefers-reduced-motion: reduce)").matches);
+  }, []);
   const start = () => { if (canHover && vid.current) { vid.current.currentTime = 0; vid.current.play().catch(() => {}); } };
   const stop = () => { vid.current?.pause(); };
   return (
-    <button type="button" onClick={onClick} onMouseEnter={video ? start : undefined} onMouseLeave={video ? stop : undefined}
+    <a href={href} onClick={onClick} onMouseEnter={video ? start : undefined} onMouseLeave={video ? stop : undefined}
       className={`group relative block w-full h-full overflow-hidden bg-zinc-800 text-left cut-md ${large ? "min-h-[360px]" : "min-h-[260px]"} lg:min-h-0`}
       aria-label={`${title}, ${sub}. Open gallery`}>
-      <img src={src} alt="" loading="lazy"
+      <Picture src={src} alt={`${title}, ${sub}`} sizes={large ? "(min-width: 1024px) 66vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]" />
       {video && canHover && (
         <video ref={vid} src={video} muted loop playsInline preload="none" aria-hidden="true"
@@ -136,15 +163,17 @@ export function CaseCard({ title, sub, tag, src, video, onClick, large = false }
         <p className="text-white/70 text-[12px] mt-2">{sub}</p>
       </div>
       <span className="absolute bottom-0 left-[76px] right-0 h-[4px] bg-brand origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" aria-hidden="true" />
-    </button>
+    </a>
   );
 }
 
 // ── Gallery lightbox ─────────────────────────────────────
-export function ImageGallery({ images, video, poster, title, subtitle, tag, story, onClose }: {
-  images: string[]; video?: string | null; poster?: string; title: string; subtitle?: string; tag?: string; story?: CaseItem["story"]; onClose: () => void;
+export function ImageGallery({ images, video, poster, title, subtitle, tag, story, onClose, asPage = false, startIndex = 0 }: {
+  asPage?: boolean; startIndex?: number; images: string[]; video?: string | null; poster?: string; title: string; subtitle?: string; tag?: string; story?: CaseItem["story"]; onClose: () => void;
 }) {
-  const [idx, setIdx] = useState(0);
+  // on a case address the case name is the page's main heading
+  const TitleTag = asPage ? "h1" : "h3";
+  const [idx, setIdx] = useState(startIndex);
   const swipe = useRef(0);
   // The project reel (if any) is the first slide, followed by the photos
   const media: { kind: "video" | "photo"; src: string }[] = [
@@ -177,7 +206,7 @@ export function ImageGallery({ images, video, poster, title, subtitle, tag, stor
         <div className="flex items-end justify-between gap-6 mb-4 text-white">
           <div>
             {tag && <span className="inline-block bg-white text-black text-[12px] font-bold px-2.5 py-1 mb-3">{tag}</span>}
-            <h3 className="font-bold leading-none" style={{ fontSize: "clamp(1.25rem,2.3vw,1.9rem)", letterSpacing: "-0.008em" }}>{title}</h3>
+            <TitleTag className="font-bold leading-none m-0" style={{ fontSize: "clamp(1.25rem,2.3vw,1.9rem)", letterSpacing: "-0.008em" }}>{title}</TitleTag>
             {subtitle && <p className="text-white/60 text-sm mt-2">{subtitle}</p>}
           </div>
           <div className="flex items-center gap-5 shrink-0">
@@ -195,7 +224,7 @@ export function ImageGallery({ images, video, poster, title, subtitle, tag, stor
           }}>
           {cur.kind === "video"
             ? <video key={cur.src} src={cur.src} poster={poster} controls autoPlay playsInline className="w-full h-full object-cover bg-black" />
-            : <img key={cur.src} src={cur.src} alt={`${title}, photo ${idx + (video ? 0 : 1)} of ${images.length}`} className="w-full h-full object-cover" />}
+            : <Picture key={cur.src} src={cur.src} loading="eager" sizes="(min-width: 1152px) 1152px, 100vw" alt={`${title}, photo ${idx + (video ? 0 : 1)} of ${images.length}`} className="w-full h-full object-cover" />}
           {total > 1 && (
             <>
               <button onClick={() => setIdx((i) => (i - 1 + total) % total)} aria-label="Previous"
@@ -246,6 +275,8 @@ function CaseStory({ story }: { story: NonNullable<CaseItem["story"]> }) {
 // ── Ending section: CTA, big email button, photo ─────────
 export function EndingSection({ c, dark = false }: { c: ContentType; dark?: boolean }) {
   const e = c.ending;
+  const [briefOpen, setBriefOpen] = useState(false);
+  const closeBrief = useCallback(() => setBriefOpen(false), []);
   return (
     <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
       <div className="max-w-[1360px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
@@ -254,20 +285,24 @@ export function EndingSection({ c, dark = false }: { c: ContentType; dark?: bool
             {e.headline}
           </h2>
           <p className="mt-4 lg:mt-6 text-[13px] lg:text-[17px] leading-snug max-w-[34ch] font-medium">{e.sub}</p>
-          <a href={e.mailto}
-            className="group mt-5 lg:mt-10 self-start max-w-full inline-flex flex-col gap-1 bg-black text-white pl-9 pr-8 py-5 lg:pl-11 lg:pr-12 lg:py-6 cut-sm transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
-            <span className="text-[12px] font-bold" style={{ color: "var(--signal)" }}>{e.ctaLabel}</span>
-            <span className="font-bold leading-tight" style={{ fontSize: "clamp(0.85rem, 1.12vw, 1.2rem)" }}>
-              {/* break only after the @ on narrow screens */}
+          <button type="button" onClick={() => setBriefOpen(true)}
+            className="group mt-5 lg:mt-10 self-start max-w-full inline-flex flex-col items-start gap-1 bg-black text-white pl-9 pr-10 py-5 lg:pl-11 lg:pr-14 lg:py-6 cut-sm text-left transition-transform duration-150 active:scale-[0.98] hover:bg-[#1a1a1a]">
+            <span className="text-[12px] font-bold" style={{ color: "var(--signal)" }}>{e.briefCtaLabel}</span>
+            <span className="font-bold leading-tight" style={{ fontSize: "clamp(1rem, 1.4vw, 1.5rem)" }}>{e.briefCta}</span>
+          </button>
+          <p className="mt-4 text-[12px] lg:text-[14px] font-medium">
+            {e.orEmail}{" "}
+            <a href={e.mailto} className="font-bold underline underline-offset-4 break-words">
               {e.cta.split("@")[0]}@<wbr />{e.cta.split("@")[1]}
-            </span>
-          </a>
+            </a>
+          </p>
         </div>
         {/* phones: the full venue photo sits on top, uncropped by the corner cut */}
         <div className="relative order-first lg:order-none aspect-[3/2] lg:aspect-auto lg:min-h-0">
-          <img src={e.photo} alt={e.photoAlt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+          <Picture src={e.photo} alt={e.photoAlt} sizes="(min-width: 1024px) 50vw, 100vw" className="absolute inset-0 w-full h-full object-cover" />
         </div>
       </div>
+      {briefOpen && <BriefForm c={c} onClose={closeBrief} />}
     </section>
   );
 }

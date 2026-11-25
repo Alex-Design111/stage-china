@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { C, type Page } from "./content";
 import { IMGS, VIDEOS } from "./images";
-import { VideoBg, SectionHeading, CaseCard, ImageGallery, EndingSection, Placeholder, FitText } from "./ui";
+import { VideoBg, SectionHeading, CaseCard, EndingSection, Placeholder, FitText, Picture } from "./ui";
 import { Play, X } from "lucide-react";
 import { NavBar } from "./NavBar";
+import { CasePage } from "./CasePage";
 import { animateScrollTo, useSectionPaging } from "./smoothScroll";
+import { parsePath, routePath, seoFor, casePath, SITE_ORIGIN, type Seo, type Route } from "./routes";
 
 
 // Which background sits under the top menu: "hero" (video), "dark" or "light"
@@ -31,60 +33,33 @@ function useNavMode(page: string): NavMode {
   return mode;
 }
 
-function getInitialPage(): Page {
-  return window.location.pathname.includes("portfolio") ? "portfolio" : "home";
-}
-
-const SEO: Record<Page, { title: string; description: string; path: string }> = {
-  home: {
-    title: "Stagency China | Event Production in China: Gala Dinners, Conferences & AV",
-    description: "Event production in China for international companies: gala dinners, conferences, events and activities, AV and shows, backed by full DMC support. We stage your vision.",
-    path: "/",
-  },
-  portfolio: {
-    title: "Cases | Stagency China",
-    description: "Gala dinners, conferences, activities and exhibition stands produced in China for international clients.",
-    path: "/portfolio",
-  },
-};
-
-const SITE_ORIGIN = "https://stagencychina.com";
-
 function setMeta(attr: string, key: string, content: string) {
   let el = document.querySelector(`meta[${attr}="${key}"]`) as HTMLMetaElement | null;
   if (!el) { el = document.createElement("meta"); el.setAttribute(attr, key); document.head.appendChild(el); }
   el.setAttribute("content", content);
 }
 
-function useSEO(page: Page) {
-  useEffect(() => {
-    const m = SEO[page];
-    const url = SITE_ORIGIN + m.path;
-    document.title = m.title;
-    setMeta("name", "description", m.description);
-    setMeta("property", "og:title", m.title);
-    setMeta("property", "og:description", m.description);
-    setMeta("property", "og:url", url);
-    setMeta("name", "twitter:title", m.title);
-    setMeta("name", "twitter:description", m.description);
-    const canonical = document.querySelector('link[rel="canonical"]');
-    if (canonical) canonical.setAttribute("href", url);
-    try {
-      if (window.location.pathname !== m.path) {
-        // Old /expo-… and /event-… URLs fold into the home page without adding history
-        const legacy = page === "home" && window.location.pathname !== "/";
-        if (legacy) history.replaceState({ page }, m.title, m.path);
-        else history.pushState({ page }, m.title, m.path);
-      }
-    } catch (_) {}
-  }, [page]);
+// Keep the head tags in step with the page shown (the build already ships them for every address)
+function applyHead(m: Seo) {
+  const url = SITE_ORIGIN + m.path;
+  document.title = m.title;
+  setMeta("name", "description", m.description);
+  setMeta("property", "og:title", m.title);
+  setMeta("property", "og:description", m.description);
+  setMeta("property", "og:url", url);
+  setMeta("property", "og:image", m.image);
+  setMeta("name", "twitter:title", m.title);
+  setMeta("name", "twitter:description", m.description);
+  setMeta("name", "twitter:image", m.image);
+  document.querySelector('link[rel="canonical"]')?.setAttribute("href", url);
 }
 
-export default function App() {
+export default function App({ initialPath }: { initialPath?: string }) {
   const c = C;
-  const [page, setPage] = useState<Page>(getInitialPage);
+  const [initial] = useState<Route>(() => parsePath(initialPath ?? window.location.pathname));
+  const [page, setPage] = useState<Page>(initial.page);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [galleryId, setGalleryId] = useState<string | null>(null);
+  const [caseId, setCaseId] = useState<string | null>(initial.caseId);
   const [reelOpen, setReelOpen] = useState(false);
   useEffect(() => {
     if (!reelOpen) return;
@@ -95,29 +70,53 @@ export default function App() {
   }, [reelOpen]);
   const navMode = useNavMode(page);
   const [fading, setFading] = useState(false);
-  useSectionPaging(page === "home");
+  useSectionPaging(page === "home" || page === "case");
 
-  useSEO(page);
+  // Address bar + head tags follow the page and the open case
+  useEffect(() => {
+    const r: Route = { page, caseId: page === "case" ? caseId : null };
+    applyHead(seoFor(r));
+    const path = routePath(r);
+    if (window.location.pathname !== path) {
+      try { history.pushState(r, "", path); } catch (_) {}
+    }
+  }, [page, caseId]);
+
+  // Coming in on /#services etc.: jump straight to that section once
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const t = window.setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY, behavior: "instant" as ScrollBehavior });
+    }, 60);
+    return () => window.clearTimeout(t);
+  }, []);
 
   // Every page change starts at the top, instantly (not with the smooth-scroll animation)
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
-  }, [page]);
+  }, [page, caseId]);
 
   // Slide-in animation and scroll snapping on both pages
   useEffect(() => {
     // Home slides snap firmly on desktop; the long cases page snaps softly so it never jumps
-    const snapClass = page === "home" ? "snap" : "snap-soft";
-    document.documentElement.classList.add(snapClass);
+    // Home and case pages page section by section; the cases list snaps softly
+    const snapClass = page === "portfolio" ? "snap-soft" : "snap";
+    if (snapClass) document.documentElement.classList.add(snapClass);
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-in"); });
     }, { threshold: 0.15 });
     document.querySelectorAll(".slide-anim").forEach((el) => io.observe(el));
-    return () => { document.documentElement.classList.remove(snapClass); io.disconnect(); };
-  }, [page]);
+    return () => { if (snapClass) document.documentElement.classList.remove(snapClass); io.disconnect(); };
+  }, [page, caseId]);
 
   useEffect(() => {
-    const onPop = () => setPage(getInitialPage());
+    const onPop = (e: PopStateEvent) => {
+      const r = (e.state as Route | null) ?? parsePath(window.location.pathname);
+      setPage(r.page);
+      setCaseId(r.caseId);
+    };
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
@@ -128,12 +127,13 @@ export default function App() {
   }, [menuOpen]);
 
   // Fade the page out, swap it, fade the new one in
-  const switchPage = (p: Page, after?: () => void) => {
+  const switchPage = (p: Page, after?: () => void, nextCase: string | null = null) => {
     setMenuOpen(false);
-    if (p === page) { after?.(); return; }
+    if (p === page && (p !== "case" || nextCase === caseId)) { after?.(); return; }
     setFading(true);
     window.setTimeout(() => {
       setPage(p);
+      setCaseId(p === "case" ? nextCase : null);
       requestAnimationFrame(() => requestAnimationFrame(() => { setFading(false); after?.(); }));
     }, 260);
   };
@@ -142,6 +142,12 @@ export default function App() {
   });
 
   const openCases = () => goPage("portfolio");
+  const openCase = (id: string) => switchPage("case", undefined, id);
+  // Links keep real addresses for crawlers; clicks are handled in-page
+  const linkClick = (fn: () => void) => (e: React.MouseEvent) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; // let "open in new tab" work
+    e.preventDefault(); fn();
+  };
 
   const goto = (id: string) => {
     const scroll = (instant = false) => {
@@ -155,9 +161,6 @@ export default function App() {
     else { setMenuOpen(false); scroll(); }
   };
 
-  const galleryProject = galleryId ? IMGS.getProject(galleryId) : null;
-  const galleryItem = galleryId ? c.cases.items.find((i) => i.id === galleryId) : null;
-
   const visibleCases = c.cases.items;
 
   return (
@@ -169,11 +172,6 @@ export default function App() {
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-black focus:text-white">
         Skip to content
       </a>
-
-      {galleryProject && galleryItem && (
-        <ImageGallery images={galleryProject.gallery} video={galleryProject.video} poster={galleryProject.poster ?? galleryProject.preview} title={galleryItem.title}
-          subtitle={galleryItem.sub} tag={galleryItem.tag} story={galleryItem.story} onClose={() => setGalleryId(null)} />
-      )}
 
       {reelOpen && c.hero.reel.url && (
         <div className="reel-in fixed inset-0 z-[300] bg-black/95 flex items-center justify-center p-4 lg:p-10" role="dialog" aria-modal="true" aria-label={c.hero.reel.label}
@@ -201,13 +199,18 @@ export default function App() {
             <div className="max-w-[1360px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {visibleCases.map((item) => (
                 <div key={item.id} className="h-[300px] lg:h-[34svh] lg:min-h-[280px]">
-                  <CaseCard {...item} src={IMGS.getProject(item.id)?.preview || ""} video={IMGS.getProject(item.id)?.video} onClick={() => setGalleryId(item.id)} />
+                  <CaseCard {...item} src={IMGS.getProject(item.id)?.preview || ""} video={IMGS.getProject(item.id)?.video} href={casePath(item.id)} onClick={linkClick(() => openCase(item.id))} />
                 </div>
               ))}
             </div>
           </section>
           <EndingSection c={c} dark />
         </main>
+      )}
+
+      {/* ── CASE PAGE ──────────────────────────────────── */}
+      {page === "case" && caseId && (
+        <CasePage key={caseId} c={c} id={caseId} openCase={openCase} openCases={openCases} goto={goto} linkClick={linkClick} />
       )}
 
       {/* ── HOME PAGE ──────────────────────────────────── */}
@@ -218,7 +221,7 @@ export default function App() {
           <section data-bg="hero" className="relative h-[100svh] min-h-[560px] bg-black overflow-hidden flex items-center justify-center text-center" style={{ scrollSnapAlign: "start" }}>
             <div className="absolute inset-0">
               <div className="absolute inset-0" style={{ filter: "saturate(1.35) contrast(1.06) brightness(1.08)" }}>
-                <VideoBg src={VIDEOS.home.src} poster={VIDEOS.home.poster} />
+                <VideoBg src={VIDEOS.home.src} mobileSrc={VIDEOS.home.mobileSrc} poster={VIDEOS.home.poster} />
               </div>
               {/* Light edge shading only, so the nav and bottom links stay readable */}
               <div className="absolute inset-x-0 top-0 h-32" style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0))" }} />
@@ -227,10 +230,10 @@ export default function App() {
 
             <div className="relative z-10 flex flex-col items-center justify-center px-5">
               <div style={{ width: "min(500px, 78vw)", filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4)) drop-shadow(0 2px 8px rgba(0,0,0,0.22))" }}>
-                <h1 className="hero-logo m-0">
+                <div className="hero-logo m-0">
                   <img src="/assets/stagency-logo-hero.png" alt="Stagency China by New Imagination DMC Group China"
-                    className="block w-full h-auto" />
-                </h1>
+                    width={1000} height={512} className="block w-full h-auto" />
+                </div>
                 <FitText text={c.hero.slogan} className="hero-in d-3 display text-white mt-5 lg:mt-6 text-center" />
               </div>
               <div className="hero-in d-5 mt-7 empty:hidden">
@@ -246,7 +249,7 @@ export default function App() {
 
             <div className="absolute bottom-0 inset-x-0 z-10 px-6 lg:px-20 hero-in d-5">
               <div className="max-w-[1360px] mx-auto border-t border-white/25 py-5 text-center">
-                <p className="text-white/90 text-[12px] sm:text-[13px] lg:text-[14px] font-bold leading-snug text-balance">{c.whatWeDo.heroLine}</p>
+                <h1 className="text-white/90 text-[12px] sm:text-[13px] lg:text-[14px] font-bold leading-snug text-balance m-0">{c.whatWeDo.heroLine}</h1>
               </div>
             </div>
           </section>
@@ -273,22 +276,24 @@ export default function App() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-5 lg:gap-8">
                 {c.whatWeDo.items.map((item) => (
                   <article key={item.title}>
-                    <div className="relative overflow-hidden bg-zinc-800 cut-md h-[clamp(90px,calc((100svh-370px)/3),260px)] md:h-[clamp(200px,calc(100svh-400px),520px)]">
-                      <img src={item.image} alt={item.alt} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                    <a href="/portfolio" onClick={linkClick(openCases)} aria-label={`${item.title}: see our cases`}
+                      className="group block relative overflow-hidden bg-zinc-800 cut-md h-[clamp(90px,calc((100svh-370px)/3),260px)] md:h-[clamp(200px,calc(100svh-400px),520px)]">
+                      <Picture src={item.image} alt={item.alt} sizes="(min-width: 768px) 33vw, 100vw" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]" />
                       {/* even shade so the centred title reads on any photo */}
-                      <div className="absolute inset-0 bg-black/35" />
+                      <div className="absolute inset-0 bg-black/35 transition-colors duration-300 group-hover:bg-black/25" />
                       <h3 className="display absolute inset-0 flex items-center justify-center text-center px-10 md:px-8 lg:px-10 text-white text-balance"
                         style={{ fontSize: "clamp(1.3rem, 2.3vw, 2.4rem)", textShadow: "0 1px 12px rgba(0,0,0,0.35)" }}>
                         {item.title}
                       </h3>
-                    </div>
+                      <span className="absolute bottom-0 left-[76px] right-0 h-[4px] bg-brand origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" aria-hidden="true" />
+                    </a>
                   </article>
                 ))}
               </div>
 
               <div className="mt-[clamp(1rem,4svh,3.5rem)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-5">
                 <p className="text-[17px] lg:text-[18px] font-bold" style={{ letterSpacing: "-0.01em" }}>{c.whatWeDo.extra.title}</p>
-                <button onClick={() => goto("contact")} className="btn btn-brand cut-sm shrink-0 self-start sm:self-auto">{c.whatWeDo.extra.cta}</button>
+                <a href="/#contact" onClick={linkClick(() => goto("contact"))} className="btn btn-brand cut-sm shrink-0 self-start sm:self-auto">{c.whatWeDo.extra.cta}</a>
               </div>
             </div>
           </section>
@@ -298,15 +303,15 @@ export default function App() {
             <div className="max-w-[1360px] mx-auto">
               <div className="flex flex-row items-end justify-between gap-4 mb-[clamp(1rem,4svh,3.5rem)]">
                 <SectionHeading light><span id="cases-heading">{c.cases.headline}</span></SectionHeading>
-                <button onClick={() => openCases()} className="btn btn-brand cut-sm shrink-0 !py-3 lg:!py-3.5 !text-[12px] lg:!text-[13px] mb-1 lg:mb-2">
+                <a href="/portfolio" onClick={linkClick(openCases)} className="btn btn-brand cut-sm shrink-0 !py-3 lg:!py-3.5 !text-[12px] lg:!text-[13px] mb-1 lg:mb-2">
                   {c.cases.cta}
-                </button>
+                </a>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 auto-rows-[clamp(100px,calc((100svh-300px)/3),260px)] sm:auto-rows-[clamp(150px,calc((100svh-380px)/2),300px)] gap-3 lg:gap-6">
                 {c.cases.items.slice(0, 3).map((item, i) => (
-                  <div key={item.id} className={`[&>button]:min-h-0 ${i === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""}`}>
+                  <div key={item.id} className={`[&>a]:min-h-0 ${i === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2" : ""}`}>
                     <CaseCard {...item} large={i === 0} src={IMGS.getProject(item.id)?.preview || ""} video={IMGS.getProject(item.id)?.video}
-                      onClick={() => setGalleryId(item.id)} />
+                      href={casePath(item.id)} onClick={linkClick(() => openCase(item.id))} />
                   </div>
                 ))}
               </div>
@@ -446,10 +451,10 @@ export default function App() {
               <ul className="space-y-2.5">
                 {c.nav.links.map((l) => (
                   <li key={l.id}>
-                    <button onClick={() => goto(l.id)} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">{l.label}</button>
+                    <a href={`/#${l.id}`} onClick={linkClick(() => goto(l.id))} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">{l.label}</a>
                   </li>
                 ))}
-                <li><button onClick={() => openCases()} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">All cases</button></li>
+                <li><a href="/portfolio" onClick={linkClick(openCases)} className="text-[14px] font-bold text-white/85 hover:text-[color:var(--signal)] transition-colors">All cases</a></li>
               </ul>
             </nav>
             <div>

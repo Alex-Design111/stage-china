@@ -1,5 +1,6 @@
 [build]
-  command = "vite build"
+  # client bundle -> server renderer -> finished HTML for every page (scripts/prerender.mjs)
+  command = "npm run build"
   publish = "dist"
 
 # Old service pages were merged into the home page — send visitors and search engines there
@@ -13,8 +14,23 @@
   to = "/"
   status = 301
 
-# SPA fallback — direct hits / shared deep links serve index.html (200, not 404)
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# No catch-all: every real page exists as its own HTML file, and unknown
+# addresses get dist/404.html with a proper 404 status.
+
+# Hashed JS/CSS bundles never change under the same name: cache for a year
+[[headers]]
+  for = "/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Fonts are versioned with ?v=… in the CSS
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Photos and videos: a week in the browser, then quietly refreshed
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, stale-while-revalidate=86400"
