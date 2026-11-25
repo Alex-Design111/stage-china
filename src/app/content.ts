@@ -271,7 +271,7 @@ export const C = {
     orEmail: "Or email us at",
     form: {
       title: "Tell us about your event",
-      intro: "A few details are enough. We reply within one working day with first ideas and a budget range.",
+      intro: "A few details are enough. We'll come back to you with first ideas and a budget range.",
       fields: {
         name: "Your name",
         email: "Work email",
@@ -289,7 +289,7 @@ export const C = {
       submit: "Send brief",
       sending: "Sending…",
       sentTitle: "Thank you, your brief is with us.",
-      sentBody: "We'll reply within one working day. If it's urgent, call or message us on +86 130 7415 6537.",
+      sentBody: "We'll contact you soon. If it's urgent, email us at stagency@newimaginationdmc.com.",
       error: "Something went wrong and the brief wasn't sent. Please email us instead:",
       close: "Close",
     },

@@ -280,8 +280,9 @@ export function EndingSection({ c, dark = false }: { c: ContentType; dark?: bool
   return (
     <section id="contact" data-bg={dark ? "dark" : "light"} className={`slide slide-anim px-6 lg:px-20 ${dark ? "bg-black" : "bg-white"}`} aria-labelledby="contact-heading">
       <div className="max-w-[1360px] mx-auto bg-brand cut-lg grid lg:grid-cols-[1fr_1fr] overflow-hidden">
-        <div className="text-black px-6 sm:px-10 lg:px-14 pt-6 lg:pt-14 pb-12 lg:pb-24 flex flex-col">
-          <h2 id="contact-heading" className="display whitespace-pre-line" style={{ fontSize: "clamp(2.3rem, 3.9vw, 4.2rem)" }}>
+        <div className="text-black px-6 sm:px-10 lg:px-14 pt-6 lg:pt-14 pb-12 lg:pb-24 flex flex-col" style={{ containerType: "inline-size" }}>
+          {/* always two lines: sized from the column width (widest line ≈ 8.6 × the font size) */}
+          <h2 id="contact-heading" className="display whitespace-pre" style={{ fontSize: "min(4.2rem, 11.2cqw)" }}>
             {e.headline}
           </h2>
           <p className="mt-4 lg:mt-6 text-[13px] lg:text-[17px] leading-snug max-w-[34ch] font-medium">{e.sub}</p>

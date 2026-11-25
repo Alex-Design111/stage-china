@@ -70,7 +70,7 @@ export default function App({ initialPath }: { initialPath?: string }) {
   }, [reelOpen]);
   const navMode = useNavMode(page);
   const [fading, setFading] = useState(false);
-  useSectionPaging(page === "home" || page === "case");
+  useSectionPaging(true);
 
   // Address bar + head tags follow the page and the open case
   useEffect(() => {
@@ -101,8 +101,8 @@ export default function App({ initialPath }: { initialPath?: string }) {
   // Slide-in animation and scroll snapping on both pages
   useEffect(() => {
     // Home slides snap firmly on desktop; the long cases page snaps softly so it never jumps
-    // Home and case pages page section by section; the cases list snaps softly
-    const snapClass = page === "portfolio" ? "snap-soft" : "snap";
+    // Every page moves section by section
+    const snapClass = "snap";
     if (snapClass) document.documentElement.classList.add(snapClass);
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("is-in"); });

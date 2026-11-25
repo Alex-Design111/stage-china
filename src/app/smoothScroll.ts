@@ -53,7 +53,14 @@ export function useSectionPaging(enabled: boolean) {
     const sections = () =>
       Array.from(document.querySelectorAll<HTMLElement>("main [data-bg], footer[data-bg]"))
         .filter((el) => el.offsetHeight > 0)
-        .map((el) => ({ top: el.getBoundingClientRect().top + window.scrollY, height: el.offsetHeight }));
+        .map((el) => ({ top: el.getBoundingClientRect().top + window.scrollY, height: el.offsetHeight }))
+        // a short band (like a page title) pages together with the section after it
+        .reduce<{ top: number; height: number; short: boolean }[]>((acc, sec) => {
+          const last = acc[acc.length - 1];
+          if (last && last.short) { last.height = sec.top + sec.height - last.top; last.short = false; return acc; }
+          acc.push({ ...sec, short: sec.height < window.innerHeight * 0.5 });
+          return acc;
+        }, []);
 
     // Decide where one step in a direction should land; null = let the browser scroll normally
     const targetFor = (dir: 1 | -1): number | null => {

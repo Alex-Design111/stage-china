@@ -118,7 +118,7 @@ export function CasePage({ c, id, openCase, openCases, goto, linkClick }: {
       {/* All photos */}
       <section data-bg="dark" className="slide slide-anim bg-black text-white px-6 lg:px-20" aria-labelledby="gallery-heading">
         <div className="max-w-[1360px] mx-auto">
-          <h2 id="gallery-heading" className="display" style={{ fontSize: "clamp(1.7rem, 3vw, 2.8rem)" }}>Photos</h2>
+          <h2 id="gallery-heading" className="display" style={{ fontSize: "clamp(1.7rem, 3vw, 2.8rem)" }}>Gallery</h2>
           <div className="mt-8 lg:mt-10 grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 auto-rows-[40vw] sm:auto-rows-[30vw] lg:auto-rows-[clamp(160px,19vw,290px)]">
             {photos.map((src, n) => (
               <button key={src} type="button" onClick={() => setLightbox(n)}
