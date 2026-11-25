@@ -21,7 +21,7 @@ export const C = {
   },
 
   hero: {
-    slogan: "WE STAGE YOUR VISION.",
+    slogan: "WE STAGE YOUR VISION",
     cta: "Start a project",
     ctaSecondary: "See our cases",
     reel: { ready: true, label: "Watch promo", url: "/assets/stagency-showreel.mp4", poster: "/assets/stagency-showreel.jpg" },
@@ -73,7 +73,7 @@ export const C = {
   },
 
   whoWeAre: {
-    headline: "Event production with a DMC behind it",
+    headline: "Event production\nwith a DMC behind it",
     body: [
       "Stagency China is the event production team of New Imagination DMC Group China, a destination management company based in Shanghai.",
       "Traditional DMCs rarely deliver event production to an international standard, while large event companies come with rigid budgets and slow communication. We give foreign corporate clients both: production quality and a flexible, direct team, with full DMC support behind it.",
@@ -261,7 +261,7 @@ export const C = {
   },
 
   ending: {
-    headline: "Let's stage\nyour vision.",
+    headline: "Let's stage\nyour vision",
     sub: "Tell us the city, the date and how many guests you expect. We'll come back with ideas and a budget.",
     cta: "stagency@newimaginationdmc.com",
     ctaLabel: "Write to us",
@@ -306,7 +306,7 @@ export const C = {
   newImaginationUrl: "https://www.newimaginationdmc.com",
 
   footer: {
-    tagline: "We stage your vision.",
+    tagline: "We stage your vision",
     socials: {
       ready: true,
       links: [

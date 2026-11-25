@@ -62,6 +62,19 @@ export function useSectionPaging(enabled: boolean) {
           return acc;
         }, []);
 
+    // Row stops inside a section: elements marked data-step; scroll-margin-top adds breathing room
+    const stops = (sec: { top: number; height: number }, y: number) => {
+      const navH = document.querySelector("nav")?.getBoundingClientRect().height ?? 0;
+      return Array.from(document.querySelectorAll<HTMLElement>("[data-step]"))
+        .map((el) => {
+          const r = el.getBoundingClientRect();
+          const gap = parseFloat(getComputedStyle(el).scrollMarginTop) || 0;
+          return { top: r.top + y, bottom: r.bottom + y, target: Math.round(r.top + y - navH - gap) };
+        })
+        .filter((m) => m.top >= sec.top - 1 && m.top < sec.top + sec.height)
+        .sort((p, q) => p.target - q.target);
+    };
+
     // Decide where one step in a direction should land; null = let the browser scroll normally
     const targetFor = (dir: 1 | -1): number | null => {
       const list = sections();
@@ -70,9 +83,14 @@ export function useSectionPaging(enabled: boolean) {
       if (i < 0) return null;
       const cur = list[i];
       if (dir === 1) {
+        const end = cur.top + cur.height - vh;
+        // marked rows (data-step): bring the first row that isn't fully on screen up under the menu
+        if (end > y + 10) {
+          const row = stops(cur, y).find((m) => m.target > y + 10 && m.bottom > y + vh - 1);
+          if (row) return Math.min(row.target, end);
+        }
         // read the rest of a tall section; a sliver left below the screen isn't worth a stop
-        if (cur.top + cur.height - vh - y > vh * 0.25) {
-          const end = cur.top + cur.height - vh;
+        if (end - y > vh * 0.25) {
           const t = Math.min(y + vh * 0.85, end);
           return end - t < vh * 0.25 ? end : t;
         }
@@ -80,12 +98,26 @@ export function useSectionPaging(enabled: boolean) {
         return next ? next.top : null;
       } else {
         if (y - cur.top > vh * 0.25) {
+          const back = stops(cur, y).find((m) => m.target < y - 10 && m.target >= y - vh * 0.85);
+          if (back) return back.target;
           const t = Math.max(cur.top, y - vh * 0.85);
           return t - cur.top < vh * 0.25 ? cur.top : t;
         }
         const prev = list[i - 1];
         return prev ? Math.max(prev.top, prev.top + prev.height - vh) : 0;
       }
+    };
+
+    // A section marked data-free (the cases grid) scrolls normally once its top reaches the menu;
+    // paging only brings you to it and takes over again after its last row.
+    const inFree = (dir: 1 | -1) => {
+      const el = document.querySelector<HTMLElement>("[data-free]");
+      if (!el) return false;
+      const y = window.scrollY, vh = window.innerHeight;
+      const navH = document.querySelector("nav")?.getBoundingClientRect().height ?? 0;
+      const r = el.getBoundingClientRect();
+      const start = r.top + y - navH, end = r.bottom + y - vh;
+      return dir === 1 ? y >= start - 2 && y < end - 2 : y > start + 2 && y <= end + 2;
     };
 
     const go = (dir: 1 | -1) => {
@@ -103,6 +135,7 @@ export function useSectionPaging(enabled: boolean) {
     const onWheel = (e: WheelEvent) => {
       if (e.ctrlKey || zoomed()) return; // pinch-zoom gesture, or the page is zoomed in
       if (document.body.style.overflow === "hidden") return; // a modal is open
+      if (!locked && !animating && e.deltaY !== 0 && inFree(e.deltaY > 0 ? 1 : -1)) { acc = 0; return; } // normal scrolling here
       e.preventDefault();
       const now = performance.now();
       const dy = e.deltaMode === 1 ? e.deltaY * 40 : e.deltaY;
@@ -129,7 +162,9 @@ export function useSectionPaging(enabled: boolean) {
     };
     const onTouchMove = (e: TouchEvent) => {
       if (!tracking || e.touches.length !== 1 || modalOpen()) return;
-      const dy = Math.abs(e.touches[0].clientY - ty), dx = Math.abs(e.touches[0].clientX - tx);
+      const raw = ty - e.touches[0].clientY;
+      const dy = Math.abs(raw), dx = Math.abs(e.touches[0].clientX - tx);
+      if (raw !== 0 && !animating && inFree(raw > 0 ? 1 : -1)) { tracking = false; return; } // normal scrolling here
       if (dy >= dx && e.cancelable) e.preventDefault(); // vertical drags are ours
     };
     const onTouchEnd = (e: TouchEvent) => {
@@ -163,6 +198,7 @@ export function useSectionPaging(enabled: boolean) {
       const down = ["PageDown", "ArrowDown"].includes(e.key) || (e.key === " " && !e.shiftKey);
       const up = ["PageUp", "ArrowUp"].includes(e.key) || (e.key === " " && e.shiftKey);
       if (!down && !up) return;
+      if (!locked && !animating && inFree(down ? 1 : -1)) return; // normal scrolling here
       e.preventDefault();
       if (locked || animating) return;
       go(down ? 1 : -1);

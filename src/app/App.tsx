@@ -195,7 +195,7 @@ export default function App({ initialPath }: { initialPath?: string }) {
               <p className="mt-4 text-[15px] text-white/70 max-w-[52ch]">{c.portfolioPage.sub}</p>
             </div>
           </section>
-          <section data-bg="light" className="px-6 lg:px-20 pt-6 lg:pt-8 pb-4" style={{ scrollSnapAlign: "start end", scrollMarginTop: "84px" }} aria-label="Projects">
+          <section data-bg="light" data-step data-free className="px-6 lg:px-20 pt-6 lg:pt-8 pb-4" style={{ scrollSnapAlign: "start end" }} aria-label="Projects">
             <div className="max-w-[1360px] mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {visibleCases.map((item) => (
                 <div key={item.id} className="h-[300px] lg:h-[34svh] lg:min-h-[280px]">
@@ -343,9 +343,12 @@ export default function App({ initialPath }: { initialPath?: string }) {
           <section data-bg="dark" id="who-we-are" className="slide slide-anim bg-black text-white px-6 lg:px-20" aria-labelledby="wwa-heading">
             <div className="max-w-[1360px] mx-auto">
               <div className="grid lg:grid-cols-[1.1fr_1fr] gap-4 lg:gap-24 items-start">
-                <h2 id="wwa-heading" className="display" style={{ fontSize: "clamp(1.9rem, 3.4vw, 3.5rem)" }}>
-                  {c.whoWeAre.headline}
-                </h2>
+                {/* two lines from tablet up, sized from the column width (longer line ≈ 14.7 × the font size) */}
+                <div style={{ containerType: "inline-size" }}>
+                  <h2 id="wwa-heading" className="display whitespace-pre-line sm:whitespace-pre text-[clamp(1.9rem,8vw,2.4rem)] sm:text-[length:min(3.5rem,6.7cqw)]">
+                    {c.whoWeAre.headline}
+                  </h2>
+                </div>
                 <p className="text-[13px] lg:text-[17px] leading-relaxed text-white/75 max-w-[44ch] lg:pt-2">
                   {c.whoWeAre.lead.split(c.whoWeAre.leadLink)[0]}
                   <a href={c.newImaginationUrl} target="_blank" rel="noopener noreferrer"
